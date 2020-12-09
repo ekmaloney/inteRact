@@ -11,7 +11,10 @@ combine_dictionary <- function(id_d, beh_d, mod_d, country, year) {
   beh_d <- beh_d %>% mutate(type = "behavior", country = country, year = year)
   mod_d <- mod_d %>% mutate(type = "modifier", country = country, year = year)
 
-  full_dictionary <- bind_rows(id_d, beh_d, mod_d)
+  full_dictionary <- bind_rows(id_d, beh_d, mod_d) %>%
+                     mutate(term = tolower(term))
+
+  return(full_dictionary)
 }
 
 us_2015_full <- combine_dictionary(us_2015_id, us_2015_beh, us_2015_mod, "US", 2015)

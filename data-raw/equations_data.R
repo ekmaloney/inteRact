@@ -16,15 +16,16 @@ all_combinations <- unique(all_combinations)
 decoding_coefficients <- tibble(coef_name = all_combinations) %>%
                          mutate(combos = str_remove(coef_name, "Z")) %>%
                          separate(combos, sep = c(3, 6), into = c("A", "B", "O")) %>%
-                         mutate(AE = if_else(A == 100, 1, 0),
-                                AP = if_else(A == 010, 1, 0),
-                                AA = if_else(A == 001, 1, 0),
-                                BE = if_else(B == 100, 1, 0),
-                                BP = if_else(B == 010, 1, 0),
-                                BA = if_else(B == 001, 1, 0),
-                                OE = if_else(O == 100, 1, 0),
-                                OP = if_else(O == 010, 1, 0),
-                                OA = if_else(O == 001, 1, 0))
+                         rowwise() %>%
+                         mutate(AE = if_else(A == "100", 1, 0),
+                                AP = if_else(A == "010", 1, 0),
+                                AA = if_else(A == "001", 1, 0),
+                                BE = if_else(B == "100", 1, 0),
+                                BP = if_else(B == "010", 1, 0),
+                                BA = if_else(B == "001", 1, 0),
+                                OE = if_else(O == "100", 1, 0),
+                                OP = if_else(O == "010", 1, 0),
+                                OA = if_else(O == "001", 1, 0))
 
 #equation to reshape the equation info
 reshape_equation <- function(eq) {
