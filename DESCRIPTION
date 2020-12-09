@@ -1,16 +1,18 @@
 Package: inteRact
-Title: What the Package Does (One Line, Title Case)
+Title: Implements Affect Control Theory Equations in R
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "First",
-           family = "Last",
+    person(given = "Emily",
+           family = "Maloney",
            role = c("aut", "cre"),
-           email = "first.last@example.com",
+           email = "emily.k.maloney@duke.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
+Description: This package allows you to run batch simulations of Affect Control Theory events by translating equations from INTERACT, the program written by David Heise, into R. 
 License: `use_mit_license()`, `use_gpl3_license()` or friends to
     pick a license
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Depends: 
+    R (>= 2.10)
