@@ -7,16 +7,14 @@
 #' @return a dataframe in long format with a variable indicating the amount of deflection produced by each
 #' element
 #'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr rowwise
+#' @importFrom dplyr %>%
+#' @importFrom tidyr unnest
+#'
 #' @export
-#'
-#' @examples
-#'
-#' #' test_df <- tibble(actor = sample(us_2015_full$term[us_2015_full$type == "identity"], 10),
-#' behavior = sample(us_2015_full$term[us_2015_full$type == "behavior"], 10),
-#' object = sample(us_2015_full$term[us_2015_full$type == "identity"], 10))
-#'
-#' element_deflection(test_df)
-#'
+
+
 batch_element_deflection <- function(df) {
                       df_res <- df %>%
                         rowwise() %>%

@@ -10,6 +10,13 @@
 #' @param max_dist a numeric variable equaling the maximum distance a term can be away from your EPA location
 #'
 #' @return a dataframe listing terms matching your search. Includes variables indicating element-wise distance and sum of squared differences.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr rowwise
+#' @importFrom dplyr %>%
+#' @importFrom dplyr filter
+#' @importFrom dplyr arrange
+#' @importFrom dplyr ungroup
 #' @export
 #'
 #' @examples
@@ -20,7 +27,7 @@ closest_term <- function(e, p, a,
                          term_typ = c("identity", "behavior", "modifier"),
                          max_dist = 1) {
 
-    load("data/us_2015_full.rda")
+    data("us_2015_full", envir=environment())
 
     terms <- us_2015_full %>%
              filter(type == term_typ) %>%

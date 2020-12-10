@@ -6,16 +6,30 @@
 #' @param dictionary which dictionary to use, currently set to "us"
 
 #' @return dataframe in long format, with one row for each element-dimension of the event, columns for fundamental sentiment and transient impression.
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr filter
+#' @importFrom dplyr rowwise
+#' @importFrom dplyr %>%
+#' @importFrom dplyr select
+#' @importFrom dplyr arrange
+#' @importFrom dplyr case_when
+#' @importFrom tidyr pivot_longer
+#' @importFrom naniar replace_with_na_all
+#' @importFrom here here
+#'
 #' @export
 #'
 #' @examples
 #' transient_impression("ceo", "advise", "benefactor")
 
 transient_impression <- function(act, beh, obj, dictionary = "us") {
+          #make sure in the right location
+          here()
 
           #read in data
-          load("data/us_2015_full.rda")
-          load("data/us_1978.rda")
+          data("us_2015_full", envir=environment())
+          data("us_1978", envir=environment())
 
           #first get the EPA values for the elements
           abo_epa <- us_2015_full %>%
@@ -34,7 +48,7 @@ transient_impression <- function(act, beh, obj, dictionary = "us") {
           selection_mat <- us_1978 %>% select(AE:OA)
 
           #get ABO elements for coefficients
-          abo_selected <- as_tibble(t(t(selection_mat)*abo_epa$fundamental_sentiment)) %>%
+          abo_selected <- as.data.frame(t(t(selection_mat)*abo_epa$fundamental_sentiment)) %>%
             replace_with_na_all(., condition = ~.x == 0) %>%
             rowwise() %>%
             mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE))

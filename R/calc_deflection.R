@@ -5,11 +5,18 @@
 #' the second, the behavior, and last, the object. Each of these terms must be
 #' in the US 2015 dictionary.
 #'
-#' @param actor lowercase string corresponding to the actor identity
+#' @param act lowercase string corresponding to the actor identity
 #' @param beh lowercase string corresponding to the behavior term
-#' @param object lowercase string corresponding to the object identity
+#' @param obj lowercase string corresponding to the object identity
 #' @param dictionary which dictionary to use, currently set to "us"
 #' @return calculated deflection for the event (single number)
+#'
+#' @importFrom dplyr mutate
+#' @importFrom dplyr rowwise
+#' @importFrom dplyr %>%
+#' @importFrom dplyr ungroup
+#' @importFrom dplyr summarise
+#'
 #' @export
 #'
 #' @examples
