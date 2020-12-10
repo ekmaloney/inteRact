@@ -18,10 +18,10 @@
 #' element_deflection(test_df)
 #'
 batch_element_deflection <- function(df) {
-    df_res <- df %>%
-      rowwise() %>%
-      mutate(el_def = list(element_deflection(actor, behavior, object))) %>%
-      unnest(el_def)
+                      df_res <- df %>%
+                        rowwise() %>%
+                        mutate(el_def = list(element_deflection(actor, behavior, object))) %>%
+                        unnest(el_def)
 
-    return(df_res)
-}
+                      return(df_res)
+                  }
