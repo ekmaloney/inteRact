@@ -11,6 +11,10 @@
 #' @param dictionary which dictionary to use, currently set to "us"
 #' @return the deflection produced by each element of the event, a 9 x 1 matrix
 #' @export
+#'
+#' @examples
+#'
+#' element_deflection("ceo", "advises", "benefactor")
 
 
 #provides deflection

@@ -11,6 +11,11 @@
 #' @param dictionary which dictionary to use, currently set to "us"
 #' @return calculated deflection for the event (single number)
 #' @export
+#'
+#' @examples
+#'
+#' calc_deflection("ceo", "advises", "benefactor")
+
 
 
 #provides deflection
