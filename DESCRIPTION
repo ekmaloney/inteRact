@@ -8,8 +8,7 @@ Authors@R:
            email = "emily.k.maloney@duke.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: This package allows you to run batch simulations of Affect Control Theory events by translating equations from INTERACT, the program written by David Heise, into R. 
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
