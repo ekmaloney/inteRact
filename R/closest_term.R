@@ -24,7 +24,7 @@
 
 closest_term <- function(e, p, a,
                          dict = "us",
-                         term_typ = c("identity", "behavior", "modifier"),
+                         term_typ,
                          max_dist = 1) {
 
     data("us_2015_full", envir=environment())
