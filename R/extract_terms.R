@@ -58,9 +58,9 @@ extract_terms <- function(elem, t_imp) {
               values <- c(element_def$trans_imp[1],
                           element_def$trans_imp[2],
                           element_def$trans_imp[3],
-                          element_def$trans_imp[4],
-                          element_def$trans_imp[5],
-                          element_def$trans_imp[6],
+                          element_def$fundamental_sentiment[4],
+                          element_def$fundamental_sentiment[5],
+                          element_def$fundamental_sentiment[6],
                           1, 1, 1)
 
               selected_values <- as.data.frame(t(t(selection_matrix)*values)) %>%
