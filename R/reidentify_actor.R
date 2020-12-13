@@ -1,11 +1,12 @@
 #' Function to Generate the Re-identification of the Actor
 #'
-#' @param act
-#' @param beh
-#' @param obj
-#' @param dictionary
+#' @param act lowercase string corresponding to the actor identity
+#' @param beh lowercase string corresponding to the behavior term
+#' @param obj lowercase string corresponding to the object identity
+#' @param dictionary which dictionary to use, currently set to "us"
 #'
-#' @return
+#' @return dataframe with 3 columns corresponding to the EPA of optimal actor identity relabel
+#' @importFrom tibble tibble
 #' @export
 #'
 #' @examples
