@@ -2,8 +2,12 @@ reidentify_object <- function(act, beh, obj, dictionary = "us"){
   #load equation information
   data("us_1978", envir=environment())
 
+  a <- act
+  b <- beh
+  o <- obj
+
   #calculate the transient impression
-  element_def <- transient_impression(act, beh, obj, dictionary = "us")
+  element_def <- transient_impression(a, b, o, dictionary = "us")
 
   #extract terms that are not A
   i_o <- extract_terms(elem = "O", t_imp = element_def)
