@@ -40,9 +40,9 @@ extract_terms <- function(elem, t_imp) {
                 mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE),
                        product = round(product, digits = 3))
             } else if(elem == "B") {
-              values <- c(element_def$trans_imp[1],
-                          element_def$trans_imp[2],
-                          element_def$trans_imp[3],
+              values <- c(t_imp$trans_imp[1],
+                          t_imp$trans_imp[2],
+                          t_imp$trans_imp[3],
                           1, 1, 1,
                           t_imp$trans_imp[7],
                           t_imp$trans_imp[8],
@@ -55,12 +55,12 @@ extract_terms <- function(elem, t_imp) {
                        product = round(product, digits = 3))
 
             } else if(elem == "O") {
-              values <- c(element_def$trans_imp[1],
-                          element_def$trans_imp[2],
-                          element_def$trans_imp[3],
-                          element_def$fundamental_sentiment[4],
-                          element_def$fundamental_sentiment[5],
-                          element_def$fundamental_sentiment[6],
+              values <- c(t_imp$trans_imp[1],
+                          t_imp$trans_imp[2],
+                          t_imp$trans_imp[3],
+                          t_imp$fundamental_sentiment[4],
+                          t_imp$fundamental_sentiment[5],
+                          t_imp$fundamental_sentiment[6],
                           1, 1, 1)
 
               selected_values <- as.data.frame(t(t(selection_matrix)*values)) %>%

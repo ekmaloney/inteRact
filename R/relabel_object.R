@@ -10,7 +10,7 @@
 #' @export
 #'
 #' @examples
-relabel_object <- function(act, beh, obj, dictionary = "us") {
+reidentify_object <- function(act, beh, obj, dictionary = "us") {
             #calculate the transient impression of the event
             trans_imp_df <- transient_impression(act, beh, obj, dictionary = "us")
 
