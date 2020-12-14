@@ -31,8 +31,9 @@ reidentify_object <- function(act, beh, obj, dictionary = "us") {
 
             #term 1 of equation
             term1 <- t(o_s) %*% i_o %*% h %*% i_o %*% o_s
-            term1 <- solve(term1)
             term1 <- -1*term1
+            term1 <- solve(term1)
+
 
             #term 2 of the equation
             term2 <- t(o_s) %*% i_o %*% h %*% i_o %*% g
