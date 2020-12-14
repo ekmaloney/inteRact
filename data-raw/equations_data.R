@@ -58,3 +58,39 @@ use_data(japan_1984, overwrite = TRUE)
 use_data(canada_re_est, overwrite = TRUE)
 use_data(china_2000, overwrite = TRUE)
 use_data(germany_2007, overwrite = TRUE)
+here()
+
+#read in the raw equations dataset
+us_emotions <- read.table("data-raw/US_1978_emotion.txt")
+
+#make the coefficients stuff less annoying
+all_combinations <- c(levels(us_emotions$V1))
+
+all_combinations <- unique(all_combinations)
+
+decoding_coefficients <- tibble(coef_name = all_combinations) %>%
+                         mutate(combos = str_remove(coef_name, "Z")) %>%
+                         separate(combos, sep = c(3), into = c("M", "I")) %>%
+                         rowwise() %>%
+                         mutate(ME = if_else(M == "100", 1, 0),
+                               MP = if_else(M == "010", 1, 0),
+                               MA = if_else(M == "001", 1, 0),
+                               IE = if_else(I == "100", 1, 0),
+                               IP = if_else(I == "010", 1, 0),
+                               IA = if_else(I == "001", 1, 0))
+
+#equation to reshape the equation info
+reshape_emotion_equation <- function(eq) {
+            eq <- tibble(coef_name = eq$V1,
+                         postME = eq$V2,
+                         postMP = eq$V3,
+                         postMA = eq$V4)
+
+            eq_coef_info <- left_join(eq, decoding_coefficients, by = c("coef_name"))
+
+            return(eq_coef_info)
+}
+
+us_emotions <- reshape_emotion_equation(us_emotions)
+
+use_data(us_emotions, overwrite = TRUE)
