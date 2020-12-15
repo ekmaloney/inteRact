@@ -984,8 +984,11 @@ closest_term(ce[1], ce[2], ce[3], term_typ = "modifier", max_dist = 1)
 ```
 
 ``` r
-batch_characteristic_emotion(events$actor) %>% 
-        rowwise() %>% 
+char_e <- batch_characteristic_emotion(events$actor)
+
+char_e %>% 
+        dplyr::rowwise() %>% 
         mutate(emotion = list(closest_term(E, P, A, term_typ = "modifier"))) %>% 
+        ungroup() %>% 
         unnest(emotion, names_repair = "universal")
 ```
