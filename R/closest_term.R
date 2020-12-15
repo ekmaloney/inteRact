@@ -41,7 +41,8 @@ closest_term <- function(e, p, a,
                     ssd = sum(d_e_s, d_p_s, d_a_s)) %>%
               ungroup() %>%
               filter(ssd < max_dist) %>%
-              arrange(ssd)
+              arrange(ssd) %>%
+              select(term, E, P, A, ssd)
 
     return(terms)
 }

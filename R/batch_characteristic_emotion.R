@@ -7,14 +7,14 @@
 #' @export
 #'
 #' @examples
-batch_characteristic_emotion <- function(df){
-      df <- df %>%
+batch_characteristic_emotion <- function(var){
+      df <- tibble(term = var) %>%
             dplyr::rowwise() %>%
-            dplyr::mutate(char_e = characteristic_emotion(term),
-                   char_e_E = char_e$E,
-                   char_e_P = char_e$P,
-                   char_e_A = char_e$A) %>%
-            dplyr::select(term, E, P, A, type, country, year, char_e_E, char_e_P, char_e_A)
+            dplyr::mutate(char_e = list(characteristic_emotion(term))) %>%
+            unnest(col = char_e) %>%
+            dplyr::ungroup() %>%
+            dplyr::mutate(dimension = rep(c("E", "P", "A"), length(var))) %>%
+            tidyr::pivot_wider(names_from = dimension, values_from = char_e)
 
       return(df)
 }
