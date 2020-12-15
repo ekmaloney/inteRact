@@ -1,0 +1,125 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# inteRact
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+The goal of inteRact is to make affect control theory (ACT) equations accessible to a broader audience of social scientists. Information about ACT as a theory can be accessed here: https://research.franklin.uga.edu/act/ 
+
+## Installation
+
+You can install the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("ekmaloney/inteRact")
+```
+## Example Analysis 
+
+The following analysis is an example of how to use this package to implement ACT equations in your work. There are two versions of every function: single and batch. The single version takes in a single event and the batch takes in a dataframe of many events to make it easier to calculate the concept of interest for many events at once. 
+
+First, for any analysis you do, you need to ensure that the identities, behaviors, and modifiers that you study are measured in the ACT dictionary. inteRact includes the US dictionary that was measured in 2015 as the default dictionary (us_2015_full) and uses the US equations as default for calculations. 
+
+Future versions will allow you to upload your own dictionaries and use them in calculations. 
+
+First, the following code samples 20 identities and 10 behaviors to create a 10 event dataframe for the analysis. 
+
+```{r example}
+library(inteRact)
+library(kableExtra)
+library(knitr)
+library(tibble)
+library(tidyverse)
+
+#load US dictionary 
+data("us_2015_full")
+
+#make a dataframe of events 
+set.seed(814)
+events <- tibble(actor = sample(us_2015_full$term[us_2015_full$type == "identity"], 10),
+                 behavior = sample(us_2015_full$term[us_2015_full$type == "behavior"], 10),
+                 object = sample(us_2015_full$term[us_2015_full$type == "identity"], 10))
+
+kable(events, caption = "Sample Events for Analysis")
+```
+
+### Deflection 
+
+To calculate deflection for a single event, you can use the function *calc_deflection*, which has 4 arguments: actor, behavior, object (all character strings), and dictionary (set to US currently). To calculate deflection for a series of events, you can use the function *batch_deflection* which has 1 argument: a dataframe with an actor, behavior, and object column (must be named that). For example, to find the deflection of `r print(paste(events$actor[1], " ", events$behavior[1], "s", " ", events$object[1], sep = ""))` you would do the following: 
+
+```{r}
+calc_deflection("brute", "work", "cook")
+```
+
+To calculate the deflection of all of the events in the sample events dataframe, you would do the following: 
+```{r}
+batch_deflection(events)
+
+```
+This is mainly a convenience function - if you are interested in seeing the code behind it, this is how you could do it outside of the batch function: 
+```{r}
+events %>%
+  rowwise() %>%
+  mutate(deflection = calc_deflection(actor, behavior, object),
+         deflection = deflection$d)
+```
+
+### Element Deflection 
+
+Additionally, you can see which elements contribute the most to the overall deflection by using the *element_deflection* function, as below. This returns a dataframe that includes each element's fundamental sentiment, the corresponding transient impression, the difference between the two, and the squared difference. In this way, you can see which element moved the most in EPA space after an event. In the case of brute works cook, the most deflection element-dimension is the Power of the Object (cook) followed by the Evaluation of the Actor (brute), 
+
+```{r}
+kable(element_deflection("brute", "work", "cook"), digits = 3)
+```
+
+Again, you can do this for an entire dataframe using *batch_element_deflection*: 
+```{r}
+elem_def <- batch_element_deflection(events)
+elem_def 
+```
+Following this, you can look at how different elements contribute to the overall deflection across your events: 
+```{r}
+ggplot(data = elem_def, mapping = aes(x = sqd_diff)) + 
+      geom_histogram(binwidth = 0.5) + facet_grid(dimension ~ element) + 
+      theme_minimal() + labs(x = "Squared Difference between Fundamental and Transient")
+```
+
+### Optimal Behavior 
+
+```{r}
+beh <- optimal_behavior("brute", "work", "cook")
+beh
+```
+
+### Closest Term 
+```{r}
+closest_term(beh$E, beh$P, beh$A, term_typ = "behavior", max_dist = 1)
+
+closest_term(beh$E, beh$P, beh$A, term_typ = "behavior", max_dist = 0.5)
+```
+### Characteristic Emotion 
+```{r}
+ce <- characteristic_emotion("brute")
+ce
+
+closest_term(ce$E, ce$P, ce$A, term_typ = "modifier", max_dist = 1)
+```
+
+```{r}
+batch_characteristic_emotion(events$actor)
+```
+
