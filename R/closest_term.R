@@ -42,7 +42,11 @@ closest_term <- function(e, p, a,
               ungroup() %>%
               filter(ssd < max_dist) %>%
               arrange(ssd) %>%
-              select(term, E, P, A, ssd)
+              mutate(term_name = term,
+                     term_E = E,
+                     term_P = P,
+                     term_A = A) %>%
+              select(term_name, term_E, term_P, term_A, ssd)
 
     return(terms)
 }

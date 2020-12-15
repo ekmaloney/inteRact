@@ -57,10 +57,6 @@ characteristic_emotion <- function(id){
 
     char_e <- solve(term1, term2)
 
-    char_e <- tibble(E = char_e[1],
-                     P = char_e[2],
-                     A = char_e[3])
-
     return(char_e)
 
 }
