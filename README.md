@@ -8,9 +8,24 @@
 <!-- badges: end -->
 
 The goal of inteRact is to make affect control theory (ACT) equations
-accessible to a broader audience of social scientists. Information about
-ACT as a theory can be accessed here:
-<https://research.franklin.uga.edu/act/>
+accessible to a broader audience of social scientists.
+
+ACT is a theory of social behavior that hinges on the control principle
+of people acting in ways to confirm cultural meaning. ACT theoretical
+concepts have been used fruitfully in recent research within cultural
+sociology (Hunzaker 2014, 2018), stratification and occupational
+research (Freeland and Hoey 2018), social movements research (shuster
+and Campos-Castillo. 2017), gender and victimization (Boyle and McKinzie
+2015; Boyle and Walker 2016). Information about ACT as a theory can be
+accessed here: <https://research.franklin.uga.edu/act/>
+
+The goal of this package is to make elements of typical ACT analyses
+easier to implement into R: calculating the deflection of an event, the
+optimal behavior of an actor after an event, the relabeling of the actor
+or object after an event, and calculating emotions within events. You
+can look within the functions to see how the equations were programmed,
+but to truly get a handle on the equations and how they work, I refer
+you to Expressive Order (Heise 2010).
 
 ## Installation
 
@@ -981,14 +996,4 @@ closest_term(ce[1], ce[2], ce[3], term_typ = "modifier", max_dist = 1)
 #> 1 domi… -1.36  2.29  1.45 -1.36  2.29  1.45 modi… US       2015 0.0361 -0.757
 #> # … with 5 more variables: d_a$A <dbl>, d_e_s$E <dbl>, d_p_s$P <dbl>,
 #> #   d_a_s$A <dbl>, ssd <dbl>
-```
-
-``` r
-char_e <- batch_characteristic_emotion(events$actor)
-
-char_e %>% 
-        dplyr::rowwise() %>% 
-        mutate(emotion = list(closest_term(E, P, A, term_typ = "modifier"))) %>% 
-        ungroup() %>% 
-        unnest(emotion, names_repair = "universal")
 ```
