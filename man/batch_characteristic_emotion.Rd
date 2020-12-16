@@ -4,10 +4,12 @@
 \alias{batch_characteristic_emotion}
 \title{Batch Characteristic Emotion}
 \usage{
-batch_characteristic_emotion(df)
+batch_characteristic_emotion(df, var)
 }
 \arguments{
 \item{df}{dataframe with a variable called term that corresponds to identities you want characteristic emotions for}
+
+\item{var}{the name of the variable containing your identities}
 }
 \value{
 df with 3 new variables: characteristic emotion E, P, and A
