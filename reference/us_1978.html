@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Batch Characteristic Emotion — batch_characteristic_emotion • inteRact</title>
+<title>US 1978 Male Equations — us_1978 • inteRact</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,10 @@
 
 
 
-<meta property="og:title" content="Batch Characteristic Emotion — batch_characteristic_emotion" />
-<meta property="og:description" content="Batch Characteristic Emotion" />
+<meta property="og:title" content="US 1978 Male Equations — us_1978" />
+<meta property="og:description" content="A dataframe of the coefficients for the impression formation equations that was estimated in 1978.
+A new version of the equations are currently being estimated. When this has been completed, the new
+dataframe will be added to this package." />
 
 
 
@@ -108,33 +110,54 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Batch Characteristic Emotion</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/batch_characteristic_emotion.R'><code>R/batch_characteristic_emotion.R</code></a></small>
-    <div class="hidden name"><code>batch_characteristic_emotion.Rd</code></div>
+    <h1>US 1978 Male Equations</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/data.R'><code>R/data.R</code></a></small>
+    <div class="hidden name"><code>us_1978.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Batch Characteristic Emotion</p>
+    <p>A dataframe of the coefficients for the impression formation equations that was estimated in 1978.
+A new version of the equations are currently being estimated. When this has been completed, the new
+dataframe will be added to this package.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>batch_characteristic_emotion</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>var</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='va'>us_1978</span></pre>
 
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>df</th>
-      <td><p>dataframe with a variable called term that corresponds to identities you want characteristic emotions for</p></td>
-    </tr>
-    <tr>
-      <th>var</th>
-      <td><p>the name of the variable containing your identities</p></td>
-    </tr>
-    </table>
 
-    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+    <h2 class="hasAnchor" id="format"><a class="anchor" href="#format"></a>Format</h2>
 
-    <p>df with 3 new variables: characteristic emotion E, P, and A</p>
+    <p>A data frame with 20 rows and 22 variables:</p><dl>
+<dt>coef_name</dt><dd><p>indicator of what elements the beta is related to</p></dd>
+<dt>postAE</dt><dd><p>coefficients to estimate the transient impression of the Actor's Evaluation</p></dd>
+<dt>postAP</dt><dd><p>point coefficients to estimate the transient impression of the Actor's Potency</p></dd>
+<dt>postAA</dt><dd><p>point coefficients to estimate the transient impression of the Actor's Activity</p></dd>
+<dt>postBE</dt><dd><p>point coefficients to estimate the transient impression of the Behavior's Evaluation</p></dd>
+<dt>postBP</dt><dd><p>point coefficients to estimate the transient impression of the Behavior's Potency</p></dd>
+<dt>postBA</dt><dd><p>point coefficients to estimate the transient impression of the Behavior's Activity</p></dd>
+<dt>postOE</dt><dd><p>point coefficients to estimate the transient impression of the Object's Evaluation</p></dd>
+<dt>postOP</dt><dd><p>point coefficients to estimate the transient impression of the Object's Potency</p></dd>
+<dt>postOA</dt><dd><p>point coefficients to estimate the transient impression of the Object's Activity</p></dd>
+<dt>A</dt><dd><p>splitting apart Z into element A</p></dd>
+<dt>B</dt><dd><p>splitting apart Z into element B</p></dd>
+<dt>O</dt><dd><p>splitting apart Z into element O</p></dd>
+<dt>AE</dt><dd><p>1 or 0 indicator whether AE is involved in estimation</p></dd>
+<dt>AP</dt><dd><p>1 or 0 indicator whether AP is involved in estimation</p></dd>
+<dt>AA</dt><dd><p>1 or 0 indicator whether AA is involved in estimation</p></dd>
+<dt>BE</dt><dd><p>1 or 0 indicator whether BE is involved in estimation</p></dd>
+<dt>BP</dt><dd><p>1 or 0 indicator whether BP is involved in estimation</p></dd>
+<dt>BA</dt><dd><p>1 or 0 indicator whether BA is involved in estimation</p></dd>
+<dt>OE</dt><dd><p>1 or 0 indicator whether OE is involved in estimation</p></dd>
+<dt>OP</dt><dd><p>1 or 0 indicator whether OP is involved in estimation</p></dd>
+<dt>OA</dt><dd><p>1 or 0 indicator whether OA is involved in estimation</p></dd>
+
+</dl>
+
+    <h2 class="hasAnchor" id="source"><a class="anchor" href="#source"></a>Source</h2>
+
+    <p><a href='http://www.tandfonline.com/doi/pdf/10.1080/0022250X.1987.9990026'>http://www.tandfonline.com/doi/pdf/10.1080/0022250X.1987.9990026</a></p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>Please cite as:&lt;FIGURE THIS OUT&gt;</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
