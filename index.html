@@ -39,7 +39,7 @@
       <ul class="nav navbar-nav">
 <li>
   <a href="index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -50,7 +50,7 @@
 <ul class="nav navbar-nav navbar-right">
 <li>
   <a href="https://github.com/ekmaloney/inteRact/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -85,10 +85,10 @@
 <div id="example-analysis" class="section level2">
 <h2 class="hasAnchor">
 <a href="#example-analysis" class="anchor"></a>Example Analysis</h2>
-<p>The following analysis is an example of how to use this package to implement ACT equations in your work. There are two versions of every function: single and batch. The single version takes in a single event and the batch takes in a dataframe of many events to make it easier to calculate the concept of interest for many events at once.</p>
+<p>The following analysis is an example of how to use this package to implement ACT equations in your work. Functions can be applied to either a single event or a dataframe of events, to make analyzing a larger number of situations easier.</p>
 <p>First, for any analysis you do, you need to ensure that the identities, behaviors, and modifiers that you study are measured in the ACT dictionary. inteRact includes the US dictionary that was measured in 2015 as the default dictionary (us_2015_full) and uses the US equations as default for calculations.</p>
 <p>Future versions will allow you to upload your own dictionaries and use them in calculations.</p>
-<p>First, the following code samples 20 identities and 10 behaviors to create a 10 event dataframe for the analysis.</p>
+<p>The following code samples 20 identities and 10 behaviors to create a 10 event dataframe for the analysis.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/ekmaloney/inteRact">inteRact</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">kableExtra</span><span class="op">)</span>
@@ -96,9 +96,9 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va">tidyverse</span><span class="op">)</span>
 <span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</span>
-<span class="co">#&gt; ✓ ggplot2 3.3.2     ✓ dplyr   1.0.2</span>
-<span class="co">#&gt; ✓ tidyr   1.1.2     ✓ stringr 1.4.0</span>
-<span class="co">#&gt; ✓ readr   1.4.0     ✓ forcats 0.5.0</span>
+<span class="co">#&gt; ✓ ggplot2 3.3.3     ✓ dplyr   1.0.5</span>
+<span class="co">#&gt; ✓ tidyr   1.1.3     ✓ stringr 1.4.0</span>
+<span class="co">#&gt; ✓ readr   1.4.0     ✓ forcats 0.5.1</span>
 <span class="co">#&gt; ✓ purrr   0.3.4</span>
 <span class="co">#&gt; ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──</span>
 <span class="co">#&gt; x dplyr::filter()     masks stats::filter()</span>
@@ -248,54 +248,181 @@
 <a href="#deflection" class="anchor"></a>Deflection</h3>
 <p>To calculate deflection for a single event, you can use the function <em>calc_deflection</em>, which has 4 arguments: actor, behavior, object (all character strings), and dictionary (set to US currently). To calculate deflection for a series of events, you can use the function <em>batch_deflection</em> which has 1 argument: a dataframe with an actor, behavior, and object column (must be named that). For example, to find the deflection of you would do the following:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/calc_deflection.html">calc_deflection</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 1</span>
-<span class="co">#&gt;       d</span>
-<span class="co">#&gt;   &lt;dbl&gt;</span>
-<span class="co">#&gt; 1  3.91</span></code></pre></div>
+<code class="sourceCode R"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_deflection.html">get_deflection</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>
+<span class="co">#&gt; $brute.d</span>
+<span class="co">#&gt; [1] 3.905718</span></code></pre></div>
 <p>To calculate the deflection of all of the events in the sample events dataframe, you would do the following:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/batch_deflection.html">batch_deflection</a></span><span class="op">(</span><span class="va">events</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt; # Rowwise: </span>
-<span class="co">#&gt;    actor              behavior        object           deflection$d</span>
-<span class="co">#&gt;    &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt;                   &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 brute              work            cook                     3.91</span>
-<span class="co">#&gt;  2 dolt               say_farewell_to executioner              3.51</span>
-<span class="co">#&gt;  3 husband            suck_up_to      trainee                 10.5 </span>
-<span class="co">#&gt;  4 sheet_metal_worker debate_with     junkie                   3.43</span>
-<span class="co">#&gt;  5 hindu              beg             lout                     5.02</span>
-<span class="co">#&gt;  6 casual_laborer     deprecate       bailiff                  7.20</span>
-<span class="co">#&gt;  7 housebreaker       implicate       welder                   2.25</span>
-<span class="co">#&gt;  8 addict             suspect         assistant                3.94</span>
-<span class="co">#&gt;  9 millionaire        shock           machine_repairer         4.07</span>
-<span class="co">#&gt; 10 hothead            refuse          blind_person             2.71</span></code></pre></div>
-<p>This is mainly a convenience function - if you are interested in seeing the code behind it, this is how you could do it outside of the batch function:</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">events</span> <span class="op">%&gt;%</span>
-  <span class="fu">rowwise</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-  <span class="fu">mutate</span><span class="op">(</span>deflection <span class="op">=</span> <span class="fu"><a href="reference/calc_deflection.html">calc_deflection</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span><span class="op">)</span>,
-         deflection <span class="op">=</span> <span class="va">deflection</span><span class="op">$</span><span class="va">d</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 10 x 4</span>
-<span class="co">#&gt; # Rowwise: </span>
-<span class="co">#&gt;    actor              behavior        object           deflection</span>
-<span class="co">#&gt;    &lt;chr&gt;              &lt;chr&gt;           &lt;chr&gt;                 &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 brute              work            cook                   3.91</span>
-<span class="co">#&gt;  2 dolt               say_farewell_to executioner            3.51</span>
-<span class="co">#&gt;  3 husband            suck_up_to      trainee               10.5 </span>
-<span class="co">#&gt;  4 sheet_metal_worker debate_with     junkie                 3.43</span>
-<span class="co">#&gt;  5 hindu              beg             lout                   5.02</span>
-<span class="co">#&gt;  6 casual_laborer     deprecate       bailiff                7.20</span>
-<span class="co">#&gt;  7 housebreaker       implicate       welder                 2.25</span>
-<span class="co">#&gt;  8 addict             suspect         assistant              3.94</span>
-<span class="co">#&gt;  9 millionaire        shock           machine_repairer       4.07</span>
-<span class="co">#&gt; 10 hothead            refuse          blind_person           2.71</span></code></pre></div>
+<code class="sourceCode R">
+<span class="va">events</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>d <span class="op">=</span> <span class="fu"><a href="reference/get_deflection.html">get_deflection</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span><span class="op">)</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">events</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+<p>actor</p>
+</th>
+<th style="text-align:left;">
+<p>behavior</p>
+</th>
+<th style="text-align:left;">
+<p>object</p>
+</th>
+<th style="text-align:left;">
+<p>d</p>
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 <div id="element-deflection" class="section level3">
 <h3 class="hasAnchor">
 <a href="#element-deflection" class="anchor"></a>Element Deflection</h3>
 <p>Additionally, you can see which elements contribute the most to the overall deflection by using the <em>element_deflection</em> function, as below. This returns a dataframe that includes each element’s fundamental sentiment, the corresponding transient impression, the difference between the two, and the squared difference. In this way, you can see which element moved the most in EPA space after an event. In the case of brute works cook, the most deflection element-dimension is the Power of the Object (cook) followed by the Evaluation of the Actor (brute),</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="reference/element_deflection.html">element_deflection</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
@@ -531,35 +658,3216 @@
 </tr>
 </tbody>
 </table>
-<p>Again, you can do this for an entire dataframe using <em>batch_element_deflection</em>:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">elem_def</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/batch_element_deflection.html">batch_element_deflection</a></span><span class="op">(</span><span class="va">events</span><span class="op">)</span>
-<span class="va">elem_def</span> 
-<span class="co">#&gt; # A tibble: 90 x 10</span>
-<span class="co">#&gt;    actor behavior object term  element dimension fundamental_sen… trans_imp</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;chr&gt;    &lt;chr&gt;  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;                &lt;dbl&gt;     &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 brute work     cook   brute A       E                    -1.97    -1.18 </span>
-<span class="co">#&gt;  2 brute work     cook   brute A       P                     1.74     1.57 </span>
-<span class="co">#&gt;  3 brute work     cook   brute A       A                     1.44     1.15 </span>
-<span class="co">#&gt;  4 brute work     cook   work  B       E                     0.27    -0.346</span>
-<span class="co">#&gt;  5 brute work     cook   work  B       P                     1.51     1.46 </span>
-<span class="co">#&gt;  6 brute work     cook   work  B       A                     0.99     0.999</span>
-<span class="co">#&gt;  7 brute work     cook   cook  O       E                     2.24     1.24 </span>
-<span class="co">#&gt;  8 brute work     cook   cook  O       P                     1.69     0.464</span>
-<span class="co">#&gt;  9 brute work     cook   cook  O       A                     1.58     1.05 </span>
-<span class="co">#&gt; 10 dolt  say_far… execu… dolt  A       E                    -0.97    -0.519</span>
-<span class="co">#&gt; # … with 80 more rows, and 2 more variables: difference &lt;dbl&gt;, sqd_diff &lt;dbl&gt;</span></code></pre></div>
+<p>You can do this for an entire dataframe with a little bit of nesting, as follows:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">elem_def</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span>
+            <span class="fu">rowwise</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            <span class="fu">mutate</span><span class="op">(</span>el_def <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="reference/element_deflection.html">element_deflection</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            <span class="fu">unnest</span><span class="op">(</span><span class="va">el_def</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">elem_def</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+<p>actor</p>
+</th>
+<th style="text-align:left;">
+<p>behavior</p>
+</th>
+<th style="text-align:left;">
+<p>object</p>
+</th>
+<th style="text-align:left;">
+<p>d</p>
+</th>
+<th style="text-align:left;">
+<p>term</p>
+</th>
+<th style="text-align:left;">
+<p>element</p>
+</th>
+<th style="text-align:left;">
+<p>dimension</p>
+</th>
+<th style="text-align:right;">
+<p>fundamental_sentiment</p>
+</th>
+<th style="text-align:right;">
+<p>trans_imp</p>
+</th>
+<th style="text-align:right;">
+<p>difference</p>
+</th>
+<th style="text-align:right;">
+<p>sqd_diff</p>
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-1.97</p>
+</td>
+<td style="text-align:right;">
+<p>-1.1784985</p>
+</td>
+<td style="text-align:right;">
+<p>-0.7915015</p>
+</td>
+<td style="text-align:right;">
+<p>0.6264747</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.74</p>
+</td>
+<td style="text-align:right;">
+<p>1.5705780</p>
+</td>
+<td style="text-align:right;">
+<p>0.1694220</p>
+</td>
+<td style="text-align:right;">
+<p>0.0287038</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>1.44</p>
+</td>
+<td style="text-align:right;">
+<p>1.1484640</p>
+</td>
+<td style="text-align:right;">
+<p>0.2915360</p>
+</td>
+<td style="text-align:right;">
+<p>0.0849932</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.27</p>
+</td>
+<td style="text-align:right;">
+<p>-0.3456641</p>
+</td>
+<td style="text-align:right;">
+<p>0.6156641</p>
+</td>
+<td style="text-align:right;">
+<p>0.3790423</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.51</p>
+</td>
+<td style="text-align:right;">
+<p>1.4572250</p>
+</td>
+<td style="text-align:right;">
+<p>0.0527750</p>
+</td>
+<td style="text-align:right;">
+<p>0.0027852</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.99</p>
+</td>
+<td style="text-align:right;">
+<p>0.9994000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0094000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0000884</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>2.24</p>
+</td>
+<td style="text-align:right;">
+<p>1.2402630</p>
+</td>
+<td style="text-align:right;">
+<p>0.9997370</p>
+</td>
+<td style="text-align:right;">
+<p>0.9994741</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.69</p>
+</td>
+<td style="text-align:right;">
+<p>0.4635380</p>
+</td>
+<td style="text-align:right;">
+<p>1.2264620</p>
+</td>
+<td style="text-align:right;">
+<p>1.5042090</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>1.58</p>
+</td>
+<td style="text-align:right;">
+<p>1.0509000</p>
+</td>
+<td style="text-align:right;">
+<p>0.5291000</p>
+</td>
+<td style="text-align:right;">
+<p>0.2799468</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-0.97</p>
+</td>
+<td style="text-align:right;">
+<p>-0.5193836</p>
+</td>
+<td style="text-align:right;">
+<p>-0.4506164</p>
+</td>
+<td style="text-align:right;">
+<p>0.2030551</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-1.41</p>
+</td>
+<td style="text-align:right;">
+<p>-0.6078640</p>
+</td>
+<td style="text-align:right;">
+<p>-0.8021360</p>
+</td>
+<td style="text-align:right;">
+<p>0.6434222</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-1.00</p>
+</td>
+<td style="text-align:right;">
+<p>-0.8432000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.1568000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0245862</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-0.28</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0892146</p>
+</td>
+<td style="text-align:right;">
+<p>-0.1907854</p>
+</td>
+<td style="text-align:right;">
+<p>0.0363991</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.76</p>
+</td>
+<td style="text-align:right;">
+<p>0.3949840</p>
+</td>
+<td style="text-align:right;">
+<p>0.3650160</p>
+</td>
+<td style="text-align:right;">
+<p>0.1332367</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-0.89</p>
+</td>
+<td style="text-align:right;">
+<p>-0.6756000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.2144000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0459674</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-1.77</p>
+</td>
+<td style="text-align:right;">
+<p>-1.1446720</p>
+</td>
+<td style="text-align:right;">
+<p>-0.6253280</p>
+</td>
+<td style="text-align:right;">
+<p>0.3910351</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>2.77</p>
+</td>
+<td style="text-align:right;">
+<p>1.3696400</p>
+</td>
+<td style="text-align:right;">
+<p>1.4003600</p>
+</td>
+<td style="text-align:right;">
+<p>1.9610081</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.25</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0122000</p>
+</td>
+<td style="text-align:right;">
+<p>0.2622000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0687488</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>1.95</p>
+</td>
+<td style="text-align:right;">
+<p>-0.7791492</p>
+</td>
+<td style="text-align:right;">
+<p>2.7291492</p>
+</td>
+<td style="text-align:right;">
+<p>7.4482554</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.64</p>
+</td>
+<td style="text-align:right;">
+<p>0.4789640</p>
+</td>
+<td style="text-align:right;">
+<p>1.1610360</p>
+</td>
+<td style="text-align:right;">
+<p>1.3480046</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.38</p>
+</td>
+<td style="text-align:right;">
+<p>0.6974840</p>
+</td>
+<td style="text-align:right;">
+<p>-0.3174840</p>
+</td>
+<td style="text-align:right;">
+<p>0.1007961</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-1.52</p>
+</td>
+<td style="text-align:right;">
+<p>-1.1916104</p>
+</td>
+<td style="text-align:right;">
+<p>-0.3283896</p>
+</td>
+<td style="text-align:right;">
+<p>0.1078397</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-1.37</p>
+</td>
+<td style="text-align:right;">
+<p>-0.4965680</p>
+</td>
+<td style="text-align:right;">
+<p>-0.8734320</p>
+</td>
+<td style="text-align:right;">
+<p>0.7628835</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.47</p>
+</td>
+<td style="text-align:right;">
+<p>0.3932000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0768000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0058982</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.88</p>
+</td>
+<td style="text-align:right;">
+<p>0.1347440</p>
+</td>
+<td style="text-align:right;">
+<p>0.7452560</p>
+</td>
+<td style="text-align:right;">
+<p>0.5554065</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-1.42</p>
+</td>
+<td style="text-align:right;">
+<p>-1.6165460</p>
+</td>
+<td style="text-align:right;">
+<p>0.1965460</p>
+</td>
+<td style="text-align:right;">
+<p>0.0386303</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-0.62</p>
+</td>
+<td style="text-align:right;">
+<p>-0.3222000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.2978000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0886848</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.91</p>
+</td>
+<td style="text-align:right;">
+<p>0.1776507</p>
+</td>
+<td style="text-align:right;">
+<p>0.7323493</p>
+</td>
+<td style="text-align:right;">
+<p>0.5363355</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.31</p>
+</td>
+<td style="text-align:right;">
+<p>0.6883350</p>
+</td>
+<td style="text-align:right;">
+<p>-0.3783350</p>
+</td>
+<td style="text-align:right;">
+<p>0.1431374</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>1.15</p>
+</td>
+<td style="text-align:right;">
+<p>1.2525100</p>
+</td>
+<td style="text-align:right;">
+<p>-0.1025100</p>
+</td>
+<td style="text-align:right;">
+<p>0.0105083</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>1.15</p>
+</td>
+<td style="text-align:right;">
+<p>0.0807570</p>
+</td>
+<td style="text-align:right;">
+<p>1.0692430</p>
+</td>
+<td style="text-align:right;">
+<p>1.1432806</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.73</p>
+</td>
+<td style="text-align:right;">
+<p>1.0257150</p>
+</td>
+<td style="text-align:right;">
+<p>0.7042850</p>
+</td>
+<td style="text-align:right;">
+<p>0.4960174</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>1.81</p>
+</td>
+<td style="text-align:right;">
+<p>1.6245000</p>
+</td>
+<td style="text-align:right;">
+<p>0.1855000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0344102</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-2.10</p>
+</td>
+<td style="text-align:right;">
+<p>-1.2219150</p>
+</td>
+<td style="text-align:right;">
+<p>-0.8780850</p>
+</td>
+<td style="text-align:right;">
+<p>0.7710333</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-2.04</p>
+</td>
+<td style="text-align:right;">
+<p>-1.5008700</p>
+</td>
+<td style="text-align:right;">
+<p>-0.5391300</p>
+</td>
+<td style="text-align:right;">
+<p>0.2906612</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-0.04</p>
+</td>
+<td style="text-align:right;">
+<p>0.0556000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0956000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0091394</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.76</p>
+</td>
+<td style="text-align:right;">
+<p>-0.6721397</p>
+</td>
+<td style="text-align:right;">
+<p>1.4321397</p>
+</td>
+<td style="text-align:right;">
+<p>2.0510241</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.14</p>
+</td>
+<td style="text-align:right;">
+<p>-0.8492180</p>
+</td>
+<td style="text-align:right;">
+<p>0.9892180</p>
+</td>
+<td style="text-align:right;">
+<p>0.9785523</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-0.66</p>
+</td>
+<td style="text-align:right;">
+<p>0.0844160</p>
+</td>
+<td style="text-align:right;">
+<p>-0.7444160</p>
+</td>
+<td style="text-align:right;">
+<p>0.5541552</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-1.58</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9170182</p>
+</td>
+<td style="text-align:right;">
+<p>-0.6629818</p>
+</td>
+<td style="text-align:right;">
+<p>0.4395449</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-2.02</p>
+</td>
+<td style="text-align:right;">
+<p>-1.1243820</p>
+</td>
+<td style="text-align:right;">
+<p>-0.8956180</p>
+</td>
+<td style="text-align:right;">
+<p>0.8021316</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.71</p>
+</td>
+<td style="text-align:right;">
+<p>0.3298000</p>
+</td>
+<td style="text-align:right;">
+<p>0.3802000</p>
+</td>
+<td style="text-align:right;">
+<p>0.1445520</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-0.99</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9187500</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0712500</p>
+</td>
+<td style="text-align:right;">
+<p>0.0050766</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-0.34</p>
+</td>
+<td style="text-align:right;">
+<p>-0.5430980</p>
+</td>
+<td style="text-align:right;">
+<p>0.2030980</p>
+</td>
+<td style="text-align:right;">
+<p>0.0412488</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.08</p>
+</td>
+<td style="text-align:right;">
+<p>0.0285000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0515000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0026522</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.77</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9140124</p>
+</td>
+<td style="text-align:right;">
+<p>1.6840124</p>
+</td>
+<td style="text-align:right;">
+<p>2.8358978</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-0.42</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0819800</p>
+</td>
+<td style="text-align:right;">
+<p>-0.3380200</p>
+</td>
+<td style="text-align:right;">
+<p>0.1142575</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-0.05</p>
+</td>
+<td style="text-align:right;">
+<p>0.4427200</p>
+</td>
+<td style="text-align:right;">
+<p>-0.4927200</p>
+</td>
+<td style="text-align:right;">
+<p>0.2427730</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-2.30</p>
+</td>
+<td style="text-align:right;">
+<p>-1.3419544</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9580456</p>
+</td>
+<td style="text-align:right;">
+<p>0.9178514</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.18</p>
+</td>
+<td style="text-align:right;">
+<p>0.3876100</p>
+</td>
+<td style="text-align:right;">
+<p>-0.2076100</p>
+</td>
+<td style="text-align:right;">
+<p>0.0431019</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.54</p>
+</td>
+<td style="text-align:right;">
+<p>0.3907000</p>
+</td>
+<td style="text-align:right;">
+<p>0.1493000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0222905</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.72</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0440580</p>
+</td>
+<td style="text-align:right;">
+<p>0.7640580</p>
+</td>
+<td style="text-align:right;">
+<p>0.5837846</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.56</p>
+</td>
+<td style="text-align:right;">
+<p>0.0038400</p>
+</td>
+<td style="text-align:right;">
+<p>1.5561600</p>
+</td>
+<td style="text-align:right;">
+<p>2.4216339</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.10</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0164000</p>
+</td>
+<td style="text-align:right;">
+<p>0.1164000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0135490</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-2.82</p>
+</td>
+<td style="text-align:right;">
+<p>-1.7520233</p>
+</td>
+<td style="text-align:right;">
+<p>-1.0679767</p>
+</td>
+<td style="text-align:right;">
+<p>1.1405743</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.84</p>
+</td>
+<td style="text-align:right;">
+<p>0.8021120</p>
+</td>
+<td style="text-align:right;">
+<p>0.0378880</p>
+</td>
+<td style="text-align:right;">
+<p>0.0014355</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.74</p>
+</td>
+<td style="text-align:right;">
+<p>0.6477120</p>
+</td>
+<td style="text-align:right;">
+<p>0.0922880</p>
+</td>
+<td style="text-align:right;">
+<p>0.0085171</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-0.79</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9885955</p>
+</td>
+<td style="text-align:right;">
+<p>0.1985955</p>
+</td>
+<td style="text-align:right;">
+<p>0.0394402</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.76</p>
+</td>
+<td style="text-align:right;">
+<p>0.8622740</p>
+</td>
+<td style="text-align:right;">
+<p>-0.1022740</p>
+</td>
+<td style="text-align:right;">
+<p>0.0104600</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.52</p>
+</td>
+<td style="text-align:right;">
+<p>0.5042000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0158000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0002496</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.92</p>
+</td>
+<td style="text-align:right;">
+<p>0.4074860</p>
+</td>
+<td style="text-align:right;">
+<p>0.5125140</p>
+</td>
+<td style="text-align:right;">
+<p>0.2626706</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.51</p>
+</td>
+<td style="text-align:right;">
+<p>-0.3244710</p>
+</td>
+<td style="text-align:right;">
+<p>0.8344710</p>
+</td>
+<td style="text-align:right;">
+<p>0.6963418</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.88</p>
+</td>
+<td style="text-align:right;">
+<p>0.5871000</p>
+</td>
+<td style="text-align:right;">
+<p>0.2929000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0857904</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-2.23</p>
+</td>
+<td style="text-align:right;">
+<p>-1.4536101</p>
+</td>
+<td style="text-align:right;">
+<p>-0.7763899</p>
+</td>
+<td style="text-align:right;">
+<p>0.6027813</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-2.36</p>
+</td>
+<td style="text-align:right;">
+<p>-1.0012660</p>
+</td>
+<td style="text-align:right;">
+<p>-1.3587340</p>
+</td>
+<td style="text-align:right;">
+<p>1.8461581</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.19</p>
+</td>
+<td style="text-align:right;">
+<p>0.0317540</p>
+</td>
+<td style="text-align:right;">
+<p>0.1582460</p>
+</td>
+<td style="text-align:right;">
+<p>0.0250418</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-0.86</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9284364</p>
+</td>
+<td style="text-align:right;">
+<p>0.0684364</p>
+</td>
+<td style="text-align:right;">
+<p>0.0046835</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>0.54</p>
+</td>
+<td style="text-align:right;">
+<p>0.1967200</p>
+</td>
+<td style="text-align:right;">
+<p>0.3432800</p>
+</td>
+<td style="text-align:right;">
+<p>0.1178412</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-0.61</p>
+</td>
+<td style="text-align:right;">
+<p>-0.1665000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.4435000</p>
+</td>
+<td style="text-align:right;">
+<p>0.1966922</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>1.51</p>
+</td>
+<td style="text-align:right;">
+<p>0.6991280</p>
+</td>
+<td style="text-align:right;">
+<p>0.8108720</p>
+</td>
+<td style="text-align:right;">
+<p>0.6575134</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-0.10</p>
+</td>
+<td style="text-align:right;">
+<p>-0.8011780</p>
+</td>
+<td style="text-align:right;">
+<p>0.7011780</p>
+</td>
+<td style="text-align:right;">
+<p>0.4916506</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.05</p>
+</td>
+<td style="text-align:right;">
+<p>0.0861000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.0361000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0013032</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.57</p>
+</td>
+<td style="text-align:right;">
+<p>-0.6074843</p>
+</td>
+<td style="text-align:right;">
+<p>1.1774843</p>
+</td>
+<td style="text-align:right;">
+<p>1.3864693</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>2.50</p>
+</td>
+<td style="text-align:right;">
+<p>1.9123160</p>
+</td>
+<td style="text-align:right;">
+<p>0.5876840</p>
+</td>
+<td style="text-align:right;">
+<p>0.3453725</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>1.09</p>
+</td>
+<td style="text-align:right;">
+<p>1.3095340</p>
+</td>
+<td style="text-align:right;">
+<p>-0.2195340</p>
+</td>
+<td style="text-align:right;">
+<p>0.0481952</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-0.69</p>
+</td>
+<td style="text-align:right;">
+<p>-0.7746998</p>
+</td>
+<td style="text-align:right;">
+<p>0.0846998</p>
+</td>
+<td style="text-align:right;">
+<p>0.0071740</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.44</p>
+</td>
+<td style="text-align:right;">
+<p>1.5766150</p>
+</td>
+<td style="text-align:right;">
+<p>-0.1366150</p>
+</td>
+<td style="text-align:right;">
+<p>0.0186637</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>1.79</p>
+</td>
+<td style="text-align:right;">
+<p>1.3837000</p>
+</td>
+<td style="text-align:right;">
+<p>0.4063000</p>
+</td>
+<td style="text-align:right;">
+<p>0.1650797</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>1.36</p>
+</td>
+<td style="text-align:right;">
+<p>0.5560130</p>
+</td>
+<td style="text-align:right;">
+<p>0.8039870</p>
+</td>
+<td style="text-align:right;">
+<p>0.6463951</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.02</p>
+</td>
+<td style="text-align:right;">
+<p>-0.1633060</p>
+</td>
+<td style="text-align:right;">
+<p>1.1833060</p>
+</td>
+<td style="text-align:right;">
+<p>1.4002131</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.68</p>
+</td>
+<td style="text-align:right;">
+<p>0.4448000</p>
+</td>
+<td style="text-align:right;">
+<p>0.2352000</p>
+</td>
+<td style="text-align:right;">
+<p>0.0553190</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-1.92</p>
+</td>
+<td style="text-align:right;">
+<p>-1.4910576</p>
+</td>
+<td style="text-align:right;">
+<p>-0.4289424</p>
+</td>
+<td style="text-align:right;">
+<p>0.1839916</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-0.42</p>
+</td>
+<td style="text-align:right;">
+<p>0.4915250</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9115250</p>
+</td>
+<td style="text-align:right;">
+<p>0.8308778</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>2.59</p>
+</td>
+<td style="text-align:right;">
+<p>1.8399440</p>
+</td>
+<td style="text-align:right;">
+<p>0.7500560</p>
+</td>
+<td style="text-align:right;">
+<p>0.5625840</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>-0.87</p>
+</td>
+<td style="text-align:right;">
+<p>-1.1084298</p>
+</td>
+<td style="text-align:right;">
+<p>0.2384298</p>
+</td>
+<td style="text-align:right;">
+<p>0.0568488</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>1.28</p>
+</td>
+<td style="text-align:right;">
+<p>1.0091390</p>
+</td>
+<td style="text-align:right;">
+<p>0.2708610</p>
+</td>
+<td style="text-align:right;">
+<p>0.0733657</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>B</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>0.64</p>
+</td>
+<td style="text-align:right;">
+<p>1.1709000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.5309000</p>
+</td>
+<td style="text-align:right;">
+<p>0.2818548</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>E</p>
+</td>
+<td style="text-align:right;">
+<p>0.65</p>
+</td>
+<td style="text-align:right;">
+<p>0.1477320</p>
+</td>
+<td style="text-align:right;">
+<p>0.5022680</p>
+</td>
+<td style="text-align:right;">
+<p>0.2522731</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>P</p>
+</td>
+<td style="text-align:right;">
+<p>-1.20</p>
+</td>
+<td style="text-align:right;">
+<p>-1.5266450</p>
+</td>
+<td style="text-align:right;">
+<p>0.3266450</p>
+</td>
+<td style="text-align:right;">
+<p>0.1066970</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>O</p>
+</td>
+<td style="text-align:left;">
+<p>A</p>
+</td>
+<td style="text-align:right;">
+<p>-1.52</p>
+</td>
+<td style="text-align:right;">
+<p>-0.9211000</p>
+</td>
+<td style="text-align:right;">
+<p>-0.5989000</p>
+</td>
+<td style="text-align:right;">
+<p>0.3586812</p>
+</td>
+</tr>
+</tbody>
+</table>
 <p>Following this, you can look at how different elements contribute to the overall deflection across your events:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">elem_def</span>, mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">sqd_diff</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> 
       <span class="fu">geom_histogram</span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span> <span class="op">+</span> <span class="fu">facet_grid</span><span class="op">(</span><span class="va">dimension</span> <span class="op">~</span> <span class="va">element</span><span class="op">)</span> <span class="op">+</span> 
       <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span> <span class="op">+</span> <span class="fu">labs</span><span class="op">(</span>x <span class="op">=</span> <span class="st">"Squared Difference between Fundamental and Transient"</span><span class="op">)</span></code></pre></div>
-<p><img src="reference/figures/README-unnamed-chunk-7-1.png" width="100%"></p>
+<p><img src="reference/figures/README-unnamed-chunk-6-1.png" width="100%"></p>
 </div>
 <div id="optimal-behavior" class="section level3">
 <h3 class="hasAnchor">
 <a href="#optimal-behavior" class="anchor"></a>Optimal Behavior</h3>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<p>ACT can also predict the optimal behavior for the actor to enact in the following interaction that would bring the transient sentiments back as close as possible to the fundamental sentiments. The function <em>optimal_behavior</em> finds the E, P, and A value for the optimal behavior</p>
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">beh</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimal_behavior.html">optimal_behavior</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span><span class="op">)</span>
 <span class="va">beh</span>
 <span class="co">#&gt; # A tibble: 1 x 3</span>
@@ -570,60 +3878,323 @@
 <div id="closest-term" class="section level3">
 <h3 class="hasAnchor">
 <a href="#closest-term" class="anchor"></a>Closest Term</h3>
-<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
+<p>To find the closest measured identity, modifier, or behavior to an EPA profile, you can use the function <em>closest_term</em> which has 5 arguments: the E, P, and A measurements, the type of term (identity, modifier, or behavior, and the maximum distance away in EPA units the term can be).</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="reference/closest_term.html">closest_term</a></span><span class="op">(</span><span class="va">beh</span><span class="op">$</span><span class="va">E</span>, <span class="va">beh</span><span class="op">$</span><span class="va">P</span>, <span class="va">beh</span><span class="op">$</span><span class="va">A</span>, term_typ <span class="op">=</span> <span class="st">"behavior"</span>, max_dist <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 45 x 17</span>
-<span class="co">#&gt;    term      E     P     A    E2    P2    A2 type  country  year      d_e</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 hagg… -0.26  0.84  1.59 -0.26  0.84  1.59 beha… US       2015 -0.150  </span>
-<span class="co">#&gt;  2 paro… -0.01  0.8   1.46 -0.01  0.8   1.46 beha… US       2015  0.0998 </span>
-<span class="co">#&gt;  3 prea…  0.33  1.09  1.58  0.33  1.09  1.58 beha… US       2015  0.440  </span>
-<span class="co">#&gt;  4 hurry -0.46  0.75  2.04 -0.46  0.75  2.04 beha… US       2015 -0.350  </span>
-<span class="co">#&gt;  5 disp… -0.1   1.32  1.54 -0.1   1.32  1.54 beha… US       2015  0.00978</span>
-<span class="co">#&gt;  6 dare  -0.53  0.86  1.24 -0.53  0.86  1.24 beha… US       2015 -0.420  </span>
-<span class="co">#&gt;  7 laug… -0.56  0.85  1.99 -0.56  0.85  1.99 beha… US       2015 -0.450  </span>
-<span class="co">#&gt;  8 jest  -0.44  0.28  1.48 -0.44  0.28  1.48 beha… US       2015 -0.330  </span>
-<span class="co">#&gt;  9 ravi…  0.24  1.24  1.42  0.24  1.24  1.42 beha… US       2015  0.350  </span>
-<span class="co">#&gt; 10 kid    0.22  0.36  1.25  0.22  0.36  1.25 beha… US       2015  0.330  </span>
-<span class="co">#&gt; # … with 35 more rows, and 6 more variables: d_p &lt;dbl&gt;, d_a &lt;dbl&gt;, d_e_s &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   d_p_s &lt;dbl&gt;, d_a_s &lt;dbl&gt;, ssd &lt;dbl&gt;</span>
+<span class="co">#&gt; # A tibble: 10 x 5</span>
+<span class="co">#&gt;    term_name   term_E term_P term_A    ssd</span>
+<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 haggle_with  -0.26   0.84   1.59 0.0290</span>
+<span class="co">#&gt;  2 parody       -0.01   0.8    1.46 0.0347</span>
+<span class="co">#&gt;  3 preach_to     0.33   1.09   1.58 0.301 </span>
+<span class="co">#&gt;  4 hurry        -0.46   0.75   2.04 0.305 </span>
+<span class="co">#&gt;  5 dispute      -0.1    1.32   1.54 0.315 </span>
+<span class="co">#&gt;  6 dare         -0.53   0.86   1.24 0.325 </span>
+<span class="co">#&gt;  7 laugh_at     -0.56   0.85   1.99 0.352 </span>
+<span class="co">#&gt;  8 jest         -0.44   0.28   1.48 0.360 </span>
+<span class="co">#&gt;  9 ravish        0.24   1.24   1.42 0.387 </span>
+<span class="co">#&gt; 10 kid           0.22   0.36   1.25 0.403</span>
 
 <span class="fu"><a href="reference/closest_term.html">closest_term</a></span><span class="op">(</span><span class="va">beh</span><span class="op">$</span><span class="va">E</span>, <span class="va">beh</span><span class="op">$</span><span class="va">P</span>, <span class="va">beh</span><span class="op">$</span><span class="va">A</span>, term_typ <span class="op">=</span> <span class="st">"behavior"</span>, max_dist <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 11 x 17</span>
-<span class="co">#&gt;    term      E     P     A    E2    P2    A2 type  country  year      d_e</span>
-<span class="co">#&gt;    &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;    &lt;dbl&gt;</span>
-<span class="co">#&gt;  1 hagg… -0.26  0.84  1.59 -0.26  0.84  1.59 beha… US       2015 -0.150  </span>
-<span class="co">#&gt;  2 paro… -0.01  0.8   1.46 -0.01  0.8   1.46 beha… US       2015  0.0998 </span>
-<span class="co">#&gt;  3 prea…  0.33  1.09  1.58  0.33  1.09  1.58 beha… US       2015  0.440  </span>
-<span class="co">#&gt;  4 hurry -0.46  0.75  2.04 -0.46  0.75  2.04 beha… US       2015 -0.350  </span>
-<span class="co">#&gt;  5 disp… -0.1   1.32  1.54 -0.1   1.32  1.54 beha… US       2015  0.00978</span>
-<span class="co">#&gt;  6 dare  -0.53  0.86  1.24 -0.53  0.86  1.24 beha… US       2015 -0.420  </span>
-<span class="co">#&gt;  7 laug… -0.56  0.85  1.99 -0.56  0.85  1.99 beha… US       2015 -0.450  </span>
-<span class="co">#&gt;  8 jest  -0.44  0.28  1.48 -0.44  0.28  1.48 beha… US       2015 -0.330  </span>
-<span class="co">#&gt;  9 ravi…  0.24  1.24  1.42  0.24  1.24  1.42 beha… US       2015  0.350  </span>
-<span class="co">#&gt; 10 kid    0.22  0.36  1.25  0.22  0.36  1.25 beha… US       2015  0.330  </span>
-<span class="co">#&gt; 11 josh   0.15  0.39  1.12  0.15  0.39  1.12 beha… US       2015  0.260  </span>
-<span class="co">#&gt; # … with 6 more variables: d_p &lt;dbl&gt;, d_a &lt;dbl&gt;, d_e_s &lt;dbl&gt;, d_p_s &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   d_a_s &lt;dbl&gt;, ssd &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 10 x 5</span>
+<span class="co">#&gt;    term_name   term_E term_P term_A    ssd</span>
+<span class="co">#&gt;    &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
+<span class="co">#&gt;  1 haggle_with  -0.26   0.84   1.59 0.0290</span>
+<span class="co">#&gt;  2 parody       -0.01   0.8    1.46 0.0347</span>
+<span class="co">#&gt;  3 preach_to     0.33   1.09   1.58 0.301 </span>
+<span class="co">#&gt;  4 hurry        -0.46   0.75   2.04 0.305 </span>
+<span class="co">#&gt;  5 dispute      -0.1    1.32   1.54 0.315 </span>
+<span class="co">#&gt;  6 dare         -0.53   0.86   1.24 0.325 </span>
+<span class="co">#&gt;  7 laugh_at     -0.56   0.85   1.99 0.352 </span>
+<span class="co">#&gt;  8 jest         -0.44   0.28   1.48 0.360 </span>
+<span class="co">#&gt;  9 ravish        0.24   1.24   1.42 0.387 </span>
+<span class="co">#&gt; 10 kid           0.22   0.36   1.25 0.403</span></code></pre></div>
 </div>
 <div id="characteristic-emotion" class="section level3">
 <h3 class="hasAnchor">
 <a href="#characteristic-emotion" class="anchor"></a>Characteristic Emotion</h3>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<p>In ACT, there are three types of emotions: characteristic emotions, structural emotions, and consequent emotions. Characteristic emotions are the emotions that result from perfect confirmation of an identity - they are the emotions that allow the transient and fundamental impression to be equal. For example, the characteristic emotion of “brute” is -1.40, 3.05, 1.46 - moderately bad, very powerful, and moderately active. The closest modifier in EPA space is “domineering.”</p>
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">ce</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/characteristic_emotion.html">characteristic_emotion</a></span><span class="op">(</span><span class="st">"brute"</span><span class="op">)</span>
 <span class="va">ce</span>
-<span class="co">#&gt; # A tibble: 1 x 3</span>
-<span class="co">#&gt;       E     P     A</span>
-<span class="co">#&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 -1.40  3.05  1.46</span>
+<span class="co">#&gt; [1] -1.396101  3.046890  1.459946</span>
 
 <span class="fu"><a href="reference/closest_term.html">closest_term</a></span><span class="op">(</span><span class="va">ce</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="va">ce</span><span class="op">[</span><span class="fl">2</span><span class="op">]</span>, <span class="va">ce</span><span class="op">[</span><span class="fl">3</span><span class="op">]</span>, term_typ <span class="op">=</span> <span class="st">"modifier"</span>, max_dist <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="co">#&gt; # A tibble: 1 x 17</span>
-<span class="co">#&gt;   term      E     P     A    E2    P2    A2 type  country  year  d_e$E  d_p$P</span>
-<span class="co">#&gt;   &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;</span>
-<span class="co">#&gt; 1 domi… -1.36  2.29  1.45 -1.36  2.29  1.45 modi… US       2015 0.0361 -0.757</span>
-<span class="co">#&gt; # … with 5 more variables: d_a$A &lt;dbl&gt;, d_e_s$E &lt;dbl&gt;, d_p_s$P &lt;dbl&gt;,</span>
-<span class="co">#&gt; #   d_a_s$A &lt;dbl&gt;, ssd &lt;dbl&gt;</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 1 x 5</span>
+<span class="co">#&gt;   term_name   term_E term_P term_A   ssd</span>
+<span class="co">#&gt;   &lt;chr&gt;        &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt;</span>
+<span class="co">#&gt; 1 domineering  -1.36   2.29   1.45 0.574</span></code></pre></div>
+<p>With a list of terms, you can get the EPA values for the characteristic emotions for all of them using the function <em>batch_characteristic_emotion</em>:</p>
+</div>
+<div id="reidentification" class="section level3">
+<h3 class="hasAnchor">
+<a href="#reidentification" class="anchor"></a>Reidentification</h3>
+<p>Following an ABO event, Actors and Objects can be reidentified by the other or an onlooker, to an identity that “fits” with their behavior better. The functions <em>reidentify_actor</em> and <em>reidentify_object</em> calculate this for you:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R">
+<span class="va">new_id</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span> 
+          <span class="va">rowwise</span> <span class="op">%&gt;%</span>  
+          <span class="fu">mutate</span><span class="op">(</span>new_actor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="reference/reidentify_actor.html">reidentify_actor</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+          <span class="fu">unnest</span><span class="op">(</span><span class="va">new_actor</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span>
+
+<span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">new_id</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
+<table class="table">
+<thead><tr>
+<th style="text-align:left;">
+<p>actor</p>
+</th>
+<th style="text-align:left;">
+<p>behavior</p>
+</th>
+<th style="text-align:left;">
+<p>object</p>
+</th>
+<th style="text-align:left;">
+<p>d</p>
+</th>
+<th style="text-align:right;">
+<p>new_actor_E</p>
+</th>
+<th style="text-align:right;">
+<p>new_actor_P</p>
+</th>
+<th style="text-align:right;">
+<p>new_actor_A</p>
+</th>
+</tr></thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+<p>brute</p>
+</td>
+<td style="text-align:left;">
+<p>work</p>
+</td>
+<td style="text-align:left;">
+<p>cook</p>
+</td>
+<td style="text-align:left;">
+<p>3.905718</p>
+</td>
+<td style="text-align:right;">
+<p>-0.27</p>
+</td>
+<td style="text-align:right;">
+<p>1.37</p>
+</td>
+<td style="text-align:right;">
+<p>1.03</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>dolt</p>
+</td>
+<td style="text-align:left;">
+<p>say_farewell_to</p>
+</td>
+<td style="text-align:left;">
+<p>executioner</p>
+</td>
+<td style="text-align:left;">
+<p>3.507459</p>
+</td>
+<td style="text-align:right;">
+<p>-0.35</p>
+</td>
+<td style="text-align:right;">
+<p>0.43</p>
+</td>
+<td style="text-align:right;">
+<p>-0.83</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>husband</p>
+</td>
+<td style="text-align:left;">
+<p>suck_up_to</p>
+</td>
+<td style="text-align:left;">
+<p>trainee</p>
+</td>
+<td style="text-align:left;">
+<p>10.4564</p>
+</td>
+<td style="text-align:right;">
+<p>-1.59</p>
+</td>
+<td style="text-align:right;">
+<p>-1.90</p>
+</td>
+<td style="text-align:right;">
+<p>0.51</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>sheet_metal_worker</p>
+</td>
+<td style="text-align:left;">
+<p>debate_with</p>
+</td>
+<td style="text-align:left;">
+<p>junkie</p>
+</td>
+<td style="text-align:left;">
+<p>3.434523</p>
+</td>
+<td style="text-align:right;">
+<p>-0.01</p>
+</td>
+<td style="text-align:right;">
+<p>1.40</p>
+</td>
+<td style="text-align:right;">
+<p>1.51</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hindu</p>
+</td>
+<td style="text-align:left;">
+<p>beg</p>
+</td>
+<td style="text-align:left;">
+<p>lout</p>
+</td>
+<td style="text-align:left;">
+<p>5.018938</p>
+</td>
+<td style="text-align:right;">
+<p>-1.56</p>
+</td>
+<td style="text-align:right;">
+<p>-3.06</p>
+</td>
+<td style="text-align:right;">
+<p>0.64</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>casual_laborer</p>
+</td>
+<td style="text-align:left;">
+<p>deprecate</p>
+</td>
+<td style="text-align:left;">
+<p>bailiff</p>
+</td>
+<td style="text-align:left;">
+<p>7.19514</p>
+</td>
+<td style="text-align:right;">
+<p>-2.07</p>
+</td>
+<td style="text-align:right;">
+<p>0.12</p>
+</td>
+<td style="text-align:right;">
+<p>0.80</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>housebreaker</p>
+</td>
+<td style="text-align:left;">
+<p>implicate</p>
+</td>
+<td style="text-align:left;">
+<p>welder</p>
+</td>
+<td style="text-align:left;">
+<p>2.245479</p>
+</td>
+<td style="text-align:right;">
+<p>-1.15</p>
+</td>
+<td style="text-align:right;">
+<p>0.69</p>
+</td>
+<td style="text-align:right;">
+<p>0.69</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>addict</p>
+</td>
+<td style="text-align:left;">
+<p>suspect</p>
+</td>
+<td style="text-align:left;">
+<p>assistant</p>
+</td>
+<td style="text-align:left;">
+<p>3.943665</p>
+</td>
+<td style="text-align:right;">
+<p>-1.14</p>
+</td>
+<td style="text-align:right;">
+<p>0.39</p>
+</td>
+<td style="text-align:right;">
+<p>-0.46</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>millionaire</p>
+</td>
+<td style="text-align:left;">
+<p>shock</p>
+</td>
+<td style="text-align:left;">
+<p>machine_repairer</p>
+</td>
+<td style="text-align:left;">
+<p>4.072882</p>
+</td>
+<td style="text-align:right;">
+<p>-1.27</p>
+</td>
+<td style="text-align:right;">
+<p>1.35</p>
+</td>
+<td style="text-align:right;">
+<p>1.64</p>
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+<p>hothead</p>
+</td>
+<td style="text-align:left;">
+<p>refuse</p>
+</td>
+<td style="text-align:left;">
+<p>blind_person</p>
+</td>
+<td style="text-align:left;">
+<p>2.707174</p>
+</td>
+<td style="text-align:right;">
+<p>-1.26</p>
+</td>
+<td style="text-align:right;">
+<p>1.16</p>
+</td>
+<td style="text-align:right;">
+<p>0.83</p>
+</td>
+</tr>
+</tbody>
+</table>
 </div>
 </div>
 </div>
