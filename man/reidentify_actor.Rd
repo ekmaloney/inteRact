@@ -21,3 +21,6 @@ dataframe with 3 columns corresponding to the EPA of optimal actor identity rela
 \description{
 Function to Generate the Re-identification of the Actor
 }
+\examples{
+reidentify_actor(act = "brute", beh = "work", obj = "cook")
+}

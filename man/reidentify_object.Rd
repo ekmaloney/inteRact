@@ -21,3 +21,6 @@ dataframe with 3 columns corresponding to the EPA of optimal object identity rel
 \description{
 Function to Generate the Re-identification of the Object
 }
+\examples{
+reidentify_object(act = "brute", beh = "work", obj = "cook")
+}

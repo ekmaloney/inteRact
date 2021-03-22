@@ -4,7 +4,15 @@
 \alias{closest_term}
 \title{Closest Term}
 \usage{
-closest_term(e, p, a, dict = "us", term_typ, max_dist = 1)
+closest_term(
+  e,
+  p,
+  a,
+  dict = "us",
+  term_typ = c("identity", "behavior", "modifier"),
+  max_dist = 1,
+  num_terms = 10
+)
 }
 \arguments{
 \item{e}{a numeric variable equaling the Evaluation of the EPA location}

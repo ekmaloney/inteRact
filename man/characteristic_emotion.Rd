@@ -7,11 +7,14 @@
 characteristic_emotion(id)
 }
 \arguments{
-\item{id}{}
+\item{id}{lowercase string corresponding to the identity}
 }
 \value{
-
+3 digit EPA profile of characteristic emotion for the identity
 }
 \description{
 Characteristic Emotion
+}
+\examples{
+characteristic_emotion("brute")
 }
