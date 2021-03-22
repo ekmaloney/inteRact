@@ -35,13 +35,13 @@ devtools::install_github("ekmaloney/inteRact")
 ```
 ## Example Analysis 
 
-The following analysis is an example of how to use this package to implement ACT equations in your work. There are two versions of every function: single and batch. The single version takes in a single event and the batch takes in a dataframe of many events to make it easier to calculate the concept of interest for many events at once. 
+The following analysis is an example of how to use this package to implement ACT equations in your work. Functions can be applied to either a single event or a dataframe of events, to make analyzing a larger number of situations easier.
 
 First, for any analysis you do, you need to ensure that the identities, behaviors, and modifiers that you study are measured in the ACT dictionary. inteRact includes the US dictionary that was measured in 2015 as the default dictionary (us_2015_full) and uses the US equations as default for calculations. 
 
 Future versions will allow you to upload your own dictionaries and use them in calculations. 
 
-First, the following code samples 20 identities and 10 behaviors to create a 10 event dataframe for the analysis. 
+The following code samples 20 identities and 10 behaviors to create a 10 event dataframe for the analysis. 
 
 ```{r example}
 library(inteRact)
@@ -67,20 +67,18 @@ kable(events, caption = "Sample Events for Analysis")
 To calculate deflection for a single event, you can use the function *calc_deflection*, which has 4 arguments: actor, behavior, object (all character strings), and dictionary (set to US currently). To calculate deflection for a series of events, you can use the function *batch_deflection* which has 1 argument: a dataframe with an actor, behavior, and object column (must be named that). For example, to find the deflection of `r print(paste(events$actor[1], " ", events$behavior[1], "s", " ", events$object[1], sep = ""))` you would do the following: 
 
 ```{r}
-calc_deflection("brute", "work", "cook")
+d <- get_deflection("brute", "work", "cook")
+
+print(d)
 ```
 
 To calculate the deflection of all of the events in the sample events dataframe, you would do the following: 
 ```{r}
-batch_deflection(events)
 
-```
-This is mainly a convenience function - if you are interested in seeing the code behind it, this is how you could do it outside of the batch function: 
-```{r}
-events %>%
-  rowwise() %>%
-  mutate(deflection = calc_deflection(actor, behavior, object),
-         deflection = deflection$d)
+events <- events %>% mutate(d = get_deflection(actor, behavior, object))
+
+kable(events)
+
 ```
 
 ### Element Deflection 
@@ -91,10 +89,15 @@ Additionally, you can see which elements contribute the most to the overall defl
 kable(element_deflection("brute", "work", "cook"), digits = 3)
 ```
 
-Again, you can do this for an entire dataframe using *batch_element_deflection*: 
+You can do this for an entire dataframe with a little bit of nesting, as follows: 
 ```{r}
-elem_def <- batch_element_deflection(events)
-elem_def 
+
+elem_def <- events %>%
+            rowwise() %>%
+            mutate(el_def = list(element_deflection(actor, behavior, object))) %>%
+            unnest(el_def)
+
+kable(elem_def)
 ```
 Following this, you can look at how different elements contribute to the overall deflection across your events: 
 ```{r}
@@ -105,18 +108,25 @@ ggplot(data = elem_def, mapping = aes(x = sqd_diff)) +
 
 ### Optimal Behavior 
 
+ACT can also predict the optimal behavior for the actor to enact in the following interaction that would bring the transient sentiments back as close as possible to the fundamental sentiments. The function *optimal_behavior* finds the E, P, and A value for the optimal behavior
+
 ```{r}
 beh <- optimal_behavior("brute", "work", "cook")
 beh
 ```
 
 ### Closest Term 
+
+To find the closest measured identity, modifier, or behavior to an EPA profile, you can use the function *closest_term* which has 5 arguments: the E, P, and A measurements, the type of term (identity, modifier, or behavior, and the maximum distance away in EPA units the term can be). 
 ```{r}
 closest_term(beh$E, beh$P, beh$A, term_typ = "behavior", max_dist = 1)
 
 closest_term(beh$E, beh$P, beh$A, term_typ = "behavior", max_dist = 0.5)
 ```
 ### Characteristic Emotion 
+
+In ACT, there are three types of emotions: characteristic emotions, structural emotions, and consequent emotions. Characteristic emotions are the emotions that result from perfect confirmation of an identity - they are the emotions that allow the transient and fundamental impression to be equal. For example, the characteristic emotion of "brute" is -1.40, 3.05, 1.46 - moderately bad, very powerful, and moderately active. The closest modifier in EPA space is "domineering."
+
 ```{r}
 ce <- characteristic_emotion("brute")
 ce
@@ -124,7 +134,21 @@ ce
 closest_term(ce[1], ce[2], ce[3], term_typ = "modifier", max_dist = 1)
 ```
 
+With a list of terms, you can get the EPA values for the characteristic emotions for all of them using the function *batch_characteristic_emotion*: 
 ```{r,  eval = FALSE, echo = FALSE}
 batch_characteristic_emotion(events, var = "actor")
+```
+
+### Reidentification 
+Following an ABO event, Actors and Objects can be reidentified by the other or an onlooker, to an identity that "fits" with their behavior better. The functions *reidentify_actor* and *reidentify_object* calculate this for you: 
+```{r}
+
+new_id <- events %>% 
+          rowwise %>%  
+          mutate(new_actor = list(reidentify_actor(actor, behavior, object))) %>% 
+          unnest(new_actor, names_sep = "_")
+
+kable(new_id, digits = 2)
+
 ```
 

@@ -23,3 +23,5 @@ Imports:
     tibble
 URL: https://github.com/ekmaloney/inteRact
 BugReports: https://github.com/ekmaloney/inteRact/issues
+Suggests: 
+    testthat
