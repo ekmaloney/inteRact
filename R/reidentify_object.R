@@ -7,9 +7,10 @@
 #'
 #' @return dataframe with 3 columns corresponding to the EPA of optimal object identity relabel
 #' @importFrom tibble tibble
+#' @importFrom dplyr if_else
 #' @export
 #'
-#' @examples
+#' @examples reidentify_object(act = "brute", beh = "work", obj = "cook")
 reidentify_object <- function(act, beh, obj, dictionary = "us") {
             #calculate the transient impression of the event
             trans_imp_df <- transient_impression(act, beh, obj, dictionary = "us")

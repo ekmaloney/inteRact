@@ -14,6 +14,7 @@
 #' @importFrom dplyr mutate
 #' @importFrom dplyr rowwise
 #' @importFrom dplyr %>%
+#' @importFrom dplyr slice
 #' @importFrom dplyr filter
 #' @importFrom dplyr arrange
 #' @importFrom dplyr ungroup
@@ -24,8 +25,9 @@
 
 closest_term <- function(e, p, a,
                          dict = "us",
-                         term_typ,
-                         max_dist = 1) {
+                         term_typ = c("identity", "behavior", "modifier"),
+                         max_dist = 1,
+                         num_terms = 10) {
 
     data("us_2015_full", envir=environment())
 
@@ -46,6 +48,7 @@ closest_term <- function(e, p, a,
                      term_E = E,
                      term_P = P,
                      term_A = A) %>%
+              slice(1:num_terms) %>%
               select(term_name, term_E, term_P, term_A, ssd)
 
     return(terms)

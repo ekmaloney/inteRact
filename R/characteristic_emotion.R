@@ -1,11 +1,11 @@
 #' Characteristic Emotion
 #'
-#' @param id
+#' @param id lowercase string corresponding to the identity
 #'
-#' @return
+#' @return 3 digit EPA profile of characteristic emotion for the identity
 #' @export
 #'
-#' @examples
+#' @examples characteristic_emotion("brute")
 characteristic_emotion <- function(id){
     #read in relevant data
     data("us_2015_full", envir=environment())

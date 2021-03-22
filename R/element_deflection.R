@@ -29,8 +29,8 @@ element_deflection <- function(act, beh, obj, dictionary = "us") {
           element_deflection <- transient_impression(act, beh, obj, dictionary = "us") %>%
             rowwise() %>%
             mutate(difference = fundamental_sentiment - trans_imp,
-                   sqd_diff = difference^2)
+                   sqd_diff = difference^2) %>%
+            ungroup()
 
             return(element_deflection)
-
 }
