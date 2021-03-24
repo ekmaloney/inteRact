@@ -42,5 +42,3 @@ get_deflection <- function(act, beh, obj, dictionary = "us") {
         return(total_deflection)
 
 }
-
-get_deflection <- Vectorize(get_deflection)
