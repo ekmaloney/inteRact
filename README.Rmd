@@ -50,7 +50,7 @@ library(knitr)
 library(tibble)
 library(tidyverse)
 
-#load US dictionary 
+#load US dict
 data("us_2015_full")
 
 #make a dataframe of events 
@@ -75,7 +75,10 @@ print(d)
 To calculate the deflection of all of the events in the sample events dataframe, you would do the following: 
 ```{r}
 
-events <- events %>% mutate(d = get_deflection(actor, behavior, object, equation = "us"))
+events <- events %>% 
+          rowwise() %>% 
+          mutate(d = get_deflection(actor, behavior, object, equation = "us"),
+                 d = d$d)
 
 kable(events)
 

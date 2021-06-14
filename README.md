@@ -71,7 +71,7 @@ library(tidyverse)
 #> x dplyr::group_rows() masks kableExtra::group_rows()
 #> x dplyr::lag()        masks stats::lag()
 
-#load US dictionary 
+#load US dict
 data("us_2015_full")
 
 #make a dataframe of events 
