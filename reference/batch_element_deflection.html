@@ -117,7 +117,7 @@
     <p>Batch Element Deflection</p>
     </div>
 
-    <pre class="usage"><span class='fu'>batch_element_deflection</span><span class='op'>(</span><span class='va'>df</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>batch_element_deflection</span><span class='op'>(</span><span class='va'>df</span>, equation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"us"</span>, <span class='st'>"user supplied"</span><span class='op'>)</span>, <span class='va'>eq_df</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,6 +127,17 @@
       <td><p>a dataframe that must have three columns named: actor, behavior, and object
 that correspond to the elements of your event. These must match with identities and behaviors
 in the US 2015 dictionary.</p></td>
+    </tr>
+    <tr>
+      <th>equation</th>
+      <td><p>which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")</p></td>
+    </tr>
+    <tr>
+      <th>eq_df</th>
+      <td><p>if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)</p></td>
     </tr>
     </table>
 

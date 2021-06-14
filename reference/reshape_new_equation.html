@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate the Transient Impression after an Event — transient_impression • inteRact</title>
+<title>Reshape New Equation — reshape_new_equation • inteRact</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Calculate the Transient Impression after an Event — transient_impression" />
-<meta property="og:description" content="Calculate the Transient Impression after an Event" />
+<meta property="og:title" content="Reshape New Equation — reshape_new_equation" />
+<meta property="og:description" content="Reshape New Equation" />
 
 
 
@@ -108,72 +108,33 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate the Transient Impression after an Event</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/transient_impression.R'><code>R/transient_impression.R</code></a></small>
-    <div class="hidden name"><code>transient_impression.Rd</code></div>
+    <h1>Reshape New Equation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/reshape_equations_functions.R'><code>R/reshape_equations_functions.R</code></a></small>
+    <div class="hidden name"><code>reshape_new_equation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate the Transient Impression after an Event</p>
+    <p>Reshape New Equation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>transient_impression</span><span class='op'>(</span>
-  <span class='va'>act</span>,
-  <span class='va'>beh</span>,
-  <span class='va'>obj</span>,
-  dictionary <span class='op'>=</span> <span class='st'>"us"</span>,
-  equation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"us"</span>, <span class='st'>"user_supplied"</span><span class='op'>)</span>,
-  eq_df <span class='op'>=</span> <span class='cn'>NULL</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>reshape_new_equation</span><span class='op'>(</span><span class='va'>eq_df</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>beh</th>
-      <td><p>lowercase string corresponding to the behavior term</p></td>
-    </tr>
-    <tr>
-      <th>dictionary</th>
-      <td><p>which dictionary to use, currently set to "us"</p></td>
-    </tr>
-    <tr>
-      <th>equation</th>
-      <td><p>which equation to use - you can either set it to "us" for the
-us 1978 equations, or "user supplied")</p></td>
-    </tr>
-    <tr>
       <th>eq_df</th>
-      <td><p>if you select "user supplied" for equation, this parameter should
-be your equation dataframe, which (should have been reshaped by the
-reshape_new_equation function prior)</p></td>
-    </tr>
-    <tr>
-      <th>actor</th>
-      <td><p>lowercase string corresponding to the actor identity</p></td>
-    </tr>
-    <tr>
-      <th>object</th>
-      <td><p>lowercase string corresponding to the object identity</p></td>
+      <td><p>a data frame containing the user-supplied equation. Should follow
+the same structure as those found in Interact.jar (10 columns, the first of which
+should have the Z plus 9 1s or 0s indicating the elements of the corresponding
+coefficient structure).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>dataframe in long format, with one row for each element-dimension of the event, columns for fundamental sentiment and transient impression.</p>
+    <p>eq_coef_info dataframe that is in the correct form for use in other functions</p>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>transient_impression</span><span class='op'>(</span><span class='st'>"ceo"</span>, <span class='st'>"advise"</span>, <span class='st'>"benefactor"</span>, equation <span class='op'>=</span> <span class='st'>"us"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;              term element dimension fundamental_sentiment trans_imp
-#&gt; postAE        ceo       A         E                  0.71  1.512329
-#&gt; postAP        ceo       A         P                  3.22  2.377649
-#&gt; postAA        ceo       A         A                  1.48  1.024836
-#&gt; postBE     advise       B         E                  2.57  1.600150
-#&gt; postBP     advise       B         P                  2.28  2.086134
-#&gt; postBA     advise       B         A                  0.28  0.612600
-#&gt; postOE benefactor       O         E                  1.97  1.499909
-#&gt; postOP benefactor       O         P                  1.98  1.076825
-#&gt; postOA benefactor       O         A                  0.10  0.097500</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
