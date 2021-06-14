@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Batch Characteristic Emotion — batch_characteristic_emotion • inteRact</title>
+<title>Reshape New Equation — reshape_new_equation • inteRact</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Batch Characteristic Emotion — batch_characteristic_emotion" />
-<meta property="og:description" content="Batch Characteristic Emotion" />
+<meta property="og:title" content="Reshape New Equation — reshape_new_equation" />
+<meta property="og:description" content="Reshape New Equation" />
 
 
 
@@ -108,33 +108,32 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Batch Characteristic Emotion</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/batch_characteristic_emotion.R'><code>R/batch_characteristic_emotion.R</code></a></small>
-    <div class="hidden name"><code>batch_characteristic_emotion.Rd</code></div>
+    <h1>Reshape New Equation</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/reshape_equations_functions.R'><code>R/reshape_equations_functions.R</code></a></small>
+    <div class="hidden name"><code>reshape_new_equation.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Batch Characteristic Emotion</p>
+    <p>Reshape New Equation</p>
     </div>
 
-    <pre class="usage"><span class='fu'>batch_characteristic_emotion</span><span class='op'>(</span><span class='va'>df</span>, <span class='va'>var</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>reshape_new_equation</span><span class='op'>(</span><span class='va'>eq_df</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>df</th>
-      <td><p>dataframe with a variable called term that corresponds to identities you want characteristic emotions for</p></td>
-    </tr>
-    <tr>
-      <th>var</th>
-      <td><p>the name of the variable containing your identities</p></td>
+      <th>eq_df</th>
+      <td><p>a data frame containing the user-supplied equation. Should follow
+the same structure as those found in Interact.jar (10 columns, the first of which
+should have the Z plus 9 1s or 0s indicating the elements of the corresponding
+coefficient structure).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>df with 3 new variables: characteristic emotion E, P, and A</p>
+    <p>eq_coef_info dataframe that is in the correct form for use in other functions</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

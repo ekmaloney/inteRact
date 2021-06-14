@@ -67,7 +67,7 @@ kable(events, caption = "Sample Events for Analysis")
 To calculate deflection for a single event, you can use the function *calc_deflection*, which has 4 arguments: actor, behavior, object (all character strings), and dictionary (set to US currently). To calculate deflection for a series of events, you can use the function *batch_deflection* which has 1 argument: a dataframe with an actor, behavior, and object column (must be named that). For example, to find the deflection of `r print(paste(events$actor[1], " ", events$behavior[1], "s", " ", events$object[1], sep = ""))` you would do the following: 
 
 ```{r}
-d <- get_deflection("brute", "work", "cook")
+d <- get_deflection("brute", "work", "cook", equation = "us")
 
 print(d)
 ```
@@ -75,7 +75,7 @@ print(d)
 To calculate the deflection of all of the events in the sample events dataframe, you would do the following: 
 ```{r}
 
-events <- events %>% mutate(d = get_deflection(actor, behavior, object))
+events <- events %>% mutate(d = get_deflection(actor, behavior, object, equation = "us"))
 
 kable(events)
 
@@ -86,7 +86,7 @@ kable(events)
 Additionally, you can see which elements contribute the most to the overall deflection by using the *element_deflection* function, as below. This returns a dataframe that includes each element's fundamental sentiment, the corresponding transient impression, the difference between the two, and the squared difference. In this way, you can see which element moved the most in EPA space after an event. In the case of brute works cook, the most deflection element-dimension is the Power of the Object (cook) followed by the Evaluation of the Actor (brute), 
 
 ```{r}
-kable(element_deflection("brute", "work", "cook"), digits = 3)
+kable(element_deflection("brute", "work", "cook", equation = "us"), digits = 3)
 ```
 
 You can do this for an entire dataframe with a little bit of nesting, as follows: 
@@ -94,7 +94,7 @@ You can do this for an entire dataframe with a little bit of nesting, as follows
 
 elem_def <- events %>%
             rowwise() %>%
-            mutate(el_def = list(element_deflection(actor, behavior, object))) %>%
+            mutate(el_def = list(element_deflection(actor, behavior, object, equation = "us"))) %>%
             unnest(el_def)
 
 kable(elem_def)
@@ -145,7 +145,7 @@ Following an ABO event, Actors and Objects can be reidentified by the other or a
 
 new_id <- events %>% 
           rowwise %>%  
-          mutate(new_actor = list(reidentify_actor(actor, behavior, object))) %>% 
+          mutate(new_actor = list(reidentify_actor(actor, behavior, object, equation = "us"))) %>% 
           unnest(new_actor, names_sep = "_")
 
 kable(new_id, digits = 2)

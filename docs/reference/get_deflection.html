@@ -83,7 +83,7 @@ in the US 2015 dictionary." />
       <ul class="nav navbar-nav">
         <li>
   <a href="../index.html">
-    <span class="fas fa fas fa-home fa-lg"></span>
+    <span class="fas fa-home fa-lg"></span>
      
   </a>
 </li>
@@ -94,7 +94,7 @@ in the US 2015 dictionary." />
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/ekmaloney/inteRact/">
-    <span class="fab fa fab fa-github fa-lg"></span>
+    <span class="fab fa-github fa-lg"></span>
      
   </a>
 </li>
@@ -123,7 +123,14 @@ the second, the behavior, and last, the object. Each of these terms must be
 in the US 2015 dictionary.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>get_deflection</span><span class='op'>(</span><span class='va'>act</span>, <span class='va'>beh</span>, <span class='va'>obj</span>, dictionary <span class='op'>=</span> <span class='st'>"us"</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>get_deflection</span><span class='op'>(</span>
+  <span class='va'>act</span>,
+  <span class='va'>beh</span>,
+  <span class='va'>obj</span>,
+  dictionary <span class='op'>=</span> <span class='st'>"us"</span>,
+  equation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"us"</span>, <span class='st'>"user supplied"</span><span class='op'>)</span>,
+  eq_df <span class='op'>=</span> <span class='cn'>NULL</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -144,6 +151,17 @@ in the US 2015 dictionary.</p>
       <th>dictionary</th>
       <td><p>which dictionary to use, currently set to "us"</p></td>
     </tr>
+    <tr>
+      <th>equation</th>
+      <td><p>which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")</p></td>
+    </tr>
+    <tr>
+      <th>eq_df</th>
+      <td><p>if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)</p></td>
+    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -152,10 +170,11 @@ in the US 2015 dictionary.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='fu'>get_deflection</span><span class='op'>(</span><span class='st'>"ceo"</span>, <span class='st'>"advise"</span>, <span class='st'>"benefactor"</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; $ceo.d
-#&gt; [1] 3.685993
-#&gt; </div></pre>
+<span class='fu'>get_deflection</span><span class='op'>(</span><span class='st'>"ceo"</span>, <span class='st'>"advise"</span>, <span class='st'>"benefactor"</span>, equation <span class='op'>=</span> <span class='st'>"us"</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span style='color: #949494;'># A tibble: 1 x 1</span>
+#&gt;       d
+#&gt;   <span style='color: #949494; font-style: italic;'>&lt;dbl&gt;</span>
+#&gt; <span style='color: #BCBCBC;'>1</span>  3.69</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
