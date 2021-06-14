@@ -14,7 +14,7 @@ all_combinations <- c(levels(us_eq$V1), levels(japan_eq$V1),
 all_combinations <- c(us_eq$V1, japan_eq$V1,
                       canada_eq$V1, china_eq$V1, germany_eq$V1)
 
-all_combinations <- unique(all_combinations)
+all_combinations <- tibble(combos = unique(all_combinations))
 
 decoding_coefficients <- tibble(coef_name = all_combinations) %>%
                          mutate(combos = str_remove(coef_name, "Z")) %>%

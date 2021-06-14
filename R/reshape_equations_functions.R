@@ -11,8 +11,8 @@
 #' @examples
 reshape_new_equation <- function(eq_df){
 
-  co_combos <- readRDS("data/coefficient_combos.RDS")
-  all_combos <- unique(c(co_combos, eq_df$V1))
+  data("all_combinations", envir=environment())
+  all_combos <- unique(c(all_combinations$combos, eq_df$V1))
 
   decoding_coefficients <- tibble(coef_name = all_combos) %>%
                           mutate(combos = str_remove(coef_name, "Z")) %>%

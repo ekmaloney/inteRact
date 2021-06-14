@@ -17,3 +17,4 @@ combine_dictionary <- function(id_d, beh_d, mod_d, country, year) {
 us_2015_full <- combine_dictionary(us_2015_id, us_2015_beh, us_2015_mod, "US", 2015)
 
 usethis::use_data(us_2015_full, overwrite = TRUE)
+usethis::use_data(all_combinations, overwrite = TRUE)
