@@ -9,6 +9,11 @@
 #' @param beh lowercase string corresponding to the behavior term
 #' @param obj lowercase string corresponding to the object identity
 #' @param dictionary which dictionary to use, currently set to "us"
+#' @param equation which equation to use - you can either set it to "us" for the
+#' us 1978 equations, or "user supplied")
+#' @param eq_df if you select "user supplied" for equation, this parameter should
+#' be your equation dataframe, which (should have been reshaped by the
+#' reshape_new_equation function prior)
 #' @return calculated deflection for the event (single number)
 #'
 #' @importFrom dplyr mutate
@@ -21,15 +26,15 @@
 #'
 #' @examples
 #'
-#' get_deflection("ceo", "advise", "benefactor")
+#' get_deflection("ceo", "advise", "benefactor", equation = "us")
 
 
 
 #provides deflection
-get_deflection <- function(act, beh, obj, dictionary = "us") {
+get_deflection <- function(act, beh, obj, dictionary = "us", equation = c("us", "user supplied"), eq_df = NULL) {
 
         #get element deflection by applying the transient impression function
-        element_deflection <- transient_impression(act, beh, obj, dictionary = "us") %>%
+        element_deflection <- transient_impression(act, beh, obj, dictionary = "us", equation, eq_df) %>%
                               rowwise() %>%
                               mutate(difference = fundamental_sentiment - trans_imp,
                               sqd_diff = difference^2)
