@@ -11,6 +11,9 @@ germany_eq <- read.table("data-raw/germany_2007.txt")
 all_combinations <- c(levels(us_eq$V1), levels(japan_eq$V1),
                       levels(canada_eq$V1), levels(china_eq$V1), levels(germany_eq$V1))
 
+all_combinations <- c(us_eq$V1, japan_eq$V1,
+                      canada_eq$V1, china_eq$V1, germany_eq$V1)
+
 all_combinations <- unique(all_combinations)
 
 decoding_coefficients <- tibble(coef_name = all_combinations) %>%

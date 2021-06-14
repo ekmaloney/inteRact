@@ -4,7 +4,14 @@
 \alias{reidentify_object}
 \title{Function to Generate the Re-identification of the Object}
 \usage{
-reidentify_object(act, beh, obj, dictionary = "us")
+reidentify_object(
+  act,
+  beh,
+  obj,
+  dictionary = "us",
+  equation = c("us", "user supplied"),
+  eq_df = NULL
+)
 }
 \arguments{
 \item{act}{lowercase string corresponding to the actor identity}
@@ -14,6 +21,13 @@ reidentify_object(act, beh, obj, dictionary = "us")
 \item{obj}{lowercase string corresponding to the object identity}
 
 \item{dictionary}{which dictionary to use, currently set to "us"}
+
+\item{equation}{which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")}
+
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
 }
 \value{
 dataframe with 3 columns corresponding to the EPA of optimal object identity relabel
@@ -22,5 +36,5 @@ dataframe with 3 columns corresponding to the EPA of optimal object identity rel
 Function to Generate the Re-identification of the Object
 }
 \examples{
-reidentify_object(act = "brute", beh = "work", obj = "cook")
+reidentify_object(act = "brute", beh = "work", obj = "cook", equation = "us")
 }

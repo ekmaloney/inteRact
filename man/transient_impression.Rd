@@ -4,12 +4,26 @@
 \alias{transient_impression}
 \title{Calculate the Transient Impression after an Event}
 \usage{
-transient_impression(act, beh, obj, dictionary = "us")
+transient_impression(
+  act,
+  beh,
+  obj,
+  dictionary = "us",
+  equation = c("us", "user_supplied"),
+  eq_df = NULL
+)
 }
 \arguments{
 \item{beh}{lowercase string corresponding to the behavior term}
 
 \item{dictionary}{which dictionary to use, currently set to "us"}
+
+\item{equation}{which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")}
+
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
 
 \item{actor}{lowercase string corresponding to the actor identity}
 
@@ -22,5 +36,5 @@ dataframe in long format, with one row for each element-dimension of the event, 
 Calculate the Transient Impression after an Event
 }
 \examples{
-transient_impression("ceo", "advise", "benefactor")
+transient_impression("ceo", "advise", "benefactor", equation = "us")
 }

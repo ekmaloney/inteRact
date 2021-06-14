@@ -4,7 +4,14 @@
 \alias{reidentify_actor}
 \title{Function to Generate the Re-identification of the Actor}
 \usage{
-reidentify_actor(act, beh, obj, dictionary = "us")
+reidentify_actor(
+  act,
+  beh,
+  obj,
+  dictionary = "us",
+  equation = c("us", "user supplied"),
+  eq_df = NULL
+)
 }
 \arguments{
 \item{act}{lowercase string corresponding to the actor identity}
@@ -14,6 +21,13 @@ reidentify_actor(act, beh, obj, dictionary = "us")
 \item{obj}{lowercase string corresponding to the object identity}
 
 \item{dictionary}{which dictionary to use, currently set to "us"}
+
+\item{equation}{which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")}
+
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
 }
 \value{
 dataframe with 3 columns corresponding to the EPA of optimal actor identity relabel
@@ -22,5 +36,5 @@ dataframe with 3 columns corresponding to the EPA of optimal actor identity rela
 Function to Generate the Re-identification of the Actor
 }
 \examples{
-reidentify_actor(act = "brute", beh = "work", obj = "cook")
+reidentify_actor(act = "brute", beh = "work", obj = "cook", equation = "us")
 }

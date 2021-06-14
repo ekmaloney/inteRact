@@ -4,7 +4,14 @@
 \alias{get_deflection}
 \title{Compute Deflection for an Event}
 \usage{
-get_deflection(act, beh, obj, dictionary = "us")
+get_deflection(
+  act,
+  beh,
+  obj,
+  dictionary = "us",
+  equation = c("us", "user supplied"),
+  eq_df = NULL
+)
 }
 \arguments{
 \item{act}{lowercase string corresponding to the actor identity}
@@ -14,6 +21,13 @@ get_deflection(act, beh, obj, dictionary = "us")
 \item{obj}{lowercase string corresponding to the object identity}
 
 \item{dictionary}{which dictionary to use, currently set to "us"}
+
+\item{equation}{which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")}
+
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
 }
 \value{
 calculated deflection for the event (single number)
@@ -26,5 +40,5 @@ in the US 2015 dictionary.
 }
 \examples{
 
-get_deflection("ceo", "advise", "benefactor")
+get_deflection("ceo", "advise", "benefactor", equation = "us")
 }

@@ -4,12 +4,19 @@
 \alias{batch_deflection}
 \title{Batch Deflection}
 \usage{
-batch_deflection(df)
+batch_deflection(df, equation = c("us", "user supplied"), eq_df = NULL)
 }
 \arguments{
 \item{df}{a dataframe that must have three columns named: actor, behavior, and object
 that correspond to the elements of your event. These must match with identities and behaviors
 in the US 2015 dictionary.}
+
+\item{equation}{which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")}
+
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
 }
 \value{
 a dataframe with a column indicating the total deflection for the event
