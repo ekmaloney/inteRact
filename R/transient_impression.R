@@ -4,6 +4,11 @@
 #' @param beh lowercase string corresponding to the behavior term
 #' @param object lowercase string corresponding to the object identity
 #' @param dictionary which dictionary to use, currently set to "us"
+#' @param equation which equation to use - you can either set it to "us" for the
+#' us 1978 equations, or "user supplied")
+#' @param eq_df if you select "user supplied" for equation, this parameter should
+#' be your equation dataframe, which (should have been reshaped by the
+#' reshape_new_equation function prior)
 
 #' @return dataframe in long format, with one row for each element-dimension of the event, columns for fundamental sentiment and transient impression.
 #'
@@ -21,15 +26,21 @@
 #' @export
 #'
 #' @examples
-#' transient_impression("ceo", "advise", "benefactor")
+#' transient_impression("ceo", "advise", "benefactor", equation = "us")
 
-transient_impression <- function(act, beh, obj, dictionary = "us") {
+transient_impression <- function(act, beh, obj, dictionary = "us", equation = c("us", "user_supplied"), eq_df = NULL) {
           #make sure in the right location
           here()
 
+          if(equation == "us"){
+            data("us_1978", envir=environment())
+            eq <- us_1978
+          } else {
+            eq <- eq_df
+          }
+
           #read in data
           data("us_2015_full", envir=environment())
-          data("us_1978", envir=environment())
 
           #first get the EPA values for the elements
           abo_epa <- us_2015_full %>%
@@ -45,7 +56,7 @@ transient_impression <- function(act, beh, obj, dictionary = "us") {
             arrange(element)
 
           #then construct the selection matrix
-          selection_mat <- us_1978 %>% select(AE:OA)
+          selection_mat <- eq %>% select(AE:OA)
 
           #get ABO elements for coefficients
           abo_selected <- as.data.frame(t(t(selection_mat)*abo_epa$fundamental_sentiment)) %>%
@@ -54,7 +65,7 @@ transient_impression <- function(act, beh, obj, dictionary = "us") {
             mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE))
 
           #multiply ABO elements by the equation coefficients
-          post_epa <- t(us_1978[,2:10]) %*% abo_selected$product
+          post_epa <- t(eq[,2:10]) %*% abo_selected$product
 
           #put before and after together
           pre_post <- cbind(abo_epa, post_epa)
