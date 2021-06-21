@@ -24,4 +24,7 @@ Imports:
 URL: https://github.com/ekmaloney/inteRact
 BugReports: https://github.com/ekmaloney/inteRact/issues
 Suggests: 
+    rmarkdown,
+    knitr,
     testthat
+VignetteBuilder: knitr
