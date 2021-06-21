@@ -34,7 +34,7 @@ reidentify_object <- function(act, beh, obj, dictionary = "us", equation = c("us
             g <- as.vector(g)
 
             #construct h matrix
-            h <- construct_h_matrix()
+            h <- construct_h_matrix(equation, eq_df)
 
             #term 1 of equation
             term1 <- t(o_s) %*% i_o %*% h %*% i_o %*% o_s

@@ -90,7 +90,7 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 g <- as.vector(g)
 
                 #h contains identity matrix + coefficients of equations
-                h <- construct_h_matrix()
+                h <- construct_h_matrix(equation, eq_df)
 
                 #term 1 of equation
                 term1 <- t(b_s) %*% mat_i_actor %*% h %*% mat_i_actor %*% b_s
@@ -143,7 +143,7 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 g <- as.vector(g)
 
                 #h contains identity matrix + coefficients of equations
-                h <- construct_h_matrix()
+                h <- construct_h_matrix(equation, eq_df)
 
                 #term 1 of equation
                 term1 <- t(b_s) %*% mat_i %*% h %*% mat_i %*% b_s

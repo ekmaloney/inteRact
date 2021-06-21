@@ -33,7 +33,7 @@ reidentify_actor <- function(act, beh, obj, dictionary = "us", equation = c("us"
           g <- as.vector(g)
 
           #construct h matrix
-          h <- construct_h_matrix()
+          h <- construct_h_matrix(equation, eq_df)
 
           #term 1 of equation
           term1 <- t(a_s) %*% i_a %*% h %*% i_a %*% a_s

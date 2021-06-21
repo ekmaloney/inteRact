@@ -4,12 +4,30 @@
 \alias{optimal_behavior}
 \title{Calculate the Optimal Behavior for the Actor following an Event}
 \usage{
-optimal_behavior(act, beh, obj, dictionary = "us")
+optimal_behavior(
+  act,
+  beh,
+  obj,
+  dictionary = "us",
+  equation = c("us", "user_supplied"),
+  eq_df = NULL,
+  which = c("actor", "behavior", "both")
+)
 }
 \arguments{
 \item{beh}{lowercase string corresponding to the behavior term}
 
 \item{dictionary}{which dictionary to use, currently set to "us"}
+
+\item{equation}{which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")}
+
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
+
+\item{which}{indicate whether you want the optimal behavior for "actor", "object",
+or "both"}
 
 \item{actor}{lowercase string corresponding to the actor identity}
 
