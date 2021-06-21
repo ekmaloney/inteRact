@@ -26,5 +26,6 @@ BugReports: https://github.com/ekmaloney/inteRact/issues
 Suggests: 
     rmarkdown,
     knitr,
-    testthat
+    testthat,
+    tidyverse
 VignetteBuilder: knitr
