@@ -44,6 +44,6 @@ get_deflection <- function(act, beh, obj, dictionary = "us", equation = c("us", 
                             ungroup() %>%
                             summarise(d = sum(sqd_diff))
 
-        return(total_deflection)
+        return(total_deflection$d)
 
 }

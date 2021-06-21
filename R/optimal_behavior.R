@@ -62,29 +62,36 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 ####ACTOR
 
                 i_actor <- eq %>%
-                  mutate(i = case_when(A == "000" & O == "000" ~ 1,
-                                       A == "100" & O == "000"~ element_def$trans_imp[1],
-                                       A == "010" & O == "000"~ element_def$trans_imp[2],
-                                       A == "001" & O == "000"~ element_def$trans_imp[3],
-                                       O == "100" & A == "000"~ element_def$trans_imp[7],
-                                       O == "010" & A == "000"~ element_def$trans_imp[8],
-                                       O == "001" & A == "000"~ element_def$trans_imp[9],
-                                       A == "100" & O == "010"~ element_def$trans_imp[1]*element_def$trans_imp[8],
-                                       A == "100" & O == "100"~ element_def$trans_imp[1]*element_def$trans_imp[7])) %>%
+                           mutate(i = case_when(A == "000" & O == "000" ~ 1,
+                                                A == "100" & O == "000" ~ element_def$trans_imp[1],
+                                                A == "010" & O == "000" ~ element_def$trans_imp[2],
+                                                A == "001" & O == "000"~ element_def$trans_imp[3],
+                                                A == "000" & O == "100" ~ element_def$trans_imp[7],
+                                                A == "000" & O == "010" ~ element_def$trans_imp[8],
+                                                A == "000" & O == "001" ~ element_def$trans_imp[9],
+                                                A == "100" & O == "100"~ element_def$trans_imp[1]*element_def$trans_imp[7],
+                                                A == "100" & O == "010" ~ element_def$trans_imp[1]*element_def$trans_imp[8],
+                                                A == "100" & O == "001" ~ element_def$trans_imp[1]*element_def$trans_imp[9],
+                                                A == "010" & O == "100" ~ element_def$trans_imp[2]*element_def$trans_imp[7],
+                                                A == "010" & O == "010" ~ element_def$trans_imp[2]*element_def$trans_imp[8],
+                                                A == "010" & O == "001" ~ element_def$trans_imp[2]*element_def$trans_imp[9],
+                                                A == "001" & O == "100" ~ element_def$trans_imp[3]*element_def$trans_imp[7],
+                                                A == "001" & O == "010" ~ element_def$trans_imp[3]*element_def$trans_imp[8],
+                                                A == "001" & O == "001" ~ element_def$trans_imp[3]*element_def$trans_imp[9])) %>%
                   select(i)
 
                 #save as a vector
                 i_actor <- c(as.vector(element_def$f_s_i), as.vector(i_actor$i))
 
                 #make into a matrix with that on the diagonal
-                mat_i_actor <- matrix(0, 29, 29)
+                mat_i_actor <- matrix(0, length(i_actor), length(i_actor))
                 diag(mat_i_actor) <- i_actor
 
                 #make a behavior selection matrix
-                b_s <- create_select_mat("behavior")
+                b_s <- create_select_mat("behavior", equation, eq_df)
 
                 #now which terms do not have behavior in them
-                i_s <- matrix(data = rep(1, 29), nrow = 29)
+                i_s <- matrix(data = rep(1, length(i_actor)), nrow = length(i_actor))
                 i_3 <- as.matrix(c(1, 1, 1))
                 g <- i_s - b_s %*% i_3
                 g <- as.vector(g)
@@ -104,9 +111,9 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 sol <- term1 %*% term2
 
                 #put into nicer format
-                opt_behavior_actor <- tibble(E = sol[1],
-                                       P = sol[2],
-                                       A = sol[3],
+                opt_behavior_actor <- tibble(opt_E = sol[1],
+                                       opt_P = sol[2],
+                                       opt_A = sol[3],
                                        term = "actor")
 
 
@@ -116,28 +123,35 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
 
                 i <- eq %>%
                   mutate(i = case_when(A == "000" & O == "000" ~ 1,
-                                       A == "100" & O == "000"~ element_def$trans_imp[7],
-                                       A == "010" & O == "000"~ element_def$trans_imp[8],
+                                       A == "100" & O == "000" ~ element_def$trans_imp[7],
+                                       A == "010" & O == "000" ~ element_def$trans_imp[8],
                                        A == "001" & O == "000"~ element_def$trans_imp[9],
-                                       O == "100" & A == "000"~ element_def$trans_imp[1],
-                                       O == "010" & A == "000"~ element_def$trans_imp[2],
-                                       O == "001" & A == "000"~ element_def$trans_imp[3],
-                                       A == "100" & O == "010"~ element_def$trans_imp[7]*element_def$trans_imp[2],
-                                       A == "100" & O == "100"~ element_def$trans_imp[7]*element_def$trans_imp[1])) %>%
+                                       A == "000" & O == "100" ~ element_def$trans_imp[1],
+                                       A == "000" & O == "010" ~ element_def$trans_imp[2],
+                                       A == "000" & O == "001" ~ element_def$trans_imp[3],
+                                       A == "100" & O == "100"~ element_def$trans_imp[7]*element_def$trans_imp[1],
+                                       A == "100" & O == "010" ~ element_def$trans_imp[7]*element_def$trans_imp[2],
+                                       A == "100" & O == "001" ~ element_def$trans_imp[7]*element_def$trans_imp[3],
+                                       A == "010" & O == "100" ~ element_def$trans_imp[8]*element_def$trans_imp[1],
+                                       A == "010" & O == "010" ~ element_def$trans_imp[8]*element_def$trans_imp[2],
+                                       A == "010" & O == "001" ~ element_def$trans_imp[8]*element_def$trans_imp[3],
+                                       A == "001" & O == "100" ~ element_def$trans_imp[9]*element_def$trans_imp[1],
+                                       A == "001" & O == "010" ~ element_def$trans_imp[9]*element_def$trans_imp[2],
+                                       A == "001" & O == "001" ~ element_def$trans_imp[9]*element_def$trans_imp[3])) %>%
                   select(i)
 
                 #save as a vector
                 i <- c(as.vector(ob_fsi), as.vector(i$i))
 
                 #make into a matrix with that on the diagonal
-                mat_i <- matrix(0, 29, 29)
+                mat_i <- matrix(0, length(i), length(i))
                 diag(mat_i) <- i
 
                 #make a behavior selection matrix
-                b_s <- create_select_mat("behavior")
+                b_s <- create_select_mat("behavior", equation, eq_df)
 
                 #now which terms do not have behavior in them
-                i_s <- matrix(data = rep(1, 29), nrow = 29)
+                i_s <- matrix(data = rep(1, length(i)), nrow = length(i))
                 i_3 <- as.matrix(c(1, 1, 1))
                 g <- i_s - b_s %*% i_3
                 g <- as.vector(g)
@@ -157,9 +171,9 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 sol <- term1 %*% term2
 
                 #put into nicer format
-                opt_behavior_object <- tibble(E = sol[1],
-                                       P = sol[2],
-                                       A = sol[3],
+                opt_behavior_object <- tibble(opt_E = sol[1],
+                                       opt_P = sol[2],
+                                       opt_A = sol[3],
                                        term = "object")
 
 

@@ -42,14 +42,19 @@ transient_impression <- function(act, beh, obj, dictionary = "us", equation = c(
           #read in data
           data("us_2015_full", envir=environment())
 
-          #first get the EPA values for the elements
-          abo_epa <- us_2015_full %>%
-            filter((term == act & type == "identity") |
-                     (term == beh & type == "behavior") |
-                     (term == obj & type == "identity")) %>%
-            mutate(element = case_when(term == act ~ "A",
-                                       term == beh ~ "B",
-                                       term == obj ~ "O")) %>%
+          a <- us_2015_full %>%
+            filter(term == act & type == "identity") %>%
+            mutate(element = "A")
+
+          b <- us_2015_full %>%
+            filter(term == beh & type == "behavior") %>%
+            mutate(element = "B")
+
+          o <- us_2015_full %>%
+            filter(term == obj & type == "identity") %>%
+            mutate(element = "O")
+
+          abo_epa <- rbind(a, b, o) %>%
             select(term, element, E, P, A) %>%
             pivot_longer(cols = E:A, names_to = "dimension",
                          values_to = "fundamental_sentiment") %>%

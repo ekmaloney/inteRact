@@ -7,16 +7,22 @@
 #'
 #' @examples
 
-create_select_mat <- function(term) {
-        #load in the data
-        data("us_1978", envir=environment())
+create_select_mat <- function(term, equation = c("us", "user_supplied"), eq_df = NULL) {
+
+        if(equation == "us"){
+                data("us_1978", envir=environment())
+                eq <- us_1978
+        } else {
+                eq <- eq_df
+        }
+
 
         #make identity matrix
         id_mat <- matrix(0, 9, 9)
         diag(id_mat) <- 1
 
         #get the coefficients from the
-        coefs <- us_1978 %>% select(AE:OA) %>% as.matrix()
+        coefs <- eq %>% select(AE:OA) %>% as.matrix()
 
         z <- rbind(id_mat, coefs)
 
