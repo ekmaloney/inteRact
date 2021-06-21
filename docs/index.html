@@ -46,6 +46,18 @@
 <li>
   <a href="reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/Example_Analysis.html">Example_Analysis</a>
+    </li>
+  </ul>
+</li>
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
@@ -96,7 +108,7 @@
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://tibble.tidyverse.org/">tibble</a></span><span class="op">)</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="http://tidyverse.tidyverse.org">tidyverse</a></span><span class="op">)</span>
 <span class="co">#&gt; ── Attaching packages ─────────────────────────────────────── tidyverse 1.3.0 ──</span>
-<span class="co">#&gt; ✓ ggplot2 3.3.3     ✓ dplyr   1.0.5</span>
+<span class="co">#&gt; ✓ ggplot2 3.3.3     ✓ dplyr   1.0.6</span>
 <span class="co">#&gt; ✓ tidyr   1.1.3     ✓ stringr 1.4.0</span>
 <span class="co">#&gt; ✓ readr   1.4.0     ✓ forcats 0.5.1</span>
 <span class="co">#&gt; ✓ purrr   0.3.4</span>
@@ -105,7 +117,7 @@
 <span class="co">#&gt; x dplyr::group_rows() masks kableExtra::group_rows()</span>
 <span class="co">#&gt; x dplyr::lag()        masks stats::lag()</span>
 
-<span class="co">#load US dictionary </span>
+<span class="co">#load US dict</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="st">"us_2015_full"</span><span class="op">)</span>
 
 <span class="co">#make a dataframe of events </span>
@@ -117,128 +129,128 @@
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">events</span>, caption <span class="op">=</span> <span class="st">"Sample Events for Analysis"</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <caption>
-<p>Sample Events for Analysis</p>
+Sample Events for Analysis
 </caption>
 <thead><tr>
 <th style="text-align:left;">
-<p>actor</p>
+actor
 </th>
 <th style="text-align:left;">
-<p>behavior</p>
+behavior
 </th>
 <th style="text-align:left;">
-<p>object</p>
+object
 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>dolt</p>
-</td>
-<td style="text-align:left;">
-<p>say_farewell_to</p>
-</td>
-<td style="text-align:left;">
-<p>executioner</p>
+cook
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>sheet_metal_worker</p>
-</td>
-<td style="text-align:left;">
-<p>debate_with</p>
-</td>
-<td style="text-align:left;">
-<p>junkie</p>
+executioner
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>lout</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>casual_laborer</p>
-</td>
-<td style="text-align:left;">
-<p>deprecate</p>
-</td>
-<td style="text-align:left;">
-<p>bailiff</p>
+trainee
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>welder</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>addict</p>
-</td>
-<td style="text-align:left;">
-<p>suspect</p>
-</td>
-<td style="text-align:left;">
-<p>assistant</p>
+junkie
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+lout
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+bailiff
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+housebreaker
+</td>
+<td style="text-align:left;">
+implicate
+</td>
+<td style="text-align:left;">
+welder
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+addict
+</td>
+<td style="text-align:left;">
+suspect
+</td>
+<td style="text-align:left;">
+assistant
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+millionaire
+</td>
+<td style="text-align:left;">
+shock
+</td>
+<td style="text-align:left;">
+machine_repairer
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hothead
+</td>
+<td style="text-align:left;">
+refuse
+</td>
+<td style="text-align:left;">
+blind_person
 </td>
 </tr>
 </tbody>
@@ -248,171 +260,175 @@
 <a href="#deflection" class="anchor"></a>Deflection</h3>
 <p>To calculate deflection for a single event, you can use the function <em>calc_deflection</em>, which has 4 arguments: actor, behavior, object (all character strings), and dictionary (set to US currently). To calculate deflection for a series of events, you can use the function <em>batch_deflection</em> which has 1 argument: a dataframe with an actor, behavior, and object column (must be named that). For example, to find the deflection of you would do the following:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_deflection.html">get_deflection</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/get_deflection.html">get_deflection</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span>, equation <span class="op">=</span> <span class="st">"us"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/r/base/print.html">print</a></span><span class="op">(</span><span class="va">d</span><span class="op">)</span>
-<span class="co">#&gt; $brute.d</span>
-<span class="co">#&gt; [1] 3.905718</span></code></pre></div>
+<span class="co">#&gt; # A tibble: 1 x 1</span>
+<span class="co">#&gt;       d</span>
+<span class="co">#&gt;   &lt;dbl&gt;</span>
+<span class="co">#&gt; 1  3.91</span></code></pre></div>
 <p>To calculate the deflection of all of the events in the sample events dataframe, you would do the following:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">events</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span> <span class="fu">mutate</span><span class="op">(</span>d <span class="op">=</span> <span class="fu"><a href="reference/get_deflection.html">get_deflection</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">events</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span> 
+          <span class="fu">rowwise</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+          <span class="fu">mutate</span><span class="op">(</span>d <span class="op">=</span> <span class="fu"><a href="reference/get_deflection.html">get_deflection</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span>, equation <span class="op">=</span> <span class="st">"us"</span><span class="op">)</span>,
+                 d <span class="op">=</span> <span class="va">d</span><span class="op">$</span><span class="va">d</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">events</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-<p>actor</p>
+actor
 </th>
 <th style="text-align:left;">
-<p>behavior</p>
+behavior
 </th>
 <th style="text-align:left;">
-<p>object</p>
+object
 </th>
-<th style="text-align:left;">
-<p>d</p>
+<th style="text-align:right;">
+d
 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>dolt</p>
-</td>
-<td style="text-align:left;">
-<p>say_farewell_to</p>
-</td>
-<td style="text-align:left;">
-<p>executioner</p>
-</td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.905718
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>sheet_metal_worker</p>
-</td>
-<td style="text-align:left;">
-<p>debate_with</p>
-</td>
-<td style="text-align:left;">
-<p>junkie</p>
-</td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.507459
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>casual_laborer</p>
-</td>
-<td style="text-align:left;">
-<p>deprecate</p>
-</td>
-<td style="text-align:left;">
-<p>bailiff</p>
-</td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+10.456399
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
-</td>
-</tr>
-<tr>
-<td style="text-align:left;">
-<p>addict</p>
-</td>
-<td style="text-align:left;">
-<p>suspect</p>
-</td>
-<td style="text-align:left;">
-<p>assistant</p>
-</td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.434523
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+5.018938
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+bailiff
+</td>
+<td style="text-align:right;">
+7.195140
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>2.707174</p>
+implicate
+</td>
+<td style="text-align:left;">
+welder
+</td>
+<td style="text-align:right;">
+2.245480
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+addict
+</td>
+<td style="text-align:left;">
+suspect
+</td>
+<td style="text-align:left;">
+assistant
+</td>
+<td style="text-align:right;">
+3.943665
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+millionaire
+</td>
+<td style="text-align:left;">
+shock
+</td>
+<td style="text-align:left;">
+machine_repairer
+</td>
+<td style="text-align:right;">
+4.072882
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+hothead
+</td>
+<td style="text-align:left;">
+refuse
+</td>
+<td style="text-align:left;">
+blind_person
+</td>
+<td style="text-align:right;">
+2.707174
 </td>
 </tr>
 </tbody>
@@ -423,3435 +439,3434 @@
 <a href="#element-deflection" class="anchor"></a>Element Deflection</h3>
 <p>Additionally, you can see which elements contribute the most to the overall deflection by using the <em>element_deflection</em> function, as below. This returns a dataframe that includes each element’s fundamental sentiment, the corresponding transient impression, the difference between the two, and the squared difference. In this way, you can see which element moved the most in EPA space after an event. In the case of brute works cook, the most deflection element-dimension is the Power of the Object (cook) followed by the Evaluation of the Actor (brute),</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="reference/element_deflection.html">element_deflection</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="fu"><a href="reference/element_deflection.html">element_deflection</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span>, equation <span class="op">=</span> <span class="st">"us"</span><span class="op">)</span>, digits <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-<p>term</p>
+term
 </th>
 <th style="text-align:left;">
-<p>element</p>
+element
 </th>
 <th style="text-align:left;">
-<p>dimension</p>
+dimension
 </th>
 <th style="text-align:right;">
-<p>fundamental_sentiment</p>
+fundamental_sentiment
 </th>
 <th style="text-align:right;">
-<p>trans_imp</p>
+trans_imp
 </th>
 <th style="text-align:right;">
-<p>difference</p>
+difference
 </th>
 <th style="text-align:right;">
-<p>sqd_diff</p>
+sqd_diff
 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-1.97</p>
+-1.97
 </td>
 <td style="text-align:right;">
-<p>-1.178</p>
+-1.178
 </td>
 <td style="text-align:right;">
-<p>-0.792</p>
+-0.792
 </td>
 <td style="text-align:right;">
-<p>0.626</p>
+0.626
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.74</p>
+1.74
 </td>
 <td style="text-align:right;">
-<p>1.571</p>
+1.571
 </td>
 <td style="text-align:right;">
-<p>0.169</p>
+0.169
 </td>
 <td style="text-align:right;">
-<p>0.029</p>
+0.029
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.44</p>
+1.44
 </td>
 <td style="text-align:right;">
-<p>1.148</p>
+1.148
 </td>
 <td style="text-align:right;">
-<p>0.292</p>
+0.292
 </td>
 <td style="text-align:right;">
-<p>0.085</p>
+0.085
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.27</p>
+0.27
 </td>
 <td style="text-align:right;">
-<p>-0.346</p>
+-0.346
 </td>
 <td style="text-align:right;">
-<p>0.616</p>
+0.616
 </td>
 <td style="text-align:right;">
-<p>0.379</p>
+0.379
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.51</p>
+1.51
 </td>
 <td style="text-align:right;">
-<p>1.457</p>
+1.457
 </td>
 <td style="text-align:right;">
-<p>0.053</p>
+0.053
 </td>
 <td style="text-align:right;">
-<p>0.003</p>
+0.003
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.99</p>
+0.99
 </td>
 <td style="text-align:right;">
-<p>0.999</p>
+0.999
 </td>
 <td style="text-align:right;">
-<p>-0.009</p>
+-0.009
 </td>
 <td style="text-align:right;">
-<p>0.000</p>
+0.000
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>2.24</p>
+2.24
 </td>
 <td style="text-align:right;">
-<p>1.240</p>
+1.240
 </td>
 <td style="text-align:right;">
-<p>1.000</p>
+1.000
 </td>
 <td style="text-align:right;">
-<p>0.999</p>
+0.999
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.69</p>
+1.69
 </td>
 <td style="text-align:right;">
-<p>0.464</p>
+0.464
 </td>
 <td style="text-align:right;">
-<p>1.226</p>
+1.226
 </td>
 <td style="text-align:right;">
-<p>1.504</p>
+1.504
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.58</p>
+1.58
 </td>
 <td style="text-align:right;">
-<p>1.051</p>
+1.051
 </td>
 <td style="text-align:right;">
-<p>0.529</p>
+0.529
 </td>
 <td style="text-align:right;">
-<p>0.280</p>
+0.280
 </td>
 </tr>
 </tbody>
 </table>
 <p>You can do this for an entire dataframe with a little bit of nesting, as follows:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">elem_def</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span>
+<code class="sourceCode R"><span class="va">elem_def</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span>
             <span class="fu">rowwise</span><span class="op">(</span><span class="op">)</span> <span class="op">%&gt;%</span>
-            <span class="fu">mutate</span><span class="op">(</span>el_def <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="reference/element_deflection.html">element_deflection</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
+            <span class="fu">mutate</span><span class="op">(</span>el_def <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="reference/element_deflection.html">element_deflection</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span>, equation <span class="op">=</span> <span class="st">"us"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span>
             <span class="fu">unnest</span><span class="op">(</span><span class="va">el_def</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">elem_def</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-<p>actor</p>
+actor
 </th>
 <th style="text-align:left;">
-<p>behavior</p>
+behavior
 </th>
 <th style="text-align:left;">
-<p>object</p>
-</th>
-<th style="text-align:left;">
-<p>d</p>
-</th>
-<th style="text-align:left;">
-<p>term</p>
-</th>
-<th style="text-align:left;">
-<p>element</p>
-</th>
-<th style="text-align:left;">
-<p>dimension</p>
+object
 </th>
 <th style="text-align:right;">
-<p>fundamental_sentiment</p>
+d
+</th>
+<th style="text-align:left;">
+term
+</th>
+<th style="text-align:left;">
+element
+</th>
+<th style="text-align:left;">
+dimension
 </th>
 <th style="text-align:right;">
-<p>trans_imp</p>
+fundamental_sentiment
 </th>
 <th style="text-align:right;">
-<p>difference</p>
+trans_imp
 </th>
 <th style="text-align:right;">
-<p>sqd_diff</p>
+difference
+</th>
+<th style="text-align:right;">
+sqd_diff
 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-1.97</p>
+-1.97
 </td>
 <td style="text-align:right;">
-<p>-1.1784985</p>
+-1.1784985
 </td>
 <td style="text-align:right;">
-<p>-0.7915015</p>
+-0.7915015
 </td>
 <td style="text-align:right;">
-<p>0.6264747</p>
+0.6264747
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.74</p>
+1.74
 </td>
 <td style="text-align:right;">
-<p>1.5705780</p>
+1.5705780
 </td>
 <td style="text-align:right;">
-<p>0.1694220</p>
+0.1694220
 </td>
 <td style="text-align:right;">
-<p>0.0287038</p>
+0.0287038
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.44</p>
+1.44
 </td>
 <td style="text-align:right;">
-<p>1.1484640</p>
+1.1484640
 </td>
 <td style="text-align:right;">
-<p>0.2915360</p>
+0.2915360
 </td>
 <td style="text-align:right;">
-<p>0.0849932</p>
+0.0849932
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.27</p>
+0.27
 </td>
 <td style="text-align:right;">
-<p>-0.3456641</p>
+-0.3456641
 </td>
 <td style="text-align:right;">
-<p>0.6156641</p>
+0.6156641
 </td>
 <td style="text-align:right;">
-<p>0.3790423</p>
+0.3790423
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.51</p>
+1.51
 </td>
 <td style="text-align:right;">
-<p>1.4572250</p>
+1.4572250
 </td>
 <td style="text-align:right;">
-<p>0.0527750</p>
+0.0527750
 </td>
 <td style="text-align:right;">
-<p>0.0027852</p>
+0.0027852
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.99</p>
+0.99
 </td>
 <td style="text-align:right;">
-<p>0.9994000</p>
+0.9994000
 </td>
 <td style="text-align:right;">
-<p>-0.0094000</p>
+-0.0094000
 </td>
 <td style="text-align:right;">
-<p>0.0000884</p>
+0.0000884
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>2.24</p>
+2.24
 </td>
 <td style="text-align:right;">
-<p>1.2402630</p>
+1.2402630
 </td>
 <td style="text-align:right;">
-<p>0.9997370</p>
+0.9997370
 </td>
 <td style="text-align:right;">
-<p>0.9994741</p>
+0.9994741
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.69</p>
+1.69
 </td>
 <td style="text-align:right;">
-<p>0.4635380</p>
+0.4635380
 </td>
 <td style="text-align:right;">
-<p>1.2264620</p>
+1.2264620
 </td>
 <td style="text-align:right;">
-<p>1.5042090</p>
+1.5042090
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
-<td style="text-align:left;">
-<p>3.905718</p>
+<td style="text-align:right;">
+3.905718
 </td>
 <td style="text-align:left;">
-<p>cook</p>
+cook
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.58</p>
+1.58
 </td>
 <td style="text-align:right;">
-<p>1.0509000</p>
+1.0509000
 </td>
 <td style="text-align:right;">
-<p>0.5291000</p>
+0.5291000
 </td>
 <td style="text-align:right;">
-<p>0.2799468</p>
+0.2799468
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-0.97</p>
+-0.97
 </td>
 <td style="text-align:right;">
-<p>-0.5193836</p>
+-0.5193836
 </td>
 <td style="text-align:right;">
-<p>-0.4506164</p>
+-0.4506164
 </td>
 <td style="text-align:right;">
-<p>0.2030551</p>
+0.2030551
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-1.41</p>
+-1.41
 </td>
 <td style="text-align:right;">
-<p>-0.6078640</p>
+-0.6078640
 </td>
 <td style="text-align:right;">
-<p>-0.8021360</p>
+-0.8021360
 </td>
 <td style="text-align:right;">
-<p>0.6434222</p>
+0.6434222
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-1.00</p>
+-1.00
 </td>
 <td style="text-align:right;">
-<p>-0.8432000</p>
+-0.8432000
 </td>
 <td style="text-align:right;">
-<p>-0.1568000</p>
+-0.1568000
 </td>
 <td style="text-align:right;">
-<p>0.0245862</p>
+0.0245862
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-0.28</p>
+-0.28
 </td>
 <td style="text-align:right;">
-<p>-0.0892146</p>
+-0.0892146
 </td>
 <td style="text-align:right;">
-<p>-0.1907854</p>
+-0.1907854
 </td>
 <td style="text-align:right;">
-<p>0.0363991</p>
+0.0363991
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.76</p>
+0.76
 </td>
 <td style="text-align:right;">
-<p>0.3949840</p>
+0.3949840
 </td>
 <td style="text-align:right;">
-<p>0.3650160</p>
+0.3650160
 </td>
 <td style="text-align:right;">
-<p>0.1332367</p>
+0.1332367
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-0.89</p>
+-0.89
 </td>
 <td style="text-align:right;">
-<p>-0.6756000</p>
+-0.6756000
 </td>
 <td style="text-align:right;">
-<p>-0.2144000</p>
+-0.2144000
 </td>
 <td style="text-align:right;">
-<p>0.0459674</p>
+0.0459674
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-1.77</p>
+-1.77
 </td>
 <td style="text-align:right;">
-<p>-1.1446720</p>
+-1.1446720
 </td>
 <td style="text-align:right;">
-<p>-0.6253280</p>
+-0.6253280
 </td>
 <td style="text-align:right;">
-<p>0.3910351</p>
+0.3910351
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>2.77</p>
+2.77
 </td>
 <td style="text-align:right;">
-<p>1.3696400</p>
+1.3696400
 </td>
 <td style="text-align:right;">
-<p>1.4003600</p>
+1.4003600
 </td>
 <td style="text-align:right;">
-<p>1.9610081</p>
+1.9610081
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
-<td style="text-align:left;">
-<p>3.507459</p>
+<td style="text-align:right;">
+3.507459
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
+executioner
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.25</p>
+0.25
 </td>
 <td style="text-align:right;">
-<p>-0.0122000</p>
+-0.0122000
 </td>
 <td style="text-align:right;">
-<p>0.2622000</p>
+0.2622000
 </td>
 <td style="text-align:right;">
-<p>0.0687488</p>
+0.0687488
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>1.95</p>
+1.95
 </td>
 <td style="text-align:right;">
-<p>-0.7791492</p>
+-0.7791492
 </td>
 <td style="text-align:right;">
-<p>2.7291492</p>
+2.7291492
 </td>
 <td style="text-align:right;">
-<p>7.4482554</p>
+7.4482554
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.64</p>
+1.64
 </td>
 <td style="text-align:right;">
-<p>0.4789640</p>
+0.4789640
 </td>
 <td style="text-align:right;">
-<p>1.1610360</p>
+1.1610360
 </td>
 <td style="text-align:right;">
-<p>1.3480046</p>
+1.3480046
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.38</p>
+0.38
 </td>
 <td style="text-align:right;">
-<p>0.6974840</p>
+0.6974840
 </td>
 <td style="text-align:right;">
-<p>-0.3174840</p>
+-0.3174840
 </td>
 <td style="text-align:right;">
-<p>0.1007961</p>
+0.1007961
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-1.52</p>
+-1.52
 </td>
 <td style="text-align:right;">
-<p>-1.1916104</p>
+-1.1916104
 </td>
 <td style="text-align:right;">
-<p>-0.3283896</p>
+-0.3283896
 </td>
 <td style="text-align:right;">
-<p>0.1078397</p>
+0.1078397
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-1.37</p>
+-1.37
 </td>
 <td style="text-align:right;">
-<p>-0.4965680</p>
+-0.4965680
 </td>
 <td style="text-align:right;">
-<p>-0.8734320</p>
+-0.8734320
 </td>
 <td style="text-align:right;">
-<p>0.7628835</p>
+0.7628835
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.47</p>
+0.47
 </td>
 <td style="text-align:right;">
-<p>0.3932000</p>
+0.3932000
 </td>
 <td style="text-align:right;">
-<p>0.0768000</p>
+0.0768000
 </td>
 <td style="text-align:right;">
-<p>0.0058982</p>
+0.0058982
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.88</p>
+0.88
 </td>
 <td style="text-align:right;">
-<p>0.1347440</p>
+0.1347440
 </td>
 <td style="text-align:right;">
-<p>0.7452560</p>
+0.7452560
 </td>
 <td style="text-align:right;">
-<p>0.5554065</p>
+0.5554065
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-1.42</p>
+-1.42
 </td>
 <td style="text-align:right;">
-<p>-1.6165460</p>
+-1.6165460
 </td>
 <td style="text-align:right;">
-<p>0.1965460</p>
+0.1965460
 </td>
 <td style="text-align:right;">
-<p>0.0386303</p>
+0.0386303
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
-<td style="text-align:left;">
-<p>10.4564</p>
+<td style="text-align:right;">
+10.456399
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
+trainee
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-0.62</p>
+-0.62
 </td>
 <td style="text-align:right;">
-<p>-0.3222000</p>
+-0.3222000
 </td>
 <td style="text-align:right;">
-<p>-0.2978000</p>
+-0.2978000
 </td>
 <td style="text-align:right;">
-<p>0.0886848</p>
+0.0886848
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.91</p>
+0.91
 </td>
 <td style="text-align:right;">
-<p>0.1776507</p>
+0.1776507
 </td>
 <td style="text-align:right;">
-<p>0.7323493</p>
+0.7323493
 </td>
 <td style="text-align:right;">
-<p>0.5363355</p>
+0.5363355
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.31</p>
+0.31
 </td>
 <td style="text-align:right;">
-<p>0.6883350</p>
+0.6883350
 </td>
 <td style="text-align:right;">
-<p>-0.3783350</p>
+-0.3783350
 </td>
 <td style="text-align:right;">
-<p>0.1431374</p>
+0.1431374
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.15</p>
+1.15
 </td>
 <td style="text-align:right;">
-<p>1.2525100</p>
+1.2525100
 </td>
 <td style="text-align:right;">
-<p>-0.1025100</p>
+-0.1025100
 </td>
 <td style="text-align:right;">
-<p>0.0105083</p>
+0.0105083
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>1.15</p>
+1.15
 </td>
 <td style="text-align:right;">
-<p>0.0807570</p>
+0.0807570
 </td>
 <td style="text-align:right;">
-<p>1.0692430</p>
+1.0692430
 </td>
 <td style="text-align:right;">
-<p>1.1432806</p>
+1.1432806
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.73</p>
+1.73
 </td>
 <td style="text-align:right;">
-<p>1.0257150</p>
+1.0257150
 </td>
 <td style="text-align:right;">
-<p>0.7042850</p>
+0.7042850
 </td>
 <td style="text-align:right;">
-<p>0.4960174</p>
+0.4960174
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.81</p>
+1.81
 </td>
 <td style="text-align:right;">
-<p>1.6245000</p>
+1.6245000
 </td>
 <td style="text-align:right;">
-<p>0.1855000</p>
+0.1855000
 </td>
 <td style="text-align:right;">
-<p>0.0344102</p>
+0.0344102
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-2.10</p>
+-2.10
 </td>
 <td style="text-align:right;">
-<p>-1.2219150</p>
+-1.2219150
 </td>
 <td style="text-align:right;">
-<p>-0.8780850</p>
+-0.8780850
 </td>
 <td style="text-align:right;">
-<p>0.7710333</p>
+0.7710333
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-2.04</p>
+-2.04
 </td>
 <td style="text-align:right;">
-<p>-1.5008700</p>
+-1.5008700
 </td>
 <td style="text-align:right;">
-<p>-0.5391300</p>
+-0.5391300
 </td>
 <td style="text-align:right;">
-<p>0.2906612</p>
+0.2906612
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
-<td style="text-align:left;">
-<p>3.434523</p>
+<td style="text-align:right;">
+3.434523
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
+junkie
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-0.04</p>
+-0.04
 </td>
 <td style="text-align:right;">
-<p>0.0556000</p>
+0.0556000
 </td>
 <td style="text-align:right;">
-<p>-0.0956000</p>
+-0.0956000
 </td>
 <td style="text-align:right;">
-<p>0.0091394</p>
+0.0091394
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.76</p>
+0.76
 </td>
 <td style="text-align:right;">
-<p>-0.6721397</p>
+-0.6721397
 </td>
 <td style="text-align:right;">
-<p>1.4321397</p>
+1.4321397
 </td>
 <td style="text-align:right;">
-<p>2.0510241</p>
+2.0510241
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.14</p>
+0.14
 </td>
 <td style="text-align:right;">
-<p>-0.8492180</p>
+-0.8492180
 </td>
 <td style="text-align:right;">
-<p>0.9892180</p>
+0.9892180
 </td>
 <td style="text-align:right;">
-<p>0.9785523</p>
+0.9785523
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-0.66</p>
+-0.66
 </td>
 <td style="text-align:right;">
-<p>0.0844160</p>
+0.0844160
 </td>
 <td style="text-align:right;">
-<p>-0.7444160</p>
+-0.7444160
 </td>
 <td style="text-align:right;">
-<p>0.5541552</p>
+0.5541552
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-1.58</p>
+-1.58
 </td>
 <td style="text-align:right;">
-<p>-0.9170182</p>
+-0.9170182
 </td>
 <td style="text-align:right;">
-<p>-0.6629818</p>
+-0.6629818
 </td>
 <td style="text-align:right;">
-<p>0.4395449</p>
+0.4395449
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-2.02</p>
+-2.02
 </td>
 <td style="text-align:right;">
-<p>-1.1243820</p>
+-1.1243820
 </td>
 <td style="text-align:right;">
-<p>-0.8956180</p>
+-0.8956180
 </td>
 <td style="text-align:right;">
-<p>0.8021316</p>
+0.8021316
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.71</p>
+0.71
 </td>
 <td style="text-align:right;">
-<p>0.3298000</p>
+0.3298000
 </td>
 <td style="text-align:right;">
-<p>0.3802000</p>
+0.3802000
 </td>
 <td style="text-align:right;">
-<p>0.1445520</p>
+0.1445520
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-0.99</p>
+-0.99
 </td>
 <td style="text-align:right;">
-<p>-0.9187500</p>
+-0.9187500
 </td>
 <td style="text-align:right;">
-<p>-0.0712500</p>
+-0.0712500
 </td>
 <td style="text-align:right;">
-<p>0.0050766</p>
+0.0050766
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-0.34</p>
+-0.34
 </td>
 <td style="text-align:right;">
-<p>-0.5430980</p>
+-0.5430980
 </td>
 <td style="text-align:right;">
-<p>0.2030980</p>
+0.2030980
 </td>
 <td style="text-align:right;">
-<p>0.0412488</p>
+0.0412488
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
-<td style="text-align:left;">
-<p>5.018938</p>
+<td style="text-align:right;">
+5.018938
 </td>
 <td style="text-align:left;">
-<p>lout</p>
+lout
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.08</p>
+0.08
 </td>
 <td style="text-align:right;">
-<p>0.0285000</p>
+0.0285000
 </td>
 <td style="text-align:right;">
-<p>0.0515000</p>
+0.0515000
 </td>
 <td style="text-align:right;">
-<p>0.0026522</p>
+0.0026522
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.77</p>
+0.77
 </td>
 <td style="text-align:right;">
-<p>-0.9140124</p>
+-0.9140124
 </td>
 <td style="text-align:right;">
-<p>1.6840124</p>
+1.6840124
 </td>
 <td style="text-align:right;">
-<p>2.8358978</p>
+2.8358978
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-0.42</p>
+-0.42
 </td>
 <td style="text-align:right;">
-<p>-0.0819800</p>
+-0.0819800
 </td>
 <td style="text-align:right;">
-<p>-0.3380200</p>
+-0.3380200
 </td>
 <td style="text-align:right;">
-<p>0.1142575</p>
+0.1142575
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-0.05</p>
+-0.05
 </td>
 <td style="text-align:right;">
-<p>0.4427200</p>
+0.4427200
 </td>
 <td style="text-align:right;">
-<p>-0.4927200</p>
+-0.4927200
 </td>
 <td style="text-align:right;">
-<p>0.2427730</p>
+0.2427730
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-2.30</p>
+-2.30
 </td>
 <td style="text-align:right;">
-<p>-1.3419544</p>
+-1.3419544
 </td>
 <td style="text-align:right;">
-<p>-0.9580456</p>
+-0.9580456
 </td>
 <td style="text-align:right;">
-<p>0.9178514</p>
+0.9178514
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.18</p>
+0.18
 </td>
 <td style="text-align:right;">
-<p>0.3876100</p>
+0.3876100
 </td>
 <td style="text-align:right;">
-<p>-0.2076100</p>
+-0.2076100
 </td>
 <td style="text-align:right;">
-<p>0.0431019</p>
+0.0431019
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.54</p>
+0.54
 </td>
 <td style="text-align:right;">
-<p>0.3907000</p>
+0.3907000
 </td>
 <td style="text-align:right;">
-<p>0.1493000</p>
+0.1493000
 </td>
 <td style="text-align:right;">
-<p>0.0222905</p>
+0.0222905
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.72</p>
+0.72
 </td>
 <td style="text-align:right;">
-<p>-0.0440580</p>
+-0.0440580
 </td>
 <td style="text-align:right;">
-<p>0.7640580</p>
+0.7640580
 </td>
 <td style="text-align:right;">
-<p>0.5837846</p>
+0.5837846
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.56</p>
+1.56
 </td>
 <td style="text-align:right;">
-<p>0.0038400</p>
+0.0038400
 </td>
 <td style="text-align:right;">
-<p>1.5561600</p>
+1.5561600
 </td>
 <td style="text-align:right;">
-<p>2.4216339</p>
+2.4216339
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
-<td style="text-align:left;">
-<p>7.19514</p>
+<td style="text-align:right;">
+7.195140
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
+bailiff
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.10</p>
+0.10
 </td>
 <td style="text-align:right;">
-<p>-0.0164000</p>
+-0.0164000
 </td>
 <td style="text-align:right;">
-<p>0.1164000</p>
+0.1164000
 </td>
 <td style="text-align:right;">
-<p>0.0135490</p>
+0.0135490
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-2.82</p>
+-2.82
 </td>
 <td style="text-align:right;">
-<p>-1.7520233</p>
+-1.7520233
 </td>
 <td style="text-align:right;">
-<p>-1.0679767</p>
+-1.0679767
 </td>
 <td style="text-align:right;">
-<p>1.1405743</p>
+1.1405743
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.84</p>
+0.84
 </td>
 <td style="text-align:right;">
-<p>0.8021120</p>
+0.8021120
 </td>
 <td style="text-align:right;">
-<p>0.0378880</p>
+0.0378880
 </td>
 <td style="text-align:right;">
-<p>0.0014355</p>
+0.0014355
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.74</p>
+0.74
 </td>
 <td style="text-align:right;">
-<p>0.6477120</p>
+0.6477120
 </td>
 <td style="text-align:right;">
-<p>0.0922880</p>
+0.0922880
 </td>
 <td style="text-align:right;">
-<p>0.0085171</p>
+0.0085171
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-0.79</p>
+-0.79
 </td>
 <td style="text-align:right;">
-<p>-0.9885955</p>
+-0.9885955
 </td>
 <td style="text-align:right;">
-<p>0.1985955</p>
+0.1985955
 </td>
 <td style="text-align:right;">
-<p>0.0394402</p>
+0.0394402
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.76</p>
+0.76
 </td>
 <td style="text-align:right;">
-<p>0.8622740</p>
+0.8622740
 </td>
 <td style="text-align:right;">
-<p>-0.1022740</p>
+-0.1022740
 </td>
 <td style="text-align:right;">
-<p>0.0104600</p>
+0.0104600
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.52</p>
+0.52
 </td>
 <td style="text-align:right;">
-<p>0.5042000</p>
+0.5042000
 </td>
 <td style="text-align:right;">
-<p>0.0158000</p>
+0.0158000
 </td>
 <td style="text-align:right;">
-<p>0.0002496</p>
+0.0002496
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.92</p>
+0.92
 </td>
 <td style="text-align:right;">
-<p>0.4074860</p>
+0.4074860
 </td>
 <td style="text-align:right;">
-<p>0.5125140</p>
+0.5125140
 </td>
 <td style="text-align:right;">
-<p>0.2626706</p>
+0.2626706
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.51</p>
+0.51
 </td>
 <td style="text-align:right;">
-<p>-0.3244710</p>
+-0.3244710
 </td>
 <td style="text-align:right;">
-<p>0.8344710</p>
+0.8344710
 </td>
 <td style="text-align:right;">
-<p>0.6963418</p>
+0.6963418
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
-<td style="text-align:left;">
-<p>2.245479</p>
+<td style="text-align:right;">
+2.245480
 </td>
 <td style="text-align:left;">
-<p>welder</p>
+welder
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.88</p>
+0.88
 </td>
 <td style="text-align:right;">
-<p>0.5871000</p>
+0.5871000
 </td>
 <td style="text-align:right;">
-<p>0.2929000</p>
+0.2929000
 </td>
 <td style="text-align:right;">
-<p>0.0857904</p>
+0.0857904
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-2.23</p>
+-2.23
 </td>
 <td style="text-align:right;">
-<p>-1.4536101</p>
+-1.4536101
 </td>
 <td style="text-align:right;">
-<p>-0.7763899</p>
+-0.7763899
 </td>
 <td style="text-align:right;">
-<p>0.6027813</p>
+0.6027813
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-2.36</p>
+-2.36
 </td>
 <td style="text-align:right;">
-<p>-1.0012660</p>
+-1.0012660
 </td>
 <td style="text-align:right;">
-<p>-1.3587340</p>
+-1.3587340
 </td>
 <td style="text-align:right;">
-<p>1.8461581</p>
+1.8461581
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.19</p>
+0.19
 </td>
 <td style="text-align:right;">
-<p>0.0317540</p>
+0.0317540
 </td>
 <td style="text-align:right;">
-<p>0.1582460</p>
+0.1582460
 </td>
 <td style="text-align:right;">
-<p>0.0250418</p>
+0.0250418
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-0.86</p>
+-0.86
 </td>
 <td style="text-align:right;">
-<p>-0.9284364</p>
+-0.9284364
 </td>
 <td style="text-align:right;">
-<p>0.0684364</p>
+0.0684364
 </td>
 <td style="text-align:right;">
-<p>0.0046835</p>
+0.0046835
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>0.54</p>
+0.54
 </td>
 <td style="text-align:right;">
-<p>0.1967200</p>
+0.1967200
 </td>
 <td style="text-align:right;">
-<p>0.3432800</p>
+0.3432800
 </td>
 <td style="text-align:right;">
-<p>0.1178412</p>
+0.1178412
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-0.61</p>
+-0.61
 </td>
 <td style="text-align:right;">
-<p>-0.1665000</p>
+-0.1665000
 </td>
 <td style="text-align:right;">
-<p>-0.4435000</p>
+-0.4435000
 </td>
 <td style="text-align:right;">
-<p>0.1966922</p>
+0.1966922
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>1.51</p>
+1.51
 </td>
 <td style="text-align:right;">
-<p>0.6991280</p>
+0.6991280
 </td>
 <td style="text-align:right;">
-<p>0.8108720</p>
+0.8108720
 </td>
 <td style="text-align:right;">
-<p>0.6575134</p>
+0.6575134
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-0.10</p>
+-0.10
 </td>
 <td style="text-align:right;">
-<p>-0.8011780</p>
+-0.8011780
 </td>
 <td style="text-align:right;">
-<p>0.7011780</p>
+0.7011780
 </td>
 <td style="text-align:right;">
-<p>0.4916506</p>
+0.4916506
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
-<td style="text-align:left;">
-<p>3.943665</p>
+<td style="text-align:right;">
+3.943665
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
+assistant
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.05</p>
+0.05
 </td>
 <td style="text-align:right;">
-<p>0.0861000</p>
+0.0861000
 </td>
 <td style="text-align:right;">
-<p>-0.0361000</p>
+-0.0361000
 </td>
 <td style="text-align:right;">
-<p>0.0013032</p>
+0.0013032
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.57</p>
+0.57
 </td>
 <td style="text-align:right;">
-<p>-0.6074843</p>
+-0.6074843
 </td>
 <td style="text-align:right;">
-<p>1.1774843</p>
+1.1774843
 </td>
 <td style="text-align:right;">
-<p>1.3864693</p>
+1.3864693
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>2.50</p>
+2.50
 </td>
 <td style="text-align:right;">
-<p>1.9123160</p>
+1.9123160
 </td>
 <td style="text-align:right;">
-<p>0.5876840</p>
+0.5876840
 </td>
 <td style="text-align:right;">
-<p>0.3453725</p>
+0.3453725
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.09</p>
+1.09
 </td>
 <td style="text-align:right;">
-<p>1.3095340</p>
+1.3095340
 </td>
 <td style="text-align:right;">
-<p>-0.2195340</p>
+-0.2195340
 </td>
 <td style="text-align:right;">
-<p>0.0481952</p>
+0.0481952
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-0.69</p>
+-0.69
 </td>
 <td style="text-align:right;">
-<p>-0.7746998</p>
+-0.7746998
 </td>
 <td style="text-align:right;">
-<p>0.0846998</p>
+0.0846998
 </td>
 <td style="text-align:right;">
-<p>0.0071740</p>
+0.0071740
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.44</p>
+1.44
 </td>
 <td style="text-align:right;">
-<p>1.5766150</p>
+1.5766150
 </td>
 <td style="text-align:right;">
-<p>-0.1366150</p>
+-0.1366150
 </td>
 <td style="text-align:right;">
-<p>0.0186637</p>
+0.0186637
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>1.79</p>
+1.79
 </td>
 <td style="text-align:right;">
-<p>1.3837000</p>
+1.3837000
 </td>
 <td style="text-align:right;">
-<p>0.4063000</p>
+0.4063000
 </td>
 <td style="text-align:right;">
-<p>0.1650797</p>
+0.1650797
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>1.36</p>
+1.36
 </td>
 <td style="text-align:right;">
-<p>0.5560130</p>
+0.5560130
 </td>
 <td style="text-align:right;">
-<p>0.8039870</p>
+0.8039870
 </td>
 <td style="text-align:right;">
-<p>0.6463951</p>
+0.6463951
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.02</p>
+1.02
 </td>
 <td style="text-align:right;">
-<p>-0.1633060</p>
+-0.1633060
 </td>
 <td style="text-align:right;">
-<p>1.1833060</p>
+1.1833060
 </td>
 <td style="text-align:right;">
-<p>1.4002131</p>
+1.4002131
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
-<td style="text-align:left;">
-<p>4.072882</p>
+<td style="text-align:right;">
+4.072882
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
+machine_repairer
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.68</p>
+0.68
 </td>
 <td style="text-align:right;">
-<p>0.4448000</p>
+0.4448000
 </td>
 <td style="text-align:right;">
-<p>0.2352000</p>
+0.2352000
 </td>
 <td style="text-align:right;">
-<p>0.0553190</p>
+0.0553190
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-1.92</p>
+-1.92
 </td>
 <td style="text-align:right;">
-<p>-1.4910576</p>
+-1.4910576
 </td>
 <td style="text-align:right;">
-<p>-0.4289424</p>
+-0.4289424
 </td>
 <td style="text-align:right;">
-<p>0.1839916</p>
+0.1839916
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-0.42</p>
+-0.42
 </td>
 <td style="text-align:right;">
-<p>0.4915250</p>
+0.4915250
 </td>
 <td style="text-align:right;">
-<p>-0.9115250</p>
+-0.9115250
 </td>
 <td style="text-align:right;">
-<p>0.8308778</p>
+0.8308778
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>2.59</p>
+2.59
 </td>
 <td style="text-align:right;">
-<p>1.8399440</p>
+1.8399440
 </td>
 <td style="text-align:right;">
-<p>0.7500560</p>
+0.7500560
 </td>
 <td style="text-align:right;">
-<p>0.5625840</p>
+0.5625840
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>-0.87</p>
+-0.87
 </td>
 <td style="text-align:right;">
-<p>-1.1084298</p>
+-1.1084298
 </td>
 <td style="text-align:right;">
-<p>0.2384298</p>
+0.2384298
 </td>
 <td style="text-align:right;">
-<p>0.0568488</p>
+0.0568488
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>1.28</p>
+1.28
 </td>
 <td style="text-align:right;">
-<p>1.0091390</p>
+1.0091390
 </td>
 <td style="text-align:right;">
-<p>0.2708610</p>
+0.2708610
 </td>
 <td style="text-align:right;">
-<p>0.0733657</p>
+0.0733657
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>B</p>
+B
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>0.64</p>
+0.64
 </td>
 <td style="text-align:right;">
-<p>1.1709000</p>
+1.1709000
 </td>
 <td style="text-align:right;">
-<p>-0.5309000</p>
+-0.5309000
 </td>
 <td style="text-align:right;">
-<p>0.2818548</p>
+0.2818548
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>E</p>
+E
 </td>
 <td style="text-align:right;">
-<p>0.65</p>
+0.65
 </td>
 <td style="text-align:right;">
-<p>0.1477320</p>
+0.1477320
 </td>
 <td style="text-align:right;">
-<p>0.5022680</p>
+0.5022680
 </td>
 <td style="text-align:right;">
-<p>0.2522731</p>
+0.2522731
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>P</p>
+P
 </td>
 <td style="text-align:right;">
-<p>-1.20</p>
+-1.20
 </td>
 <td style="text-align:right;">
-<p>-1.5266450</p>
+-1.5266450
 </td>
 <td style="text-align:right;">
-<p>0.3266450</p>
+0.3266450
 </td>
 <td style="text-align:right;">
-<p>0.1066970</p>
+0.1066970
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
-<td style="text-align:left;">
-<p>2.707174</p>
+<td style="text-align:right;">
+2.707174
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
+blind_person
 </td>
 <td style="text-align:left;">
-<p>O</p>
+O
 </td>
 <td style="text-align:left;">
-<p>A</p>
+A
 </td>
 <td style="text-align:right;">
-<p>-1.52</p>
+-1.52
 </td>
 <td style="text-align:right;">
-<p>-0.9211000</p>
+-0.9211000
 </td>
 <td style="text-align:right;">
-<p>-0.5989000</p>
+-0.5989000
 </td>
 <td style="text-align:right;">
-<p>0.3586812</p>
+0.3586812
 </td>
 </tr>
 </tbody>
@@ -3869,6 +3884,8 @@
 <p>ACT can also predict the optimal behavior for the actor to enact in the following interaction that would bring the transient sentiments back as close as possible to the fundamental sentiments. The function <em>optimal_behavior</em> finds the E, P, and A value for the optimal behavior</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">beh</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/optimal_behavior.html">optimal_behavior</a></span><span class="op">(</span><span class="st">"brute"</span>, <span class="st">"work"</span>, <span class="st">"cook"</span><span class="op">)</span>
+<span class="co">#&gt; Warning in if (equation == "us") {: the condition has length &gt; 1 and only the</span>
+<span class="co">#&gt; first element will be used</span>
 <span class="va">beh</span>
 <span class="co">#&gt; # A tibble: 1 x 3</span>
 <span class="co">#&gt;        E     P     A</span>
@@ -3931,266 +3948,265 @@
 <a href="#reidentification" class="anchor"></a>Reidentification</h3>
 <p>Following an ABO event, Actors and Objects can be reidentified by the other or an onlooker, to an identity that “fits” with their behavior better. The functions <em>reidentify_actor</em> and <em>reidentify_object</em> calculate this for you:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R">
-<span class="va">new_id</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span> 
+<code class="sourceCode R"><span class="va">new_id</span> <span class="op">&lt;-</span> <span class="va">events</span> <span class="op">%&gt;%</span> 
           <span class="va">rowwise</span> <span class="op">%&gt;%</span>  
-          <span class="fu">mutate</span><span class="op">(</span>new_actor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="reference/reidentify_actor.html">reidentify_actor</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
+          <span class="fu">mutate</span><span class="op">(</span>new_actor <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html">list</a></span><span class="op">(</span><span class="fu"><a href="reference/reidentify_actor.html">reidentify_actor</a></span><span class="op">(</span><span class="va">actor</span>, <span class="va">behavior</span>, <span class="va">object</span>, equation <span class="op">=</span> <span class="st">"us"</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">%&gt;%</span> 
           <span class="fu">unnest</span><span class="op">(</span><span class="va">new_actor</span>, names_sep <span class="op">=</span> <span class="st">"_"</span><span class="op">)</span>
 
 <span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html">kable</a></span><span class="op">(</span><span class="va">new_id</span>, digits <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></code></pre></div>
 <table class="table">
 <thead><tr>
 <th style="text-align:left;">
-<p>actor</p>
+actor
 </th>
 <th style="text-align:left;">
-<p>behavior</p>
+behavior
 </th>
 <th style="text-align:left;">
-<p>object</p>
-</th>
-<th style="text-align:left;">
-<p>d</p>
+object
 </th>
 <th style="text-align:right;">
-<p>new_actor_E</p>
+d
 </th>
 <th style="text-align:right;">
-<p>new_actor_P</p>
+new_actor_E
 </th>
 <th style="text-align:right;">
-<p>new_actor_A</p>
+new_actor_P
+</th>
+<th style="text-align:right;">
+new_actor_A
 </th>
 </tr></thead>
 <tbody>
 <tr>
 <td style="text-align:left;">
-<p>brute</p>
+brute
 </td>
 <td style="text-align:left;">
-<p>work</p>
+work
 </td>
 <td style="text-align:left;">
-<p>cook</p>
-</td>
-<td style="text-align:left;">
-<p>3.905718</p>
+cook
 </td>
 <td style="text-align:right;">
-<p>-0.27</p>
+3.91
 </td>
 <td style="text-align:right;">
-<p>1.37</p>
+-0.27
 </td>
 <td style="text-align:right;">
-<p>1.03</p>
+1.37
+</td>
+<td style="text-align:right;">
+1.03
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>dolt</p>
+dolt
 </td>
 <td style="text-align:left;">
-<p>say_farewell_to</p>
+say_farewell_to
 </td>
 <td style="text-align:left;">
-<p>executioner</p>
-</td>
-<td style="text-align:left;">
-<p>3.507459</p>
+executioner
 </td>
 <td style="text-align:right;">
-<p>-0.35</p>
+3.51
 </td>
 <td style="text-align:right;">
-<p>0.43</p>
+-0.35
 </td>
 <td style="text-align:right;">
-<p>-0.83</p>
+0.43
+</td>
+<td style="text-align:right;">
+-0.83
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>husband</p>
+husband
 </td>
 <td style="text-align:left;">
-<p>suck_up_to</p>
+suck_up_to
 </td>
 <td style="text-align:left;">
-<p>trainee</p>
-</td>
-<td style="text-align:left;">
-<p>10.4564</p>
+trainee
 </td>
 <td style="text-align:right;">
-<p>-1.59</p>
+10.46
 </td>
 <td style="text-align:right;">
-<p>-1.90</p>
+-1.59
 </td>
 <td style="text-align:right;">
-<p>0.51</p>
+-1.90
+</td>
+<td style="text-align:right;">
+0.51
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>sheet_metal_worker</p>
+sheet_metal_worker
 </td>
 <td style="text-align:left;">
-<p>debate_with</p>
+debate_with
 </td>
 <td style="text-align:left;">
-<p>junkie</p>
-</td>
-<td style="text-align:left;">
-<p>3.434523</p>
+junkie
 </td>
 <td style="text-align:right;">
-<p>-0.01</p>
+3.43
 </td>
 <td style="text-align:right;">
-<p>1.40</p>
+-0.01
 </td>
 <td style="text-align:right;">
-<p>1.51</p>
+1.40
+</td>
+<td style="text-align:right;">
+1.51
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hindu</p>
+hindu
 </td>
 <td style="text-align:left;">
-<p>beg</p>
+beg
 </td>
 <td style="text-align:left;">
-<p>lout</p>
-</td>
-<td style="text-align:left;">
-<p>5.018938</p>
+lout
 </td>
 <td style="text-align:right;">
-<p>-1.56</p>
+5.02
 </td>
 <td style="text-align:right;">
-<p>-3.06</p>
+-1.56
 </td>
 <td style="text-align:right;">
-<p>0.64</p>
+-3.06
+</td>
+<td style="text-align:right;">
+0.64
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>casual_laborer</p>
+casual_laborer
 </td>
 <td style="text-align:left;">
-<p>deprecate</p>
+deprecate
 </td>
 <td style="text-align:left;">
-<p>bailiff</p>
-</td>
-<td style="text-align:left;">
-<p>7.19514</p>
+bailiff
 </td>
 <td style="text-align:right;">
-<p>-2.07</p>
+7.20
 </td>
 <td style="text-align:right;">
-<p>0.12</p>
+-2.07
 </td>
 <td style="text-align:right;">
-<p>0.80</p>
+0.12
+</td>
+<td style="text-align:right;">
+0.80
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>housebreaker</p>
+housebreaker
 </td>
 <td style="text-align:left;">
-<p>implicate</p>
+implicate
 </td>
 <td style="text-align:left;">
-<p>welder</p>
-</td>
-<td style="text-align:left;">
-<p>2.245479</p>
+welder
 </td>
 <td style="text-align:right;">
-<p>-1.15</p>
+2.25
 </td>
 <td style="text-align:right;">
-<p>0.69</p>
+-1.15
 </td>
 <td style="text-align:right;">
-<p>0.69</p>
+0.69
+</td>
+<td style="text-align:right;">
+0.69
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>addict</p>
+addict
 </td>
 <td style="text-align:left;">
-<p>suspect</p>
+suspect
 </td>
 <td style="text-align:left;">
-<p>assistant</p>
-</td>
-<td style="text-align:left;">
-<p>3.943665</p>
+assistant
 </td>
 <td style="text-align:right;">
-<p>-1.14</p>
+3.94
 </td>
 <td style="text-align:right;">
-<p>0.39</p>
+-1.14
 </td>
 <td style="text-align:right;">
-<p>-0.46</p>
+0.39
+</td>
+<td style="text-align:right;">
+-0.46
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>millionaire</p>
+millionaire
 </td>
 <td style="text-align:left;">
-<p>shock</p>
+shock
 </td>
 <td style="text-align:left;">
-<p>machine_repairer</p>
-</td>
-<td style="text-align:left;">
-<p>4.072882</p>
+machine_repairer
 </td>
 <td style="text-align:right;">
-<p>-1.27</p>
+4.07
 </td>
 <td style="text-align:right;">
-<p>1.35</p>
+-1.27
 </td>
 <td style="text-align:right;">
-<p>1.64</p>
+1.35
+</td>
+<td style="text-align:right;">
+1.64
 </td>
 </tr>
 <tr>
 <td style="text-align:left;">
-<p>hothead</p>
+hothead
 </td>
 <td style="text-align:left;">
-<p>refuse</p>
+refuse
 </td>
 <td style="text-align:left;">
-<p>blind_person</p>
-</td>
-<td style="text-align:left;">
-<p>2.707174</p>
+blind_person
 </td>
 <td style="text-align:right;">
-<p>-1.26</p>
+2.71
 </td>
 <td style="text-align:right;">
-<p>1.16</p>
+-1.26
 </td>
 <td style="text-align:right;">
-<p>0.83</p>
+1.16
+</td>
+<td style="text-align:right;">
+0.83
 </td>
 </tr>
 </tbody>
