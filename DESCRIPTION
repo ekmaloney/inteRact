@@ -2,7 +2,7 @@ Package: inteRact
 Title: Implements Affect Control Theory Equations in R
 Version: 0.0.0.9000
 Authors@R: 
-    person(given = "Emily",
+    person(given = "Em",
            family = "Maloney",
            role = c("aut", "cre"),
            email = "emily.k.maloney@duke.edu",
