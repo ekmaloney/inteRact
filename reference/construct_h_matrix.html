@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Calculate the Optimal Behavior for the Actor following an Event — optimal_behavior • inteRact</title>
+<title>Construct H Matrix — construct_h_matrix • inteRact</title>
 
 
 <!-- jquery -->
@@ -39,8 +39,8 @@
 
 
 
-<meta property="og:title" content="Calculate the Optimal Behavior for the Actor following an Event — optimal_behavior" />
-<meta property="og:description" content="Calculate the Optimal Behavior for the Actor following an Event" />
+<meta property="og:title" content="Construct H Matrix — construct_h_matrix" />
+<meta property="og:description" content="Construct H Matrix" />
 
 
 
@@ -108,36 +108,20 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Calculate the Optimal Behavior for the Actor following an Event</h1>
-    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/optimal_behavior.R'><code>R/optimal_behavior.R</code></a></small>
-    <div class="hidden name"><code>optimal_behavior.Rd</code></div>
+    <h1>Construct H Matrix</h1>
+    <small class="dont-index">Source: <a href='https://github.com/ekmaloney/inteRact/blob/master/R/construct_h_matrix.R'><code>R/construct_h_matrix.R</code></a></small>
+    <div class="hidden name"><code>construct_h_matrix.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Calculate the Optimal Behavior for the Actor following an Event</p>
+    <p>Construct H Matrix</p>
     </div>
 
-    <pre class="usage"><span class='fu'>optimal_behavior</span><span class='op'>(</span>
-  <span class='va'>act</span>,
-  <span class='va'>beh</span>,
-  <span class='va'>obj</span>,
-  dictionary <span class='op'>=</span> <span class='st'>"us"</span>,
-  equation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"us"</span>, <span class='st'>"user_supplied"</span><span class='op'>)</span>,
-  eq_df <span class='op'>=</span> <span class='cn'>NULL</span>,
-  which <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"actor"</span>, <span class='st'>"behavior"</span>, <span class='st'>"both"</span><span class='op'>)</span>
-<span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>construct_h_matrix</span><span class='op'>(</span>equation <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"us"</span>, <span class='st'>"user supplied"</span><span class='op'>)</span>, eq_df <span class='op'>=</span> <span class='cn'>NULL</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>beh</th>
-      <td><p>lowercase string corresponding to the behavior term</p></td>
-    </tr>
-    <tr>
-      <th>dictionary</th>
-      <td><p>which dictionary to use, currently set to "us"</p></td>
-    </tr>
     <tr>
       <th>equation</th>
       <td><p>which equation to use - you can either set it to "us" for the
@@ -149,24 +133,13 @@ us 1978 equations, or "user supplied")</p></td>
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)</p></td>
     </tr>
-    <tr>
-      <th>which</th>
-      <td><p>indicate whether you want the optimal behavior for "actor", "object",
-or "both"</p></td>
-    </tr>
-    <tr>
-      <th>actor</th>
-      <td><p>lowercase string corresponding to the actor identity</p></td>
-    </tr>
-    <tr>
-      <th>object</th>
-      <td><p>lowercase string corresponding to the object identity</p></td>
-    </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>3 digit EPA indicating the optimal behavior</p>
+    
+
+
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
