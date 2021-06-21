@@ -24,7 +24,7 @@ reidentify_actor <- function(act, beh, obj, dictionary = "us", equation = c("us"
           i_a <- extract_terms(elem = "A", trans_imp_df)
 
           #create actor selection matrix
-          a_s <- create_select_mat("actor")
+          a_s <- create_select_mat("actor", equation, eq_df)
 
           #now which terms do not have actor in them
           i_s <- matrix(data = rep(1, 29), nrow = 29)

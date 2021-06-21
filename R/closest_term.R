@@ -51,6 +51,14 @@ closest_term <- function(e, p, a,
               slice(1:num_terms) %>%
               select(term_name, term_E, term_P, term_A, ssd)
 
+    if(nrow(terms) == 0){
+      terms <- tibble(term_name = "No terms within max distance",
+                      term_E = NA,
+                      term_P = NA,
+                      term_A = NA,
+                      ssd = NA)
+    }
+
     return(terms)
 }
 

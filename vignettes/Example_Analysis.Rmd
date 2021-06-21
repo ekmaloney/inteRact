@@ -17,6 +17,7 @@ knitr::opts_chunk$set(
 ```{r setup}
 library(inteRact)
 library(tidyverse)
+library(here)
 ```
 
 Step 1: Load data, select events
@@ -76,11 +77,10 @@ events %>%
 
 ```
 
-
 or if you only want predictions for actor/behavior --
 ```{r}
 
-events %>% 
+act_events <- events %>% 
           rowwise() %>% 
           mutate(deflection = get_deflection(actor, behavior, object, 
                                              equation = "user supplied", 
@@ -88,7 +88,24 @@ events %>%
                  opt_beh = list(optimal_behavior(actor, behavior, object, 
                                                  equation = "user_supplied",
                                                  eq_df = reshaped_eq, which = "actor"))) %>% 
-  unnest(opt_beh) %>% 
+  unnest(opt_beh)
+
+act_events %>% 
           head(10)
+```
+You can also search for the closest behavior to the opt_behavior: 
+```{r}
+act_events <- act_events %>% 
+              rowwise() %>% 
+              mutate(closest_beh = closest_term(e = opt_E,
+                                                p = opt_P,
+                                                a = opt_A,
+                                                term_typ = "behavior",
+                                                max_dist = 1,
+                                                num_terms = 1))
+
+act_events %>% head()
+
+
 ```
 
