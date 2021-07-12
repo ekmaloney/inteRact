@@ -57,8 +57,6 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                   mutate(f_s_i = if_else(element != "B",
                                          fundamental_sentiment, 1))
 
-
-
                 ####ACTOR
 
                 i_actor <- eq %>%
