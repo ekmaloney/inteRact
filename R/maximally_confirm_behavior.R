@@ -30,11 +30,11 @@ maximally_confirm_behavior <- function(actor, object, dictionary, equation, eq_d
   data("us_2015_full")
 
   a <- us_2015_full %>%
-        filter(term == act & type == "identity") %>%
+        filter(term == actor & type == "identity") %>%
         mutate(element = "A")
 
   o <- us_2015_full %>%
-    filter(term == obj & type == "identity") %>%
+    filter(term == object & type == "identity") %>%
     mutate(element = "O")
 
   ao_epa <- rbind(a, o) %>%
