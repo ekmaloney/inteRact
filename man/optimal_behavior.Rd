@@ -4,19 +4,17 @@
 \alias{optimal_behavior}
 \title{Calculate the Optimal Behavior for the Actor following an Event}
 \usage{
-optimal_behavior(
-  act,
-  beh,
-  obj,
-  dictionary_key,
-  gender,
-  equation_key,
-  eq_df = NULL,
-  which = c("actor", "behavior", "both")
-)
+optimal_behavior(df, equation_info)
 }
 \arguments{
+\item{actor}{lowercase string corresponding to the actor identity}
+
 \item{beh}{lowercase string corresponding to the behavior term}
+
+\item{object}{lowercase string corresponding to the object identity}
+
+\item{which}{indicate whether you want the optimal behavior for "actor", "object",
+or "both"}
 
 \item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
@@ -27,13 +25,6 @@ optimal_behavior(
 \item{eq_df}{if you select "user supplied" for equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)}
-
-\item{which}{indicate whether you want the optimal behavior for "actor", "object",
-or "both"}
-
-\item{actor}{lowercase string corresponding to the actor identity}
-
-\item{object}{lowercase string corresponding to the object identity}
 }
 \value{
 3 digit EPA indicating the optimal behavior

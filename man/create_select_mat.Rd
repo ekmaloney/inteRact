@@ -4,7 +4,7 @@
 \alias{create_select_mat}
 \title{Convenience Function for Creating Selection Matrix Depending on the Term}
 \usage{
-create_select_mat(term, gender, equation_key, eq_df = NULL)
+create_select_mat(term, eq)
 }
 \arguments{
 \item{term, }{string indicating whether you are selection for actor, behavior, or object}

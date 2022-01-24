@@ -23,55 +23,46 @@
 #' @export
 #'
 #' @examples
-optimal_behavior <- function(act, beh, obj,
-                             dictionary_key,
-                             gender,
-                             equation_key,
-                             eq_df = NULL,
-                             which = c("actor", "behavior", "both")) {
+optimal_behavior <- function(df,
+                             equation_info) {
 
-          #get equation
-          if(equation_key == "user_supplied"){
-            eq <- eq_df
-          } else {
-            eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
-            eq <- reshape_new_equation(eq)
-          }
+          #get the equation
+          eq_info <- stringr::str_split(equation_info, "_")
+
+          eq <- get_equation(name = eq_info[[1]][1],
+                             gender = eq_info[[1]][2],
+                             type = "impressionabo")
+
+          eq <- reshape_new_equation(eq)
 
           #calculate the transient impression
-          element_def <- transient_impression(act,
-                                              beh,
-                                              obj,
-                                              dictionary_key,
-                                              gender,
-                                              equation_key,
-                                              eq_df)
+          element_def <- transient_impression(df, equation_info)
 
-                #select fundamental sentiment terms related to behavior
-                element_def <- element_def %>%
-                  mutate(f_s_b = if_else(element == "B",
-                                         fundamental_sentiment, 1))
+              #select fundamental sentiment terms related to behavior
+              element_def <- element_def %>%
+                dplyr::mutate(f_s_b = if_else(element == "behavior",
+                                         estimate, 1))
 
                 #select transient impression terms related to behavior
                 z_b <- eq %>%
-                  mutate(z_b = case_when(B == "000" ~ 1,
+                  dplyr::mutate(z_b = case_when(B == "000" ~ 1,
                                          B == "100" ~ element_def$trans_imp[4],
                                          B == "010" ~ element_def$trans_imp[5],
                                          B == "001" ~ element_def$trans_imp[6])) %>%
-                  select(z_b)
+                  dplyr::select(z_b)
 
                 #save as a vector
                 z_b <- c(as.vector(element_def$f_s_b), as.vector(z_b$z_b))
 
                 #now get the non-behavior terms from each
                 element_def <- element_def %>%
-                  mutate(f_s_i = if_else(element != "B",
-                                         fundamental_sentiment, 1))
+                  dplyr::mutate(f_s_i = if_else(element != "behavior",
+                                         estimate, 1))
 
                 ####ACTOR
 
                 i_actor <- eq %>%
-                           mutate(i = case_when(A == "000" & O == "000" ~ 1,
+                  dplyr::mutate(i = case_when(A == "000" & O == "000" ~ 1,
                                                 A == "100" & O == "000" ~ element_def$trans_imp[1],
                                                 A == "010" & O == "000" ~ element_def$trans_imp[2],
                                                 A == "001" & O == "000"~ element_def$trans_imp[3],
@@ -97,9 +88,7 @@ optimal_behavior <- function(act, beh, obj,
                 diag(mat_i_actor) <- i_actor
 
                 #make a behavior selection matrix
-                b_s <- create_select_mat("behavior", gender = gender,
-                                         equation_key = equation_key,
-                                         eq_df)
+                b_s <- create_select_mat("behavior", eq)
 
                 #now which terms do not have behavior in them
                 i_s <- matrix(data = rep(1, length(i_actor)), nrow = length(i_actor))
@@ -108,8 +97,7 @@ optimal_behavior <- function(act, beh, obj,
                 g <- as.vector(g)
 
                 #h contains identity matrix + coefficients of equations
-                h <- construct_h_matrix(equation_key = equation_key,
-                                        gender = gender)
+                h <- construct_h_matrix(eq)
 
                 #term 1 of equation
                 term1 <- t(b_s) %*% mat_i_actor %*% h %*% mat_i_actor %*% b_s
@@ -123,7 +111,7 @@ optimal_behavior <- function(act, beh, obj,
                 sol <- term1 %*% term2
 
                 #put into nicer format
-                opt_behavior_actor <- tibble(opt_E = sol[1],
+                opt_behavior_actor <- tibble::tibble(opt_E = sol[1],
                                        opt_P = sol[2],
                                        opt_A = sol[3],
                                        term = "actor")
@@ -134,7 +122,7 @@ optimal_behavior <- function(act, beh, obj,
                 ob_fsi <- c(element_def$f_s_i[7:9], 1, 1, 1, element_def$f_s_i[1:3])
 
                 i <- eq %>%
-                  mutate(i = case_when(A == "000" & O == "000" ~ 1,
+                  dplyr::mutate(i = case_when(A == "000" & O == "000" ~ 1,
                                        A == "100" & O == "000" ~ element_def$trans_imp[7],
                                        A == "010" & O == "000" ~ element_def$trans_imp[8],
                                        A == "001" & O == "000"~ element_def$trans_imp[9],
@@ -150,7 +138,7 @@ optimal_behavior <- function(act, beh, obj,
                                        A == "001" & O == "100" ~ element_def$trans_imp[9]*element_def$trans_imp[1],
                                        A == "001" & O == "010" ~ element_def$trans_imp[9]*element_def$trans_imp[2],
                                        A == "001" & O == "001" ~ element_def$trans_imp[9]*element_def$trans_imp[3])) %>%
-                  select(i)
+                  dplyr::select(i)
 
                 #save as a vector
                 i <- c(as.vector(ob_fsi), as.vector(i$i))
@@ -160,9 +148,7 @@ optimal_behavior <- function(act, beh, obj,
                 diag(mat_i) <- i
 
                 #make a behavior selection matrix
-                b_s <- create_select_mat("behavior", gender = gender,
-                                         equation_key = equation_key,
-                                         eq_df)
+                b_s <- create_select_mat("behavior", eq)
 
                 #now which terms do not have behavior in them
                 i_s <- matrix(data = rep(1, length(i)), nrow = length(i))
@@ -171,8 +157,7 @@ optimal_behavior <- function(act, beh, obj,
                 g <- as.vector(g)
 
                 #h contains identity matrix + coefficients of equations
-                h <- construct_h_matrix(equation_key = equation_key,
-                                        gender = gender)
+                h <- construct_h_matrix(eq)
 
                 #term 1 of equation
                 term1 <- t(b_s) %*% mat_i %*% h %*% mat_i %*% b_s
@@ -186,19 +171,14 @@ optimal_behavior <- function(act, beh, obj,
                 sol <- term1 %*% term2
 
                 #put into nicer format
-                opt_behavior_object <- tibble(opt_E = sol[1],
+                opt_behavior_object <- tibble::tibble(opt_E = sol[1],
                                        opt_P = sol[2],
                                        opt_A = sol[3],
                                        term = "object")
 
 
-                if(which == "actor"){
-                  final <- opt_behavior_actor
-                } else if(which == "object") {
-                  final <- opt_behavior_object
-                } else if(which == "both"){
+
                   final <- rbind(opt_behavior_actor, opt_behavior_object)
-                }
 
     return(final)
 

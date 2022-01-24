@@ -4,32 +4,12 @@
 \alias{reidentify_object}
 \title{Function to Generate the Re-identification of the Object}
 \usage{
-reidentify_object(
-  act,
-  beh,
-  obj,
-  dictionary_key,
-  gender,
-  equation_key,
-  eq_df = NULL
-)
+reidentify_object(df, equation_info)
 }
 \arguments{
-\item{act}{lowercase string corresponding to the actor identity}
+\item{df}{data that has been reshaped by the events_df}
 
-\item{beh}{lowercase string corresponding to the behavior term}
-
-\item{obj}{lowercase string corresponding to the object identity}
-
-\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
-
-\item{gender}{either average, male, or female, depending on if you are using gendered equations}
-
-\item{equation_key}{a string corresponding to the equation key from actdata}
-
-\item{eq_df}{if you select "user supplied" for equation, this parameter should
-be your equation dataframe, which (should have been reshaped by the
-reshape_new_equation function prior)}
+\item{equation_info}{is a string that corresponds to "{equationkey}_{gender}" from actdata}
 }
 \value{
 dataframe with 3 columns corresponding to the EPA of optimal object identity relabel
@@ -38,6 +18,7 @@ dataframe with 3 columns corresponding to the EPA of optimal object identity rel
 Function to Generate the Re-identification of the Object
 }
 \examples{
-reidentify_object(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-gender = "average", equation_key = "us2010")
+d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+reidentify_actor(df = d, equation_info = "us2010_average")
 }

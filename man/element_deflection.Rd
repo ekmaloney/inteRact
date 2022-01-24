@@ -4,15 +4,7 @@
 \alias{element_deflection}
 \title{Compute Element Deflection for an Event}
 \usage{
-element_deflection(
-  act,
-  beh,
-  obj,
-  dictionary_key,
-  gender,
-  equation_key,
-  eq_df = NULL
-)
+element_deflection(df, equation_info)
 }
 \arguments{
 \item{act}{lowercase string corresponding to the actor identity}
@@ -42,6 +34,7 @@ in the US 2015 dictionary.
 }
 \examples{
 
-element_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-gender = "average", equation_key = "us2010")
+d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+element_deflection(df = d, equation_info = "us2010_average")
 }

@@ -10,25 +10,14 @@
 #' @examples
 
 create_select_mat <- function(term,
-                              gender,
-                              equation_key,
-                              eq_df = NULL) {
-
-        #get equation
-        if(equation_key == "user_supplied"){
-                eq <- eq_df
-        } else {
-                eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
-                eq <- reshape_new_equation(eq)
-        }
-
+                              eq) {
 
         #make identity matrix
         id_mat <- matrix(0, 9, 9)
         diag(id_mat) <- 1
 
         #get the coefficients from the
-        coefs <- eq %>% select(AE:OA) %>% as.matrix()
+        coefs <- eq %>% dplyr::select(AE:OA) %>% as.matrix()
 
         z <- rbind(id_mat, coefs)
 

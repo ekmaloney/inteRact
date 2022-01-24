@@ -1,8 +1,17 @@
 test_that("sum of element deflection is equal to overall deflection", {
-    d <- get_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-                        gender = "average", equation_key = "us2010")
-    e <- element_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-                            gender = "average", equation_key = "us2010") %>%
+
+  d <- tibble(actor = "brute", behavior = "work", object = "cook")
+
+  df <- reshape_events_df(df = d,
+                         df_format = "wide",
+                         dictionary_key = "nc1978",
+                         dictionary_gender = "male")
+
+  d <- get_deflection(df = df, equation_info = "nc1978_male")
+
+
+    e <- element_deflection(df = df, equation_info = "nc1978_male") %>%
          summarise(d = sum(sqd_diff))
-  expect_equal(d, e$d)
+
+    expect_equal(d, e$d)
 })

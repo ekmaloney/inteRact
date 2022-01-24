@@ -1,48 +1,39 @@
 #' Function to Generate the Re-identification of the Actor
 #'
-#' @param act lowercase string corresponding to the actor identity
-#' @param beh lowercase string corresponding to the behavior term
-#' @param obj lowercase string corresponding to the object identity
-#' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
-#' @param gender either average, male, or female, depending on if you are using gendered equations
-#' @param equation_key a string corresponding to the equation key from actdata
-#' @param eq_df if you select "user supplied" for equation, this parameter should
-#' be your equation dataframe, which (should have been reshaped by the
-#' reshape_new_equation function prior)
+#' @param df data that has been reshaped by the events_df
+#' @param equation_info is a string that corresponds to "{equationkey}_{gender}" from actdata
 #'
 #' @return dataframe with 3 columns corresponding to the EPA of optimal actor identity relabel
 #' @importFrom tibble tibble
 #' @importFrom dplyr if_else
 #' @export
 #'
-#' @examples reidentify_actor(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-#' gender = "average", equation_key = "us2010")
-reidentify_actor <- function(act,
-                             beh,
-                             obj,
-                             dictionary_key,
-                             gender,
-                             equation_key, eq_df = NULL) {
+#' @examples
+#' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+#' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+#' reidentify_actor(df = d, equation_info = "us2010_average")
+reidentify_actor <- function(df, equation_info) {
 
           #calculate the transient impression of the event
-          trans_imp_df <- transient_impression(act,
-                                               beh,
-                                               obj,
-                                               dictionary_key,
-                                               gender,
-                                               equation_key,
-                                               eq_df)
+          trans_imp_df <- transient_impression(df, equation_info = equation_info)
+
+          #get the equation
+          equation_info <- stringr::str_split(equation_info, "_")
+
+          eq <- get_equation(name = equation_info[[1]][1],
+                             gender = equation_info[[1]][2],
+                             type = "impressionabo")
+          eq <- reshape_new_equation(eq)
+
+
           #extract terms that are not A
-          i_a <- extract_terms(elem = "A",
-                               equation_key = equation_key,
-                               gender = gender,
+          i_a <- extract_terms(elem = "actor",
+                               eq = eq,
                                trans_imp_df)
 
           #create actor selection matrix
-          a_s <- create_select_mat("actor",
-                                   gender = gender,
-                                   equation_key = equation_key,
-                                   eq_df)
+          a_s <- create_select_mat(term = "actor",
+                                   eq = eq)
 
           #now which terms do not have actor in them
           i_s <- matrix(data = rep(1, nrow(i_a)), nrow = nrow(i_a))
@@ -51,8 +42,7 @@ reidentify_actor <- function(act,
           g <- as.vector(g)
 
           #construct h matrix
-          h <- construct_h_matrix(equation_key = equation_key,
-                                  gender = gender)
+          h <- construct_h_matrix(eq = eq)
 
           #term 1 of equation
           term1 <- t(a_s) %*% i_a %*% h %*% i_a %*% a_s
@@ -66,7 +56,7 @@ reidentify_actor <- function(act,
           sol <- term1 %*% term2
 
           #put into nicer format
-          actor_label <- tibble(E = sol[1],
+          actor_label <- tibble::tibble(E = sol[1],
                                  P = sol[2],
                                  A = sol[3])
 

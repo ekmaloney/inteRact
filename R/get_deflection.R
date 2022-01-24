@@ -25,32 +25,24 @@
 #' @export
 #'
 #' @examples
-#'
-#' get_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-#' gender = "average", equation_key = "us2010")
-
+#' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+#' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+#' get_deflection(df = d, equation_info = "us2010_average")
 
 
 #provides deflection
-get_deflection <- function(act,
-                           beh,
-                           obj,
-                           dictionary_key,
-                           gender,
-                           equation_key, eq_df = NULL) {
+get_deflection <- function(df, equation_info) {
+
+
+        t_imp <- transient_impression(df = df, equation_info = equation_info)
 
         #get element deflection by applying the transient impression function
-        element_deflection <- transient_impression(act, beh, obj,
-                                                   dictionary_key, gender, equation_key, eq_df) %>%
-                              rowwise() %>%
-                              mutate(difference = fundamental_sentiment - trans_imp,
-                              sqd_diff = difference^2)
+        total_deflection <- t_imp %>%
+                      dplyr::mutate(difference = estimate - trans_imp,
+                                                 sqd_diff = difference^2) %>%
+                      dplyr::summarise(deflection = sum(sqd_diff))
 
-        #add together to get total deflection
-        total_deflection <- element_deflection %>%
-                            ungroup() %>%
-                            summarise(d = sum(sqd_diff))
 
-        return(total_deflection$d)
+        return(total_deflection %>% dplyr::pull(deflection))
 
 }

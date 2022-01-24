@@ -10,19 +10,10 @@
 #' @export
 #'
 #' @examples
-construct_h_matrix <- function(equation_key,
-                               gender,
-                               eq_df = NULL){
-          #get equation
-          if(equation_key == "user_supplied"){
-            eq <- eq_df
-          } else {
-            eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
-            eq <- reshape_new_equation(eq)
-          }
+construct_h_matrix <- function(eq){
 
           #need to get the coefficient information
-          coefs <- eq %>% select(postAE:postOA) %>% as.matrix()
+          coefs <- eq %>% dplyr::select(postAE:postOA) %>% as.matrix()
 
           #need to make an identity matrix
           identity <- matrix(0, 9, 9)

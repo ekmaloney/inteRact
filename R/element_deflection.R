@@ -24,31 +24,19 @@
 #'
 #' @examples
 #'
-#' element_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-#' gender = "average", equation_key = "us2010")
+#' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+#' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+#' element_deflection(df = d, equation_info = "us2010_average")
 
 
 #provides deflection
-element_deflection <- function(act,
-                               beh,
-                               obj,
-                               dictionary_key,
-                               gender,
-                               equation_key,
-                               eq_df = NULL) {
+element_deflection <- function(df, equation_info) {
 
           #get element deflection by applying the transient impression function
-          element_deflection <- transient_impression(act,
-                                                     beh,
-                                                     obj,
-                                                     dictionary_key,
-                                                     gender,
-                                                     equation_key,
-                                                     eq_df) %>%
-            rowwise() %>%
-            mutate(difference = fundamental_sentiment - trans_imp,
+          element_deflection <- transient_impression(df, equation_info) %>%
+            dplyr::mutate(difference = estimate - trans_imp,
                    sqd_diff = difference^2) %>%
-            ungroup()
+            dplyr::ungroup()
 
             return(element_deflection)
 }

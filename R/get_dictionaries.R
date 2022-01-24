@@ -36,7 +36,7 @@ get_dictionary <- function(dict_key, g){
 #' @examples
 get_equation <- function(name, type, gender){
 
-  g <- case_when(gender == "female" ~ "f",
+  g <- dplyr::case_when(gender == "female" ~ "f",
                  gender == "male" ~ "m",
                  gender == "average" ~ "av")
 

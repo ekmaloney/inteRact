@@ -4,15 +4,7 @@
 \alias{get_deflection}
 \title{Compute Deflection for an Event}
 \usage{
-get_deflection(
-  act,
-  beh,
-  obj,
-  dictionary_key,
-  gender,
-  equation_key,
-  eq_df = NULL
-)
+get_deflection(df, equation_info)
 }
 \arguments{
 \item{act}{lowercase string corresponding to the actor identity}
@@ -41,7 +33,7 @@ the second, the behavior, and last, the object. Each of these terms must be
 in the US 2015 dictionary.
 }
 \examples{
-
-get_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
-gender = "average", equation_key = "us2010")
+d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+get_deflection(df = d, equation_info = "us2010_average")
 }

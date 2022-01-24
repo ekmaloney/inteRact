@@ -1,8 +1,7 @@
 #' Create the I matrix from Heise (2010) that corresponds to ABO elements that are not the one being solved for in optimal functions
 #'
 #' @param elem string either A, B, or O
-#' @param equation key
-#' @param gender
+#' @param eq equation
 #' @param t_imp the dataframe containing the result of the transient impression from the event
 #'
 #' @return 29 x 29 matrix
@@ -17,40 +16,31 @@
 #'
 #' @examples
 extract_terms <- function(elem,
-                          equation_key,
-                          gender,
+                          eq,
                           t_imp) {
-
-        #get equation
-        if(equation_key == "user_supplied"){
-          eq <- eq_df
-        } else {
-          eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
-          eq <- reshape_new_equation(eq)
-        }
 
             #get fundamental terms NOT related to the element
             t_imp <- t_imp %>%
-                     mutate(f_s = if_else(element != elem,
-                                   fundamental_sentiment, 1))
+              dplyr::mutate(f_s = if_else(element != elem,
+                                   estimate, 1))
 
             #get the trans_imp terms NOT related to the element
-            selection_matrix <- eq %>% select(AE:OA)
+            selection_matrix <- eq %>% dplyr::select(AE:OA)
 
-            if(elem == "A"){
-              values <- c(1, 1, 1, t_imp$fundamental_sentiment[4],
-                          t_imp$fundamental_sentiment[5],
-                          t_imp$fundamental_sentiment[6],
+            if(elem == "actor"){
+              values <- c(1, 1, 1, t_imp$estimate[4],
+                          t_imp$estimate[5],
+                          t_imp$estimate[6],
                           t_imp$trans_imp[7],
                           t_imp$trans_imp[8],
                           t_imp$trans_imp[9])
 
               selected_values <- as.data.frame(t(t(selection_matrix)*values)) %>%
-                replace_with_na_all(., condition = ~.x == 0) %>%
-                rowwise() %>%
-                mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE),
+                naniar::replace_with_na_all(., condition = ~.x == 0) %>%
+                dplyr::rowwise() %>%
+                dplyr::mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE),
                        product = round(product, digits = 3))
-            } else if(elem == "B") {
+            } else if(elem == "behavior") {
               values <- c(t_imp$trans_imp[1],
                           t_imp$trans_imp[2],
                           t_imp$trans_imp[3],
@@ -60,24 +50,24 @@ extract_terms <- function(elem,
                           t_imp$trans_imp[9])
 
               selected_values <- as.data.frame(t(t(selection_matrix)*values)) %>%
-                replace_with_na_all(., condition = ~.x == 0) %>%
-                rowwise() %>%
-                mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE),
+                naniar::replace_with_na_all(., condition = ~.x == 0) %>%
+                dplyr::rowwise() %>%
+                dplyr::mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE),
                        product = round(product, digits = 3))
 
-            } else if(elem == "O") {
+            } else if(elem == "object") {
               values <- c(t_imp$trans_imp[1],
                           t_imp$trans_imp[2],
                           t_imp$trans_imp[3],
-                          t_imp$fundamental_sentiment[4],
-                          t_imp$fundamental_sentiment[5],
-                          t_imp$fundamental_sentiment[6],
+                          t_imp$estimate[4],
+                          t_imp$estimate[5],
+                          t_imp$estimate[6],
                           1, 1, 1)
 
               selected_values <- as.data.frame(t(t(selection_matrix)*values)) %>%
-                replace_with_na_all(., condition = ~.x == 0) %>%
-                rowwise() %>%
-                mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE),
+                naniar::replace_with_na_all(., condition = ~.x == 0) %>%
+                dplyr::rowwise() %>%
+                dplyr::mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE),
                        product = round(product, digits = 3))
             }
 

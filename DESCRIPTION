@@ -23,7 +23,8 @@ Imports:
     here,
     tibble,
     magrittr,
-    data.table
+    data.table,
+    stringr
 URL: https://github.com/ekmaloney/inteRact
 BugReports: https://github.com/ekmaloney/inteRact/issues
 Suggests: 

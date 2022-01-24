@@ -35,26 +35,26 @@ closest_term <- function(e, p, a,
       d <- actdata::epa_subset(dataset = dictionary_key, gender = gender, component = term_typ)
 
     terms <- d %>%
-             rowwise() %>%
-             mutate(d_e = E - e,
+      dplyr::rowwise() %>%
+      dplyr::mutate(d_e = E - e,
                     d_p = P - p,
                     d_a = A - a,
                     d_e_s = (d_e)^2,
                     d_p_s = (d_p)^2,
                     d_a_s = (d_a)^2,
                     ssd = sum(d_e_s, d_p_s, d_a_s)) %>%
-              ungroup() %>%
-              filter(ssd < max_dist) %>%
-              arrange(ssd) %>%
-              mutate(term_name = term,
+      dplyr::ungroup() %>%
+      dplyr::filter(ssd < max_dist) %>%
+      dplyr::arrange(ssd) %>%
+      dplyr::mutate(term_name = term,
                      term_E = E,
                      term_P = P,
                      term_A = A) %>%
-              slice(1:num_terms) %>%
-              select(term_name, term_E, term_P, term_A, ssd)
+      dplyr::slice(1:num_terms) %>%
+      dplyr::select(term_name, term_E, term_P, term_A, ssd)
 
     if(nrow(terms) == 0){
-      terms <- tibble(term_name = "No terms within max distance",
+      terms <- tibble::tibble(term_name = "No terms within max distance",
                       term_E = NA,
                       term_P = NA,
                       term_A = NA,

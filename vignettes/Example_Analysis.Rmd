@@ -34,62 +34,44 @@ events <- tibble(actor = sample(us_2015$term[us_2015$component == "identity"], 5
                  object = sample(us_2015$term[us_2015$component == "identity"], 50))
 
 
-head(events)
+
+
 ```
 
-Step 2: run some calculations on the dataframe! 
+Step 2: Reshape the dataframe to have EPA values 
+```{r}
+analysis_df <- reshape_events_df(events, df_format = "wide",
+                                 dictionary_key = "usfullsurveyor2015", 
+                                 dictionary_gender = "average")
+```
 
-If you have a df already set with your events -- you can format your code like this to calculate the deflection and get the optimal behavior for each Actor - Behavior - Object row. 
+Step 3: Nest your dataframe by event id and indicate the equation you will be using 
+for your calculations - must be in the format "{equation_key}_{gender}" with the equation 
+key coming from the actdata package. 
 
 ```{r}
 
-events %>% 
-          rowwise() %>% 
-          mutate(deflection = get_deflection(actor, behavior, object, 
-                                             dictionary_key = "usfullsurveyor2015",
-                                             gender = "average",
-                                             equation_key = "us2010"),
-                 opt_beh = list(optimal_behavior(actor, behavior, object, 
-                                             dictionary_key = "usfullsurveyor2015",
-                                             gender = "average",
-                                             equation_key = "us2010", which = "both"))) %>% 
-          unnest(opt_beh) %>% head(10)
+nested_analysis <- analysis_df %>% 
+                   group_by(event_id) %>% nest() %>% 
+                   mutate(equation_info = "us2010_average")
 
 ```
+Step 4: Run some calculations
+```{r}
+deflection <- nested_analysis %>% 
+      mutate(d = map2(data, equation_info, get_deflection))
 
-or if you only want predictions for actor/behavior --
+deflection %>% unnest(cols = c(data, d))
+```
+
+
+
 ```{r}
 
-act_events <- events %>% 
-          rowwise() %>% 
-          mutate(deflection = get_deflection(actor, behavior, object, 
-                                             dictionary_key = "usfullsurveyor2015",
-                                             gender = "average",
-                                             equation_key = "us2010"),
-                 opt_beh = list(optimal_behavior(actor, behavior, object, 
-                                             dictionary_key = "usfullsurveyor2015",
-                                             gender = "average",
-                                             equation_key = "us2010", which = "actor"))) %>% 
-  unnest(opt_beh)
-
-act_events %>% 
-          head(10)
-```
-You can also search for the closest behavior to the opt_behavior: 
-```{r}
-act_events <- act_events %>% 
-              rowwise() %>% 
-              mutate(closest_beh = closest_term(e = opt_E,
-                                                p = opt_P,
-                                                a = opt_A,
-                                                dictionary_key = "usfullsurveyor2015",
-                                                gender = "average",
-                                                term_typ = "behavior",
-                                                max_dist = 1,
-                                                num_terms = 1))
-
-act_events %>% unnest(closest_beh) %>% head()
-
+multiple_functions <- nested_analysis %>% 
+                      mutate(d = map2(data, equation_info, get_deflection),
+                             ra = map2(data, equation_info, reidentify_actor))
 
 ```
+
 
