@@ -6,11 +6,9 @@
 #' @param actor lowercase string corresponding to the actor identity
 #' @param beh lowercase string corresponding to the behavior term
 #' @param object lowercase string corresponding to the object identity
-#' @param which indicate whether you want the optimal behavior for "actor", "object",
-#' or "both"
-#' @param dictionary which dictionary to use, currently set to "us"
-#' @param equation which equation to use - you can either set it to "us" for the
-#' us 1978 equations, or "user supplied")
+#' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
+#' @param gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_key a string corresponding to the equation key from actdata
 #' @param eq_df if you select "user supplied" for equation, this parameter should
 #' be your equation dataframe, which (should have been reshaped by the
 #' reshape_new_equation function prior)
@@ -19,23 +17,30 @@
 #' @export
 #'
 #' @examples
-maximally_confirm_behavior <- function(actor, object, dictionary, equation, eq_df = NULL){
-  if(equation == "us"){
-    data("us_1978", envir=environment())
-    eq <- us_1978
-  } else {
+maximally_confirm_behavior <- function(act, beh, obj,
+                                       dictionary_key,
+                                       gender,
+                                       equation_key,
+                                       eq_df = NULL){
+
+  #get dictionaries
+  d <- actdata::epa_subset(dataset = dictionary_key, gender = gender)
+
+  #get equation
+  if(equation_key == "user_supplied"){
     eq <- eq_df
+  } else {
+    eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
+    eq <- reshape_new_equation(eq)
   }
 
-  data("us_2015_full")
+  a <- d %>%
+    dplyr::filter(term == act & component == "identity") %>%
+    dplyr::mutate(element = "A")
 
-  a <- us_2015_full %>%
-        filter(term == actor & type == "identity") %>%
-        mutate(element = "A")
-
-  o <- us_2015_full %>%
-    filter(term == object & type == "identity") %>%
-    mutate(element = "O")
+  o <- d %>%
+    dplyr::filter(term == obj & component == "identity") %>%
+    dplyr::mutate(element = "O")
 
   ao_epa <- rbind(a, o) %>%
     select(term, element, E, P, A) %>%
@@ -78,7 +83,9 @@ maximally_confirm_behavior <- function(actor, object, dictionary, equation, eq_d
   diag(mat_i_actor) <- i_actor
 
   #make a behavior selection matrix
-  b_s <- create_select_mat("behavior", equation, eq_df)
+  b_s <- create_select_mat("behavior", gender = gender,
+                           equation_key = equation_key,
+                           eq_df)
 
   #now which terms do not have behavior in them
   i_s <- matrix(data = rep(1, length(i_actor)), nrow = length(i_actor))
@@ -87,7 +94,8 @@ maximally_confirm_behavior <- function(actor, object, dictionary, equation, eq_d
   g <- as.vector(g)
 
   #h contains identity matrix + coefficients of equations
-  h <- construct_h_matrix(equation, eq_df)
+  h <- construct_h_matrix(equation_key = equation_key,
+                          gender = gender)
 
   #term 1 of equation
   term1 <- t(b_s) %*% mat_i_actor %*% h %*% mat_i_actor %*% b_s

@@ -8,8 +8,9 @@ element_deflection(
   act,
   beh,
   obj,
-  dictionary = "us",
-  equation = c("us", "user supplied"),
+  dictionary_key,
+  gender,
+  equation_key,
   eq_df = NULL
 )
 }
@@ -20,10 +21,11 @@ element_deflection(
 
 \item{obj}{lowercase string corresponding to the object identity}
 
-\item{dictionary}{which dictionary to use, currently set to "us"}
+\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
-\item{equation}{which equation to use - you can either set it to "us" for the
-us 1978 equations, or "user supplied")}
+\item{gender}{either average, male, or female, depending on if you are using gendered equations}
+
+\item{equation_key}{a string corresponding to the equation key from actdata}
 
 \item{eq_df}{if you select "user supplied" for equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the
@@ -40,5 +42,6 @@ in the US 2015 dictionary.
 }
 \examples{
 
-element_deflection("ceo", "advise", "benefactor", equation = "us")
+element_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
+gender = "average", equation_key = "us2010")
 }

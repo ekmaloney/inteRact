@@ -4,26 +4,32 @@
 \alias{maximally_confirm_behavior}
 \title{maximally_confirm_behavior}
 \usage{
-maximally_confirm_behavior(actor, object, dictionary, equation, eq_df = NULL)
+maximally_confirm_behavior(
+  act,
+  beh,
+  obj,
+  dictionary_key,
+  gender,
+  equation_key,
+  eq_df = NULL
+)
 }
 \arguments{
-\item{actor}{lowercase string corresponding to the actor identity}
+\item{beh}{lowercase string corresponding to the behavior term}
 
-\item{object}{lowercase string corresponding to the object identity}
+\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
-\item{dictionary}{which dictionary to use, currently set to "us"}
+\item{gender}{either average, male, or female, depending on if you are using gendered equations}
 
-\item{equation}{which equation to use - you can either set it to "us" for the
-us 1978 equations, or "user supplied")}
+\item{equation_key}{a string corresponding to the equation key from actdata}
 
 \item{eq_df}{if you select "user supplied" for equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)}
 
-\item{beh}{lowercase string corresponding to the behavior term}
+\item{actor}{lowercase string corresponding to the actor identity}
 
-\item{which}{indicate whether you want the optimal behavior for "actor", "object",
-or "both"}
+\item{object}{lowercase string corresponding to the object identity}
 }
 \value{
 3 digit EPA indicating the optimal behavior

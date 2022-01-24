@@ -1,6 +1,8 @@
 #' Create the I matrix from Heise (2010) that corresponds to ABO elements that are not the one being solved for in optimal functions
 #'
 #' @param elem string either A, B, or O
+#' @param equation key
+#' @param gender
 #' @param t_imp the dataframe containing the result of the transient impression from the event
 #'
 #' @return 29 x 29 matrix
@@ -14,9 +16,18 @@
 #' @export
 #'
 #' @examples
-extract_terms <- function(elem, t_imp) {
-            #load equation information
-            data("us_1978", envir=environment())
+extract_terms <- function(elem,
+                          equation_key,
+                          gender,
+                          t_imp) {
+
+        #get equation
+        if(equation_key == "user_supplied"){
+          eq <- eq_df
+        } else {
+          eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
+          eq <- reshape_new_equation(eq)
+        }
 
             #get fundamental terms NOT related to the element
             t_imp <- t_imp %>%
@@ -24,7 +35,7 @@ extract_terms <- function(elem, t_imp) {
                                    fundamental_sentiment, 1))
 
             #get the trans_imp terms NOT related to the element
-            selection_matrix <- us_1978 %>% select(AE:OA)
+            selection_matrix <- eq %>% select(AE:OA)
 
             if(elem == "A"){
               values <- c(1, 1, 1, t_imp$fundamental_sentiment[4],
@@ -74,7 +85,7 @@ extract_terms <- function(elem, t_imp) {
             i <- c(as.vector(t_imp$f_s), as.vector(selected_values$product))
 
             #make into a matrix with that on the diagonal
-            mat_i <- matrix(0, 29, 29)
+            mat_i <- matrix(0, length(i), length(i))
             diag(mat_i) <- i
 
             return(mat_i)

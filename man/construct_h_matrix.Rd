@@ -4,15 +4,15 @@
 \alias{construct_h_matrix}
 \title{Construct H Matrix}
 \usage{
-construct_h_matrix(equation = c("us", "user supplied"), eq_df = NULL)
+construct_h_matrix(equation_key, gender, eq_df = NULL)
 }
 \arguments{
-\item{equation}{which equation to use - you can either set it to "us" for the
-us 1978 equations, or "user supplied")}
-
 \item{eq_df}{if you select "user supplied" for equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)}
+
+\item{equation}{which equation to use - you can either set it to "us" for the
+us 1978 equations, or "user supplied")}
 }
 \value{
 

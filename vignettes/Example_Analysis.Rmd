@@ -23,56 +23,36 @@ library(here)
 Step 1: Load data, select events
 
 ```{r}
-#load US dict
-data("us_2015_full")
+
+#get US 2015 dictionary
+us_2015 <- epa_subset(dataset = "usfullsurveyor2015")
 
 #make a dataframe of events 
-set.seed(729)
-events <- tibble(actor = sample(us_2015_full$term[us_2015_full$type == "identity"], 50),
-                 behavior = sample(us_2015_full$term[us_2015_full$type == "behavior"], 50),
-                 object = sample(us_2015_full$term[us_2015_full$type == "identity"], 50))
+set.seed(129)
+events <- tibble(actor = sample(us_2015$term[us_2015$component == "identity"], 50),
+                 behavior = sample(us_2015$term[us_2015$component == "behavior"], 50),
+                 object = sample(us_2015$term[us_2015$component == "identity"], 50))
 
 
 head(events)
 ```
-Step 2: New equation data 
 
--important -- equations should follow the "Z" format from Interact (Heise)
+Step 2: run some calculations on the dataframe! 
 
-
-```{r}
-your_equation_data <- read.table(here("data-raw/2010_equations.txt"))
-
-your_equation_data
-
-#format of your own eq data
-colnames(your_equation_data)
-your_equation_data$V1
-```
-Step 3: Reshape it to be in the necessary format 
-- use the reshape_equation function on the "Z" formatted table to generate a dataframe with the necessary colnames and variables for the other functions in the package. 
-
-```{r}
-reshaped_eq <- reshape_new_equation(your_equation_data)
-
-
-glimpse(reshaped_eq)
-```
-
-Step 4: run some calculations on the dataframe! 
-
-If you have a df already set with your events -- you can format your code like this to calculate the deflection and get the optimal behavior for the 
+If you have a df already set with your events -- you can format your code like this to calculate the deflection and get the optimal behavior for each Actor - Behavior - Object row. 
 
 ```{r}
 
 events %>% 
           rowwise() %>% 
           mutate(deflection = get_deflection(actor, behavior, object, 
-                                             equation = "user supplied", 
-                                             eq_df = reshaped_eq),
+                                             dictionary_key = "usfullsurveyor2015",
+                                             gender = "average",
+                                             equation_key = "us2010"),
                  opt_beh = list(optimal_behavior(actor, behavior, object, 
-                                                 equation = "user_supplied",
-                                                 eq_df = reshaped_eq, which = "both"))) %>% 
+                                             dictionary_key = "usfullsurveyor2015",
+                                             gender = "average",
+                                             equation_key = "us2010", which = "both"))) %>% 
           unnest(opt_beh) %>% head(10)
 
 ```
@@ -83,11 +63,13 @@ or if you only want predictions for actor/behavior --
 act_events <- events %>% 
           rowwise() %>% 
           mutate(deflection = get_deflection(actor, behavior, object, 
-                                             equation = "user supplied", 
-                                             eq_df = reshaped_eq),
+                                             dictionary_key = "usfullsurveyor2015",
+                                             gender = "average",
+                                             equation_key = "us2010"),
                  opt_beh = list(optimal_behavior(actor, behavior, object, 
-                                                 equation = "user_supplied",
-                                                 eq_df = reshaped_eq, which = "actor"))) %>% 
+                                             dictionary_key = "usfullsurveyor2015",
+                                             gender = "average",
+                                             equation_key = "us2010", which = "actor"))) %>% 
   unnest(opt_beh)
 
 act_events %>% 
@@ -100,11 +82,13 @@ act_events <- act_events %>%
               mutate(closest_beh = closest_term(e = opt_E,
                                                 p = opt_P,
                                                 a = opt_A,
+                                                dictionary_key = "usfullsurveyor2015",
+                                                gender = "average",
                                                 term_typ = "behavior",
                                                 max_dist = 1,
                                                 num_terms = 1))
 
-act_events %>% head()
+act_events %>% unnest(closest_beh) %>% head()
 
 
 ```

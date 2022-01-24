@@ -8,8 +8,9 @@ optimal_behavior(
   act,
   beh,
   obj,
-  dictionary = "us",
-  equation = c("us", "user_supplied"),
+  dictionary_key,
+  gender,
+  equation_key,
   eq_df = NULL,
   which = c("actor", "behavior", "both")
 )
@@ -17,10 +18,11 @@ optimal_behavior(
 \arguments{
 \item{beh}{lowercase string corresponding to the behavior term}
 
-\item{dictionary}{which dictionary to use, currently set to "us"}
+\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
-\item{equation}{which equation to use - you can either set it to "us" for the
-us 1978 equations, or "user supplied")}
+\item{gender}{either average, male, or female, depending on if you are using gendered equations}
+
+\item{equation_key}{a string corresponding to the equation key from actdata}
 
 \item{eq_df}{if you select "user supplied" for equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the

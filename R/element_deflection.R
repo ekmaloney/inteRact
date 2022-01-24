@@ -8,9 +8,9 @@
 #' @param act lowercase string corresponding to the actor identity
 #' @param beh lowercase string corresponding to the behavior term
 #' @param obj lowercase string corresponding to the object identity
-#' @param dictionary which dictionary to use, currently set to "us"
-#' @param equation which equation to use - you can either set it to "us" for the
-#' us 1978 equations, or "user supplied")
+#' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
+#' @param gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_key a string corresponding to the equation key from actdata
 #' @param eq_df if you select "user supplied" for equation, this parameter should
 #' be your equation dataframe, which (should have been reshaped by the
 #' reshape_new_equation function prior)
@@ -24,16 +24,27 @@
 #'
 #' @examples
 #'
-#' element_deflection("ceo", "advise", "benefactor", equation = "us")
+#' element_deflection(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
+#' gender = "average", equation_key = "us2010")
 
 
 #provides deflection
-element_deflection <- function(act, beh, obj, dictionary = "us", equation = c("us", "user supplied"),
+element_deflection <- function(act,
+                               beh,
+                               obj,
+                               dictionary_key,
+                               gender,
+                               equation_key,
                                eq_df = NULL) {
 
           #get element deflection by applying the transient impression function
-          element_deflection <- transient_impression(act, beh, obj, dictionary = "us",
-                                                     equation = equation, eq_df = eq_df) %>%
+          element_deflection <- transient_impression(act,
+                                                     beh,
+                                                     obj,
+                                                     dictionary_key,
+                                                     gender,
+                                                     equation_key,
+                                                     eq_df) %>%
             rowwise() %>%
             mutate(difference = fundamental_sentiment - trans_imp,
                    sqd_diff = difference^2) %>%

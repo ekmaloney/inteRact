@@ -10,13 +10,15 @@
 #' @export
 #'
 #' @examples
-construct_h_matrix <- function(equation = c("us", "user supplied"), eq_df = NULL){
-          #load equation information
-          if(equation == "us"){
-            data("us_1978", envir=environment())
-            eq <- us_1978
-          } else {
+construct_h_matrix <- function(equation_key,
+                               gender,
+                               eq_df = NULL){
+          #get equation
+          if(equation_key == "user_supplied"){
             eq <- eq_df
+          } else {
+            eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
+            eq <- reshape_new_equation(eq)
           }
 
           #need to get the coefficient information

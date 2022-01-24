@@ -3,10 +3,10 @@
 #' @param actor lowercase string corresponding to the actor identity
 #' @param beh lowercase string corresponding to the behavior term
 #' @param object lowercase string corresponding to the object identity
-#' @param dictionary which dictionary to use, currently set to "us"
-#' @param equation which equation to use - you can either set it to "us" for the
-#' us 1978 equations, or "user supplied")
-#' @param eq_df if you select "user supplied" for equation, this parameter should
+#' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
+#' @param gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_key a string corresponding to the equation key from actdata
+#' @param eq_df if you select "user supplied" for equation key, this parameter should
 #' be your equation dataframe, which (should have been reshaped by the
 #' reshape_new_equation function prior)
 
@@ -22,52 +22,66 @@
 #' @importFrom tidyr pivot_longer
 #' @importFrom naniar replace_with_na_all
 #' @importFrom here here
+#' @importFrom data.table data.table
+#' @importFrom data.table melt
 #'
 #' @export
 #'
 #' @examples
-#' transient_impression("ceo", "advise", "benefactor", equation = "us")
+#' transient_impression(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
+#' gender = "average", equation_key = "us2010")
+#'
 
-transient_impression <- function(act, beh, obj, dictionary = "us", equation = c("us", "user_supplied"), eq_df = NULL) {
-          #make sure in the right location
-          here()
 
-          if(equation == "us"){
-            data("us_1978", envir=environment())
-            eq <- us_1978
-          } else {
+transient_impression <- function(act, beh, obj,
+                                 dictionary_key,
+                                 gender,
+                                 equation_key,
+                                 eq_df = NULL) {
+
+
+          #get dictionaries
+          d <- actdata::epa_subset(dataset = dictionary_key, gender = gender)
+
+          #get equation
+          if(equation_key == "user_supplied"){
             eq <- eq_df
+          } else {
+            eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
+            eq <- reshape_new_equation(eq)
           }
 
-          #read in data
-          data("us_2015_full", envir=environment())
+          a <- d %>%
+               dplyr::filter(term == act & component == "identity") %>%
+               dplyr::mutate(element = "A")
 
-          a <- us_2015_full %>%
-            filter(term == act & type == "identity") %>%
-            mutate(element = "A")
+          b <- d %>%
+               dplyr::filter(term == beh & component == "behavior") %>%
+               dplyr::mutate(element = "B")
 
-          b <- us_2015_full %>%
-            filter(term == beh & type == "behavior") %>%
-            mutate(element = "B")
+          o <- d %>%
+               dplyr::filter(term == obj & component == "identity") %>%
+               dplyr::mutate(element = "O")
 
-          o <- us_2015_full %>%
-            filter(term == obj & type == "identity") %>%
-            mutate(element = "O")
+          abo_epa <- rbind(a, b, o)
+          abo_epa <- abo_epa[,c("term", "element",  "E", "P", "A")]
+          abo_epa <- data.table::data.table(abo_epa)
+          abo_epa <- data.table::melt(abo_epa,
+                                      id.vars = c("term", "element"),
+                                      measure.vars = c("E", "P", "A"),
+                                      variable.name = "dimension",
+                                      value.name = "fundamental_sentiment")
 
-          abo_epa <- rbind(a, b, o) %>%
-            select(term, element, E, P, A) %>%
-            pivot_longer(cols = E:A, names_to = "dimension",
-                         values_to = "fundamental_sentiment") %>%
-            arrange(element)
+          abo_epa <- abo_epa %>% arrange(element)
 
           #then construct the selection matrix
-          selection_mat <- eq %>% select(AE:OA)
+          selection_mat <- eq %>% dplyr::select(AE:OA)
 
           #get ABO elements for coefficients
           abo_selected <- as.data.frame(t(t(selection_mat)*abo_epa$fundamental_sentiment)) %>%
-            replace_with_na_all(., condition = ~.x == 0) %>%
-            rowwise() %>%
-            mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE))
+                          naniar::replace_with_na_all(., condition = ~.x == 0) %>%
+                          rowwise() %>%
+                          mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE))
 
           #multiply ABO elements by the equation coefficients
           post_epa <- t(eq[,2:10]) %*% abo_selected$product
@@ -82,4 +96,6 @@ transient_impression <- function(act, beh, obj, dictionary = "us", equation = c(
           return(pre_post)
 
 }
+
+
 

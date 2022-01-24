@@ -1,19 +1,25 @@
 #' Convenience Function for Creating Selection Matrix Depending on the Term
 #'
 #' @param term, string indicating whether you are selection for actor, behavior, or object
+#' @param gender
+#' @param equation_key
 #'
 #' @return
 #' @export
 #'
 #' @examples
 
-create_select_mat <- function(term, equation = c("us", "user_supplied"), eq_df = NULL) {
+create_select_mat <- function(term,
+                              gender,
+                              equation_key,
+                              eq_df = NULL) {
 
-        if(equation == "us"){
-                data("us_1978", envir=environment())
-                eq <- us_1978
-        } else {
+        #get equation
+        if(equation_key == "user_supplied"){
                 eq <- eq_df
+        } else {
+                eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
+                eq <- reshape_new_equation(eq)
         }
 
 

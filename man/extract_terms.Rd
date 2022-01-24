@@ -4,12 +4,14 @@
 \alias{extract_terms}
 \title{Create the I matrix from Heise (2010) that corresponds to ABO elements that are not the one being solved for in optimal functions}
 \usage{
-extract_terms(elem, t_imp)
+extract_terms(elem, equation_key, gender, t_imp)
 }
 \arguments{
 \item{elem}{string either A, B, or O}
 
 \item{t_imp}{the dataframe containing the result of the transient impression from the event}
+
+\item{equation}{key}
 }
 \value{
 29 x 29 matrix

@@ -5,9 +5,9 @@
 #' @param object lowercase string corresponding to the object identity
 #' @param which indicate whether you want the optimal behavior for "actor", "object",
 #' or "both"
-#' @param dictionary which dictionary to use, currently set to "us"
-#' @param equation which equation to use - you can either set it to "us" for the
-#' us 1978 equations, or "user supplied")
+#' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
+#' @param gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_key a string corresponding to the equation key from actdata
 #' @param eq_df if you select "user supplied" for equation, this parameter should
 #' be your equation dataframe, which (should have been reshaped by the
 #' reshape_new_equation function prior)
@@ -23,18 +23,29 @@
 #' @export
 #'
 #' @examples
-optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us", "user_supplied"), eq_df = NULL,
+optimal_behavior <- function(act, beh, obj,
+                             dictionary_key,
+                             gender,
+                             equation_key,
+                             eq_df = NULL,
                              which = c("actor", "behavior", "both")) {
 
-                if(equation == "us"){
-                  data("us_1978", envir=environment())
-                  eq <- us_1978
-                } else {
-                  eq <- eq_df
-                }
+          #get equation
+          if(equation_key == "user_supplied"){
+            eq <- eq_df
+          } else {
+            eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
+            eq <- reshape_new_equation(eq)
+          }
 
-                #calculate the transient impression
-                element_def <- transient_impression(act, beh, obj, dictionary = "us", equation, eq_df)
+          #calculate the transient impression
+          element_def <- transient_impression(act,
+                                              beh,
+                                              obj,
+                                              dictionary_key,
+                                              gender,
+                                              equation_key,
+                                              eq_df)
 
                 #select fundamental sentiment terms related to behavior
                 element_def <- element_def %>%
@@ -86,7 +97,9 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 diag(mat_i_actor) <- i_actor
 
                 #make a behavior selection matrix
-                b_s <- create_select_mat("behavior", equation, eq_df)
+                b_s <- create_select_mat("behavior", gender = gender,
+                                         equation_key = equation_key,
+                                         eq_df)
 
                 #now which terms do not have behavior in them
                 i_s <- matrix(data = rep(1, length(i_actor)), nrow = length(i_actor))
@@ -95,7 +108,8 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 g <- as.vector(g)
 
                 #h contains identity matrix + coefficients of equations
-                h <- construct_h_matrix(equation, eq_df)
+                h <- construct_h_matrix(equation_key = equation_key,
+                                        gender = gender)
 
                 #term 1 of equation
                 term1 <- t(b_s) %*% mat_i_actor %*% h %*% mat_i_actor %*% b_s
@@ -146,7 +160,9 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 diag(mat_i) <- i
 
                 #make a behavior selection matrix
-                b_s <- create_select_mat("behavior", equation, eq_df)
+                b_s <- create_select_mat("behavior", gender = gender,
+                                         equation_key = equation_key,
+                                         eq_df)
 
                 #now which terms do not have behavior in them
                 i_s <- matrix(data = rep(1, length(i)), nrow = length(i))
@@ -155,7 +171,8 @@ optimal_behavior <- function(act, beh, obj, dictionary = "us", equation = c("us"
                 g <- as.vector(g)
 
                 #h contains identity matrix + coefficients of equations
-                h <- construct_h_matrix(equation, eq_df)
+                h <- construct_h_matrix(equation_key = equation_key,
+                                        gender = gender)
 
                 #term 1 of equation
                 term1 <- t(b_s) %*% mat_i %*% h %*% mat_i %*% b_s

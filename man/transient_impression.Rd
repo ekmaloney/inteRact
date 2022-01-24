@@ -8,20 +8,22 @@ transient_impression(
   act,
   beh,
   obj,
-  dictionary = "us",
-  equation = c("us", "user_supplied"),
+  dictionary_key,
+  gender,
+  equation_key,
   eq_df = NULL
 )
 }
 \arguments{
 \item{beh}{lowercase string corresponding to the behavior term}
 
-\item{dictionary}{which dictionary to use, currently set to "us"}
+\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
-\item{equation}{which equation to use - you can either set it to "us" for the
-us 1978 equations, or "user supplied")}
+\item{gender}{either average, male, or female, depending on if you are using gendered equations}
 
-\item{eq_df}{if you select "user supplied" for equation, this parameter should
+\item{equation_key}{a string corresponding to the equation key from actdata}
+
+\item{eq_df}{if you select "user supplied" for equation key, this parameter should
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)}
 
@@ -36,5 +38,7 @@ dataframe in long format, with one row for each element-dimension of the event, 
 Calculate the Transient Impression after an Event
 }
 \examples{
-transient_impression("ceo", "advise", "benefactor", equation = "us")
+transient_impression(act = "ceo", beh = "advise", obj = "benefactor", dictionary_key = "usfullsurveyor2015",
+gender = "average", equation_key = "us2010")
+
 }

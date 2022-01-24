@@ -15,10 +15,10 @@ reshape_new_equation <- function(eq_df){
   all_combos <- unique(c(all_combinations$combos, eq_df$V1))
 
   decoding_coefficients <- tibble(coef_name = all_combos) %>%
-                          mutate(combos = str_remove(coef_name, "Z")) %>%
-                          separate(combos, sep = c(3, 6), into = c("A", "B", "O")) %>%
-                          rowwise() %>%
-                          mutate(AE = if_else(A == "100", 1, 0),
+                          dplyr::mutate(combos = stringr::str_remove(coef_name, "Z")) %>%
+    tidyr::separate(combos, sep = c(3, 6), into = c("A", "B", "O")) %>%
+    dplyr::rowwise() %>%
+    dplyr::mutate(AE = if_else(A == "100", 1, 0),
                                  AP = if_else(A == "010", 1, 0),
                                  AA = if_else(A == "001", 1, 0),
                                  BE = if_else(B == "100", 1, 0),
@@ -28,7 +28,7 @@ reshape_new_equation <- function(eq_df){
                                  OP = if_else(O == "010", 1, 0),
                                  OA = if_else(O == "001", 1, 0))
 
-  eq_df <- tibble(coef_name = eq_df$V1,
+  eq_df <- tibble::tibble(coef_name = eq_df$V1,
                  postAE = eq_df$V2,
                  postAP = eq_df$V3,
                  postAA = eq_df$V4,
@@ -39,7 +39,7 @@ reshape_new_equation <- function(eq_df){
                  postOP = eq_df$V9,
                  postOA = eq_df$V10)
 
-    eq_coef_info <- left_join(eq_df, decoding_coefficients, by = c("coef_name"))
+    eq_coef_info <- dplyr::left_join(eq_df, decoding_coefficients, by = c("coef_name"))
 
     return(eq_coef_info)
   }
