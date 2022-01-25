@@ -30,7 +30,8 @@ reshape_events_df <- function(df,
   if(df_format == "wide"){
 
     df_long <- df %>%
-              dplyr::mutate(event_id = dplyr::row_number()) %>%
+              dplyr::mutate(event_id = dplyr::row_number(),
+                            event = paste(actor, behavior, object, sep = " ")) %>%
               tidyr::pivot_longer(actor:object,
                            names_to = "element",
                            values_to = "term") %>%
@@ -46,6 +47,8 @@ reshape_events_df <- function(df,
                dplyr::mutate(component = dplyr::if_else(element == "behavior",
                                                          "behavior", "identity"),
                              event_id = get(id_column)) %>%
+               dplyr::group_by(event_id) %>%
+               dplyr::mutate(event = paste(term, collapse = " ")) %>%
                dplyr::left_join(dictionary) %>%
                dplyr::select(-all_of(id_column)) %>%
       tidyr::pivot_longer(E:A,

@@ -53,12 +53,12 @@ library(tidyverse)
 us_2015 <- epa_subset(dataset = "usfullsurveyor2015")
 
 #make a dataframe of events 
-set.seed(729)
+set.seed(369)
 events_wide <- tibble(actor = sample(us_2015$term[us_2015$component == "identity"], 10),
                  behavior = sample(us_2015$term[us_2015$component == "behavior"], 10),
                  object = sample(us_2015$term[us_2015$component == "identity"], 10))
 
-set.seed(729)
+set.seed(369)
 events_long <- tibble(id = rep(1:10, 3),
                       term = c(sample(us_2015$term[us_2015$component == "identity"], 10),
                                sample(us_2015$term[us_2015$component == "behavior"], 10),
@@ -96,7 +96,7 @@ Once you have the overall analysis dataframe, you should group_by the event_id a
 
 ```{r}
 nested_analysis_df <- analysis_df %>% 
-                      group_by(event_id) %>% 
+                      group_by(event_id, event) %>% 
                       nest() %>% 
                       mutate(eq_info = "us2010_average")
 ```
@@ -107,9 +107,9 @@ Now, you can apply various functions to each event by using the map2() function 
 ```{r}
 
 results_df <- nested_analysis_df %>% 
-              mutate(deflection = map2(data, eq_info, get_deflection))
+              mutate(deflection = map2_dbl(data, eq_info, get_deflection))
 
-results_df %>% unnest() %>% select(event_id, term, deflection) %>% distinct()
+results_df %>% select(event, deflection)
 
 ```
 
@@ -125,7 +125,7 @@ nested_analysis_df %>%
     unnest(trans_imp) %>% 
     mutate(difference = estimate - trans_imp,
            sqd_difference = difference^2) %>% 
-    group_by(event_id) %>% 
+    group_by(event_id, event) %>% 
     summarise(deflection = sum(sqd_difference))
 ```
 

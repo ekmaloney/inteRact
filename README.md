@@ -77,12 +77,12 @@ library(tidyverse)
 us_2015 <- epa_subset(dataset = "usfullsurveyor2015")
 
 #make a dataframe of events 
-set.seed(729)
+set.seed(369)
 events_wide <- tibble(actor = sample(us_2015$term[us_2015$component == "identity"], 10),
                  behavior = sample(us_2015$term[us_2015$component == "behavior"], 10),
                  object = sample(us_2015$term[us_2015$component == "identity"], 10))
 
-set.seed(729)
+set.seed(369)
 events_long <- tibble(id = rep(1:10, 3),
                       term = c(sample(us_2015$term[us_2015$component == "identity"], 10),
                                sample(us_2015$term[us_2015$component == "behavior"], 10),
@@ -92,24 +92,24 @@ events_long <- tibble(id = rep(1:10, 3),
 
 head(events_wide)
 #> # A tibble: 6 × 3
-#>   actor          behavior        object      
-#>   <chr>          <chr>           <chr>       
-#> 1 authority      hide_from       student     
-#> 2 mormon         dine_with       underdog    
-#> 3 alcoholic      fondle          peer        
-#> 4 civil_engineer fire_from_a_job ticket_taker
-#> 5 brain          boss            negotiator  
-#> 6 bookkeeper     rebel_against   black
+#>   actor      behavior  object                      
+#>   <chr>      <chr>     <chr>                       
+#> 1 landlady   fluster   introvert                   
+#> 2 virgin     shield    neurotic                    
+#> 3 chatterbox educate   myself_as_i_would_like_to_be
+#> 4 shop_clerk entreat   best_man                    
+#> 5 grind      aggravate machine_repairer            
+#> 6 asian_man  berate    chatterbox
 head(events_long)
 #> # A tibble: 6 × 3
 #>      id term      element 
 #>   <int> <chr>     <chr>   
-#> 1     1 authority actor   
-#> 2     1 hide_from behavior
-#> 3     1 student   object  
-#> 4     2 mormon    actor   
-#> 5     2 dine_with behavior
-#> 6     2 underdog  object
+#> 1     1 landlady  actor   
+#> 2     1 fluster   behavior
+#> 3     1 introvert object  
+#> 4     2 virgin    actor   
+#> 5     2 shield    behavior
+#> 6     2 neurotic  object
 ```
 
 The next step is to augment your events with the corresponding EPA
@@ -130,15 +130,15 @@ analysis_df <- reshape_events_df(df = events_wide,
 #> Joining, by = c("term", "component")
 
 head(analysis_df)
-#> # A tibble: 6 × 6
-#>   event_id element  term      component dimension estimate
-#>      <int> <chr>    <chr>     <chr>     <chr>        <dbl>
-#> 1        1 actor    authority identity  E             0.7 
-#> 2        1 actor    authority identity  P             2.99
-#> 3        1 actor    authority identity  A             0.85
-#> 4        1 behavior hide_from behavior  E            -0.82
-#> 5        1 behavior hide_from behavior  P            -0.86
-#> 6        1 behavior hide_from behavior  A            -1.37
+#> # A tibble: 6 × 7
+#>   event_id event                      element term  component dimension estimate
+#>      <int> <chr>                      <chr>   <chr> <chr>     <chr>        <dbl>
+#> 1        1 landlady fluster introvert actor   land… identity  E             0.08
+#> 2        1 landlady fluster introvert actor   land… identity  P             1.68
+#> 3        1 landlady fluster introvert actor   land… identity  A             0.59
+#> 4        1 landlady fluster introvert behavi… flus… behavior  E            -0.32
+#> 5        1 landlady fluster introvert behavi… flus… behavior  P             1.2 
+#> 6        1 landlady fluster introvert behavi… flus… behavior  A             0.81
 
 analysis_df <- reshape_events_df(df = events_long,
                                  df_format = "long",
@@ -148,15 +148,16 @@ analysis_df <- reshape_events_df(df = events_long,
 #> Joining, by = c("term", "component")
 
 head(analysis_df)
-#> # A tibble: 6 × 6
-#>   term      element  component event_id dimension estimate
-#>   <chr>     <chr>    <chr>        <int> <chr>        <dbl>
-#> 1 authority actor    identity         1 E             0.7 
-#> 2 authority actor    identity         1 P             2.99
-#> 3 authority actor    identity         1 A             0.85
-#> 4 hide_from behavior behavior         1 E            -0.82
-#> 5 hide_from behavior behavior         1 P            -0.86
-#> 6 hide_from behavior behavior         1 A            -1.37
+#> # A tibble: 6 × 7
+#> # Groups:   event_id [1]
+#>   term     element  component event_id event                  dimension estimate
+#>   <chr>    <chr>    <chr>        <int> <chr>                  <chr>        <dbl>
+#> 1 landlady actor    identity         1 landlady fluster intr… E             0.08
+#> 2 landlady actor    identity         1 landlady fluster intr… P             1.68
+#> 3 landlady actor    identity         1 landlady fluster intr… A             0.59
+#> 4 fluster  behavior behavior         1 landlady fluster intr… E            -0.32
+#> 5 fluster  behavior behavior         1 landlady fluster intr… P             1.2 
+#> 6 fluster  behavior behavior         1 landlady fluster intr… A             0.81
 ```
 
 After reshaping your events, you now have a dataframe with the
@@ -178,7 +179,7 @@ us2010 equation averaged across genders to match the dictionary.
 
 ``` r
 nested_analysis_df <- analysis_df %>% 
-                      group_by(event_id) %>% 
+                      group_by(event_id, event) %>% 
                       nest() %>% 
                       mutate(eq_info = "us2010_average")
 ```
@@ -191,26 +192,24 @@ information inside the nested dataframe.
 
 ``` r
 results_df <- nested_analysis_df %>% 
-              mutate(deflection = map2(data, eq_info, get_deflection))
+              mutate(deflection = map2_dbl(data, eq_info, get_deflection))
 
-results_df %>% unnest() %>% select(event_id, term, deflection) %>% distinct()
-#> Warning: `cols` is now required when using unnest().
-#> Please use `cols = c(data, deflection)`
-#> # A tibble: 30 × 3
-#> # Groups:   event_id [10]
-#>    event_id term           deflection
-#>       <int> <chr>               <dbl>
-#>  1        1 authority           13.3 
-#>  2        1 hide_from           13.3 
-#>  3        1 student             13.3 
-#>  4        2 mormon               5.06
-#>  5        2 dine_with            5.06
-#>  6        2 underdog             5.06
-#>  7        3 alcoholic            9.00
-#>  8        3 fondle               9.00
-#>  9        3 peer                 9.00
-#> 10        4 civil_engineer      13.0 
-#> # … with 20 more rows
+results_df %>% select(event, deflection)
+#> Adding missing grouping variables: `event_id`
+#> # A tibble: 10 × 3
+#> # Groups:   event_id, event [10]
+#>    event_id event                                           deflection
+#>       <int> <chr>                                                <dbl>
+#>  1        1 landlady fluster introvert                           2.18 
+#>  2        2 virgin shield neurotic                               6.93 
+#>  3        3 chatterbox educate myself_as_i_would_like_to_be     20.5  
+#>  4        4 shop_clerk entreat best_man                          0.994
+#>  5        5 grind aggravate machine_repairer                    17.1  
+#>  6        6 asian_man berate chatterbox                         20.9  
+#>  7        7 crybaby harass sleuth                               19.8  
+#>  8        8 street_musician glorify mugger                       1.86 
+#>  9        9 chaplain chastise scoundrel                         22.8  
+#> 10       10 artist like newcomer                                12.2
 ```
 
 ### Deflection
@@ -236,21 +235,23 @@ nested_analysis_df %>%
     unnest(trans_imp) %>% 
     mutate(difference = estimate - trans_imp,
            sqd_difference = difference^2) %>% 
-    group_by(event_id) %>% 
+    group_by(event_id, event) %>% 
     summarise(deflection = sum(sqd_difference))
-#> # A tibble: 10 × 2
-#>    event_id deflection
-#>       <int>      <dbl>
-#>  1        1      13.3 
-#>  2        2       5.06
-#>  3        3       9.00
-#>  4        4      13.0 
-#>  5        5      37.1 
-#>  6        6      13.2 
-#>  7        7      12.4 
-#>  8        8      23.7 
-#>  9        9       2.51
-#> 10       10       2.43
+#> `summarise()` has grouped output by 'event_id'. You can override using the `.groups` argument.
+#> # A tibble: 10 × 3
+#> # Groups:   event_id [10]
+#>    event_id event                                           deflection
+#>       <int> <chr>                                                <dbl>
+#>  1        1 landlady fluster introvert                           2.18 
+#>  2        2 virgin shield neurotic                               6.93 
+#>  3        3 chatterbox educate myself_as_i_would_like_to_be     20.5  
+#>  4        4 shop_clerk entreat best_man                          0.994
+#>  5        5 grind aggravate machine_repairer                    17.1  
+#>  6        6 asian_man berate chatterbox                         20.9  
+#>  7        7 crybaby harass sleuth                               19.8  
+#>  8        8 street_musician glorify mugger                       1.86 
+#>  9        9 chaplain chastise scoundrel                         22.8  
+#> 10       10 artist like newcomer                                12.2
 ```
 
 ### Element Deflection
@@ -279,30 +280,30 @@ close as possible to the fundamental sentiments. The function
 nested_analysis_df %>% 
   mutate(opt_beh = map2(data, eq_info, optimal_behavior)) %>% 
   unnest(opt_beh)
-#> # A tibble: 20 × 7
-#> # Groups:   event_id [10]
-#>    event_id data             eq_info          opt_E   opt_P  opt_A term  
-#>       <int> <list>           <chr>            <dbl>   <dbl>  <dbl> <chr> 
-#>  1        1 <tibble [9 × 5]> us2010_average  1.48    1.88    1.64  actor 
-#>  2        1 <tibble [9 × 5]> us2010_average  1.76   -0.0444  0.593 object
-#>  3        2 <tibble [9 × 5]> us2010_average -0.112   0.510  -0.483 actor 
-#>  4        2 <tibble [9 × 5]> us2010_average -0.135   0.0444 -0.251 object
-#>  5        3 <tibble [9 × 5]> us2010_average -0.491  -1.67    1.17  actor 
-#>  6        3 <tibble [9 × 5]> us2010_average  0.799   1.43    0.947 object
-#>  7        4 <tibble [9 × 5]> us2010_average  2.08    1.13    0.387 actor 
-#>  8        4 <tibble [9 × 5]> us2010_average  0.271   0.462   0.628 object
-#>  9        5 <tibble [9 × 5]> us2010_average  4.10    2.11    2.65  actor 
-#> 10        5 <tibble [9 × 5]> us2010_average  3.02    1.78    1.90  object
-#> 11        6 <tibble [9 × 5]> us2010_average  1.97   -0.175  -1.39  actor 
-#> 12        6 <tibble [9 × 5]> us2010_average  0.0478  1.79    0.322 object
-#> 13        7 <tibble [9 × 5]> us2010_average  0.0677  0.0705 -0.454 actor 
-#> 14        7 <tibble [9 × 5]> us2010_average -1.28   -0.507   0.736 object
-#> 15        8 <tibble [9 × 5]> us2010_average  2.30    1.20    0.236 actor 
-#> 16        8 <tibble [9 × 5]> us2010_average  0.846   0.955   3.08  object
-#> 17        9 <tibble [9 × 5]> us2010_average  0.998   1.16    1.24  actor 
-#> 18        9 <tibble [9 × 5]> us2010_average  0.868   0.308   1.27  object
-#> 19       10 <tibble [9 × 5]> us2010_average  1.13    0.528   0.378 actor 
-#> 20       10 <tibble [9 × 5]> us2010_average  0.661   0.894   0.716 object
+#> # A tibble: 20 × 8
+#> # Groups:   event_id, event [10]
+#>    event_id event               data     eq_info     opt_E   opt_P   opt_A term 
+#>       <int> <chr>               <list>   <chr>       <dbl>   <dbl>   <dbl> <chr>
+#>  1        1 landlady fluster i… <tibble… us2010_a…  0.784   1.53    0.0992 actor
+#>  2        1 landlady fluster i… <tibble… us2010_a…  0.393  -0.299  -1.94   obje…
+#>  3        2 virgin shield neur… <tibble… us2010_a…  0.605   0.733  -1.05   actor
+#>  4        2 virgin shield neur… <tibble… us2010_a… -0.983  -0.217   0.225  obje…
+#>  5        3 chatterbox educate… <tibble… us2010_a… -0.0298 -0.274   2.78   actor
+#>  6        3 chatterbox educate… <tibble… us2010_a…  1.37    2.59    1.58   obje…
+#>  7        4 shop_clerk entreat… <tibble… us2010_a…  0.583   0.0312  0.319  actor
+#>  8        4 shop_clerk entreat… <tibble… us2010_a…  0.784   1.60    0.431  obje…
+#>  9        5 grind aggravate ma… <tibble… us2010_a…  0.201  -0.622   0.819  actor
+#> 10        5 grind aggravate ma… <tibble… us2010_a…  0.753   2.12    0.741  obje…
+#> 11        6 asian_man berate c… <tibble… us2010_a…  1.56   -0.0484  0.398  actor
+#> 12        6 asian_man berate c… <tibble… us2010_a…  0.299   1.47    2.81   obje…
+#> 13        7 crybaby harass sle… <tibble… us2010_a…  1.67   -0.889   1.70   actor
+#> 14        7 crybaby harass sle… <tibble… us2010_a…  0.102   0.467  -1.75   obje…
+#> 15        8 street_musician gl… <tibble… us2010_a… -0.0732 -0.114   1.62   actor
+#> 16        8 street_musician gl… <tibble… us2010_a… -1.21    0.234   0.688  obje…
+#> 17        9 chaplain chastise … <tibble… us2010_a…  1.59    1.19   -0.385  actor
+#> 18        9 chaplain chastise … <tibble… us2010_a…  0.359   0.170   1.77   obje…
+#> 19       10 artist like newcom… <tibble… us2010_a… -0.411   1.04   -0.696  actor
+#> 20       10 artist like newcom… <tibble… us2010_a…  0.0461  0.303  -1.33   obje…
 ```
 
 ### Actor and Object Reidentification
@@ -317,20 +318,20 @@ nested_analysis_df %>%
   mutate(new_actor_id = map2(data, eq_info, reidentify_actor),
          new_object_id = map2(data, eq_info, reidentify_object)) %>% 
   unnest(new_actor_id)
-#> # A tibble: 10 × 7
-#> # Groups:   event_id [10]
-#>    event_id data             eq_info              E      P      A new_object_id 
-#>       <int> <list>           <chr>            <dbl>  <dbl>  <dbl> <list>        
-#>  1        1 <tibble [9 × 5]> us2010_average -1.40   -1.07  -1.53  <tibble [1 × …
-#>  2        2 <tibble [9 × 5]> us2010_average -0.0157  0.919 -0.313 <tibble [1 × …
-#>  3        3 <tibble [9 × 5]> us2010_average  0.126   0.710 -0.169 <tibble [1 × …
-#>  4        4 <tibble [9 × 5]> us2010_average -2.72    2.15   1.33  <tibble [1 × …
-#>  5        5 <tibble [9 × 5]> us2010_average -2.99    1.62   2.12  <tibble [1 × …
-#>  6        6 <tibble [9 × 5]> us2010_average  0.0895  1.75   2.13  <tibble [1 × …
-#>  7        7 <tibble [9 × 5]> us2010_average -0.0565  2.73   1.58  <tibble [1 × …
-#>  8        8 <tibble [9 × 5]> us2010_average -3.57    1.73   3.15  <tibble [1 × …
-#>  9        9 <tibble [9 × 5]> us2010_average  1.33    0.803 -0.694 <tibble [1 × …
-#> 10       10 <tibble [9 × 5]> us2010_average  1.78    1.66  -0.394 <tibble [1 × …
+#> # A tibble: 10 × 8
+#> # Groups:   event_id, event [10]
+#>    event_id event           data     eq_info        E     P      A new_object_id
+#>       <int> <chr>           <list>   <chr>      <dbl> <dbl>  <dbl> <list>       
+#>  1        1 landlady flust… <tibble… us2010_a…  0.275 1.27   1.06  <tibble [1 ×…
+#>  2        2 virgin shield … <tibble… us2010_a…  0.262 2.65   1.03  <tibble [1 ×…
+#>  3        3 chatterbox edu… <tibble… us2010_a…  1.15  2.79  -0.277 <tibble [1 ×…
+#>  4        4 shop_clerk ent… <tibble… us2010_a…  1.01  0.376 -0.250 <tibble [1 ×…
+#>  5        5 grind aggravat… <tibble… us2010_a… -1.69  0.645  2.70  <tibble [1 ×…
+#>  6        6 asian_man bera… <tibble… us2010_a… -2.90  0.756  2.86  <tibble [1 ×…
+#>  7        7 crybaby harass… <tibble… us2010_a…  0.480 0.428  2.35  <tibble [1 ×…
+#>  8        8 street_musicia… <tibble… us2010_a…  0.578 0.850  1.52  <tibble [1 ×…
+#>  9        9 chaplain chast… <tibble… us2010_a… -2.84  0.904  1.89  <tibble [1 ×…
+#> 10       10 artist like ne… <tibble… us2010_a… -1.02  1.60   0.185 <tibble [1 ×…
 ```
 
 ### Closest Term
@@ -349,19 +350,19 @@ nested_analysis_df %>%
   mutate(term = closest_term(E, P, A, dictionary_key = "usfullsurveyor2015", gender = "average",
                term_typ = "identity", num_terms = 1)) %>% 
   unnest(cols = c(term))
-#> # A tibble: 10 × 12
-#> # Groups:   event_id [10]
-#>    event_id data   eq_info        E      P      A new_object_id term_name term_E
-#>       <int> <list> <chr>      <dbl>  <dbl>  <dbl> <list>        <chr>      <dbl>
-#>  1        1 <tibb… us2010_… -1.40   -1.07  -1.53  <tibble [1 ×… miser      -1.61
-#>  2        2 <tibb… us2010_… -0.0157  0.919 -0.313 <tibble [1 ×… imam        0.17
-#>  3        3 <tibb… us2010_…  0.126   0.710 -0.169 <tibble [1 ×… conserva…   0.44
-#>  4        4 <tibb… us2010_… -2.72    2.15   1.33  <tibble [1 ×… gunman     -2.33
-#>  5        5 <tibb… us2010_… -2.99    1.62   2.12  <tibble [1 ×… slave_dr…  -3.28
-#>  6        6 <tibb… us2010_…  0.0895  1.75   2.13  <tibble [1 ×… jock        0.34
-#>  7        7 <tibb… us2010_… -0.0565  2.73   1.58  <tibble [1 ×… prosecut…   0.15
-#>  8        8 <tibb… us2010_… -3.57    1.73   3.15  <tibble [1 ×… No terms…  NA   
-#>  9        9 <tibb… us2010_…  1.33    0.803 -0.694 <tibble [1 ×… bank_tel…   1.27
-#> 10       10 <tibb… us2010_…  1.78    1.66  -0.394 <tibble [1 ×… scientist   1.89
-#> # … with 3 more variables: term_P <dbl>, term_A <dbl>, ssd <dbl>
+#> # A tibble: 10 × 13
+#> # Groups:   event_id, event [10]
+#>    event_id event     data   eq_info      E     P      A new_object_id term_name
+#>       <int> <chr>     <list> <chr>    <dbl> <dbl>  <dbl> <list>        <chr>    
+#>  1        1 landlady… <tibb… us2010…  0.275 1.27   1.06  <tibble [1 ×… grind    
+#>  2        2 virgin s… <tibb… us2010…  0.262 2.65   1.03  <tibble [1 ×… milliona…
+#>  3        3 chatterb… <tibb… us2010…  1.15  2.79  -0.277 <tibble [1 ×… judge    
+#>  4        4 shop_cle… <tibb… us2010…  1.01  0.376 -0.250 <tibble [1 ×… rancher  
+#>  5        5 grind ag… <tibb… us2010… -1.69  0.645  2.70  <tibble [1 ×… speeder  
+#>  6        6 asian_ma… <tibb… us2010… -2.90  0.756  2.86  <tibble [1 ×… madman   
+#>  7        7 crybaby … <tibb… us2010…  0.480 0.428  2.35  <tibble [1 ×… busybody 
+#>  8        8 street_m… <tibb… us2010…  0.578 0.850  1.52  <tibble [1 ×… flirt    
+#>  9        9 chaplain… <tibb… us2010… -2.84  0.904  1.89  <tibble [1 ×… bully    
+#> 10       10 artist l… <tibb… us2010… -1.02  1.60   0.185 <tibble [1 ×… mafioso  
+#> # … with 4 more variables: term_E <dbl>, term_P <dbl>, term_A <dbl>, ssd <dbl>
 ```
