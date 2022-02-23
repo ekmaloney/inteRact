@@ -18,7 +18,7 @@ dataframe in long format, with one row for each element-dimension of the event, 
 Calculate the Transient Impression after an Event
 }
 \examples{
-d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+d <- tibble::tibble(actor_modifier = "tired", actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
 transient_impression(df = d, equation_info = "us2010_average")
 

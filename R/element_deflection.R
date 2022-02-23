@@ -34,7 +34,7 @@ element_deflection <- function(df, equation_info) {
 
           #get element deflection by applying the transient impression function
           element_deflection <- transient_impression(df, equation_info) %>%
-            dplyr::mutate(difference = estimate - trans_imp,
+            dplyr::mutate(difference = trans_imp - estimate,
                    sqd_diff = difference^2) %>%
             dplyr::ungroup()
 

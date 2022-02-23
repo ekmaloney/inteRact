@@ -23,7 +23,6 @@ reidentify_actor <- function(df, equation_info) {
           eq <- get_equation(name = equation_info[[1]][1],
                              gender = equation_info[[1]][2],
                              type = "impressionabo")
-          eq <- reshape_new_equation(eq)
 
 
           #extract terms that are not A

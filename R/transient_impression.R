@@ -21,7 +21,7 @@
 #' @export
 #'
 #' @examples
-#' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
+#' d <- tibble::tibble(actor_modifier = "tired", actor = "ceo", behavior = "advise", object = "benefactor")
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
 #' transient_impression(df = d, equation_info = "us2010_average")
 #'
@@ -30,14 +30,53 @@
 transient_impression <- function(df,
                                  equation_info) {
 
+if("actor_modifier" %in% df$element){
+
+  new_id <- modify_identity(identity = unique(df$term[df$element == "actor"]),
+                            modifier = unique(df$term[df$element == "actor_modifier"]),
+                            eq_info = equation_info)
+
+  new_actor_info <- tibble::tibble(event_id = unique(df$event_id),
+                                   element = "actor",
+                                   term = paste(unique(df$term[df$element == "actor_modifier"]),
+                                                unique(df$term[df$element == "actor"])),
+                                   component = "identity",
+                                   event = unique(df$event),
+                                   dimension = c("E", "P", "A"),
+                                   estimate = c(new_id[1], new_id[2], new_id[3]))
+
+  df <- df %>% filter(element != "actor" & element != "actor_modifier")
+  df <- bind_rows(new_actor_info, df)
+
+}
+
+  if("object_modifier" %in% df$element){
+
+    new_id <- modify_identity(identity = unique(df$term[df$element == "object"]),
+                              modifier = unique(df$term[df$element == "object_modifier"]),
+                              eq_info = equation_info)
+
+    new_actor_info <- tibble::tibble(event_id = unique(df$event_id),
+                                     element = "object",
+                                     term = paste(unique(df$term[df$element == "object_modifier"]),
+                                                  unique(df$term[df$element == "object"])),
+                                     component = "identity",
+                                     event = unique(df$event),
+                                     dimension = c("E", "P", "A"),
+                                     estimate = c(new_id[1], new_id[2], new_id[3]))
+
+    df <- df %>% filter(element != "object" & element != "object_modifier")
+    df <- bind_rows(new_actor_info, df)
+
+  }
+
+
           #get the equation
           equation_info <- stringr::str_split(equation_info, "_")
 
           eq <- get_equation(name = equation_info[[1]][1],
                              gender = equation_info[[1]][2],
                              type = "impressionabo")
-
-          eq <- reshape_new_equation(eq)
 
           #construct the selection matrix
           selection_mat <- eq %>% dplyr::select(AE:OA)

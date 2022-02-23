@@ -39,7 +39,29 @@ reshape_new_equation <- function(eq_df){
                  postOP = eq_df$V9,
                  postOA = eq_df$V10)
 
-    eq_coef_info <- dplyr::left_join(eq_df, decoding_coefficients, by = c("coef_name"))
+    eq_coef_info <- dplyr::left_join(eq_df, impression_coefficients, by = c("coef_name"))
 
     return(eq_coef_info)
-  }
+}
+
+
+reshape_emotion_equation <- function(eq) {
+  eq <- tibble(coef_name = eq$V1,
+               postME = eq$V2,
+               postMP = eq$V3,
+               postMA = eq$V4)
+
+  eq_coef_info <- full_join(eq, emotions_coefficients, by = c("coef_name"))
+
+  eq_coef_info[is.na(eq_coef_info)] <- 0
+
+  eq_coef_info <- eq_coef_info %>%
+                  mutate(terms_involved = ME + MP + MA + IE + IP + IA,
+                         interaction_term = if_else(terms_involved > 1, 1, 0),
+                         E_interaction = if_else(interaction_term == 1 & IE == 1, 1, 0),
+                         P_interaction = if_else(interaction_term == 1 & IP == 1, 1, 0),
+                         A_interaction = if_else(interaction_term == 1 & IA == 1, 1, 0)) %>%
+                  select(-terms_involved, interaction_term)
+
+  return(eq_coef_info)
+}

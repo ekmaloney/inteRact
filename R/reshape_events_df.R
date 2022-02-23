@@ -29,14 +29,20 @@ reshape_events_df <- function(df,
   #next, do different things if wide or short
   if(df_format == "wide"){
 
+
+    all_var_names <- variable.names(df)
+
     df_long <- df %>%
-              dplyr::mutate(event_id = dplyr::row_number(),
-                            event = paste(actor, behavior, object, sep = " ")) %>%
-              tidyr::pivot_longer(actor:object,
+              dplyr::mutate(event_id = dplyr::row_number()) %>%
+              tidyr::pivot_longer(all_var_names,
                            names_to = "element",
                            values_to = "term") %>%
-              dplyr::mutate(component = dplyr::if_else(element == "behavior",
-                                                "behavior", "identity")) %>%
+              dplyr::mutate(component =
+                              dplyr::case_when(element == "behavior" ~"behavior",
+                              element == "actor" | element == "object" ~ "identity",
+                              str_detect(element, "modifier") ~ "modifier")) %>%
+      dplyr::group_by(event_id) %>%
+      dplyr::mutate(event = paste(term, collapse = " ")) %>%
               dplyr::left_join(dictionary) %>%
               tidyr::pivot_longer(E:A,
                                   names_to = "dimension",
@@ -44,8 +50,9 @@ reshape_events_df <- function(df,
 
   }else{
     df_long <- df %>%
-               dplyr::mutate(component = dplyr::if_else(element == "behavior",
-                                                         "behavior", "identity"),
+               dplyr::mutate(component = dplyr::case_when(element == "behavior" ~"behavior",
+                                                          element == "actor" | element == "object" ~ "identity",
+                                                          str_detect(element, "modifier") ~ "modifier"),
                              event_id = get(id_column)) %>%
                dplyr::group_by(event_id) %>%
                dplyr::mutate(event = paste(term, collapse = " ")) %>%

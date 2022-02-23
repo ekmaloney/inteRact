@@ -36,14 +36,21 @@ get_dictionary <- function(dict_key, g){
 #' @examples
 get_equation <- function(name, type, gender){
 
-  g <- dplyr::case_when(gender == "female" ~ "f",
-                 gender == "male" ~ "m",
-                 gender == "average" ~ "av")
+  eq_df <- equations_dataframe %>%
+            filter(gender == gender &
+                   key == name &
+                   equation_type == type) %>%
+            pull(df)
 
-  eqn_fn <- paste0(name, "_", type, "_", g, "_eqn")
+  eq_df <- eq_df[[1]]
 
-  eq <- get(eqn_fn)
+  if(type == "impressionabo"){
+    eq_clean <- reshape_new_equation(eq_df)
+  }else if (type == "traitid" | type == "emotionid"){
+    eq_clean <- reshape_emotion_equation(eq_df)
+  }
 
-  return(eq)
+
+  return(eq_clean)
 
 }

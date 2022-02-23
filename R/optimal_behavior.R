@@ -33,8 +33,6 @@ optimal_behavior <- function(df,
                              gender = eq_info[[1]][2],
                              type = "impressionabo")
 
-          eq <- reshape_new_equation(eq)
-
           #calculate the transient impression
           element_def <- transient_impression(df, equation_info)
 

@@ -31,7 +31,6 @@ maximally_confirm_behavior <- function(act, beh, obj,
     eq <- eq_df
   } else {
     eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
-    eq <- reshape_new_equation(eq)
   }
 
   a <- d %>%
