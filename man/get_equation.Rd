@@ -4,7 +4,7 @@
 \alias{get_equation}
 \title{Get Equation}
 \usage{
-get_equation(name, type, gender)
+get_equation(name, type, g)
 }
 \arguments{
 \item{name}{name of equation. options: canada1985, canada20012003, china2000,

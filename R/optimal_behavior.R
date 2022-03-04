@@ -30,7 +30,7 @@ optimal_behavior <- function(df,
           eq_info <- stringr::str_split(equation_info, "_")
 
           eq <- get_equation(name = eq_info[[1]][1],
-                             gender = eq_info[[1]][2],
+                             g= eq_info[[1]][2],
                              type = "impressionabo")
 
           #calculate the transient impression

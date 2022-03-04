@@ -51,7 +51,7 @@ reshape_emotion_equation <- function(eq) {
                postMP = eq$V3,
                postMA = eq$V4)
 
-  eq_coef_info <- full_join(eq, emotions_coefficients, by = c("coef_name"))
+  eq_coef_info <- dplyr::full_join(eq, emotions_coefficients, by = c("coef_name"))
 
   eq_coef_info[is.na(eq_coef_info)] <- 0
 

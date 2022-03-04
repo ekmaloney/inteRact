@@ -25,7 +25,7 @@ or long (multiple rows for each event)}
 \item{dictionary_gender}{the gender EPA ratings you are using for your analysis. Should be male, female, or average}
 }
 \value{
-
+a dataframe in the format necessary for applying main ACT functions to the events:
 }
 \description{
 Reshape Events DF

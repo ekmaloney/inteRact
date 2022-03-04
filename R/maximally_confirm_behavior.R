@@ -30,7 +30,7 @@ maximally_confirm_behavior <- function(act, beh, obj,
   if(equation_key == "user_supplied"){
     eq <- eq_df
   } else {
-    eq <- get_equation(name = equation_key, type = "impressionabo", gender = gender)
+    eq <- get_equation(name = equation_key, type = "impressionabo", g = gender)
   }
 
   a <- d %>%

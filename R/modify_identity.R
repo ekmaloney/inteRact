@@ -1,24 +1,25 @@
-
-
-
-modify_identity <- function(identity, modifier,
+#' Modify Identity
+#'
+#' A function that applies the modifier equations to find the EPA location for modifier
+#' + identity
+#'
+#' @param id_info a dataframe from reshape events that should be only
+#' actor_modifier and actor elements or object_modifier and object elements
+#' @param eq_info the equation information you are using, should be in the
+#' form {name}_{gender}
+#'
+#' @return three digit EPA profile of the modified identity
+#' @export
+#'
+#' @examples
+modify_identity <- function(id_info,
                             eq_info){
 
-  #get the modifier and identity information
-  id_info <- epa_subset(dataset = dict,
-                        gender = "male") %>%
-             filter((term == identity & component == "identity") |
-                      term == modifier & component == "modifier") %>%
-              select(term, component, E, P, A) %>%
-              pivot_longer(E:A,
-                           names_to = "dimension",
-                           values_to = "estimate")
-
-
   equation_info <- stringr::str_split(eq_info, "_")
+
   #get the equation you're using
   eq <- get_equation(name = equation_info[[1]][1],
-                     gender = equation_info[[1]][2],
+                     g = equation_info[[1]][2],
                      type = "traitid")
 
   #select variables of interest
@@ -36,7 +37,12 @@ modify_identity <- function(identity, modifier,
   #final combination :)
   post_epa <- t(eq[,2:4]) %*% abo_selected$product
 
-  return(post_epa)
+  results <- tibble(dimension = c("E", "P", "A"),
+                    estimate = c(post_epa[1],
+                                 post_epa[2],
+                                 post_epa[3]))
+
+  return(results)
 
 
 }

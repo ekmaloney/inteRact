@@ -21,7 +21,7 @@ reidentify_object <- function(df, equation_info) {
             equation_info <- stringr::str_split(equation_info, "_")
 
             eq <- get_equation(name = equation_info[[1]][1],
-                               gender = equation_info[[1]][2],
+                               g = equation_info[[1]][2],
                                type = "impressionabo")
 
             #extract terms that are not A

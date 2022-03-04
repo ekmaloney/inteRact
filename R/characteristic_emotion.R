@@ -11,6 +11,8 @@ characteristic_emotion <- function(id){
     data("us_2015_full", envir=environment())
     data("us_emotions", envir=environment())
 
+    #us_emotions <- reshape_emotion_equation(us_emotions)
+
     #get the identity EPA scores
     r <- us_2015_full %>%
          filter(term == id & type == "identity") %>%

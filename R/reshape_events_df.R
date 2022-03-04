@@ -7,7 +7,7 @@
 #' @param dictionary_key the actdata dictionary key you are using for your analysis
 #' @param dictionary_gender the gender EPA ratings you are using for your analysis. Should be male, female, or average
 #'
-#' @return
+#' @return a dataframe in the format necessary for applying main ACT functions to the events:
 #' @export
 #'
 #' @examples
@@ -40,7 +40,7 @@ reshape_events_df <- function(df,
               dplyr::mutate(component =
                               dplyr::case_when(element == "behavior" ~"behavior",
                               element == "actor" | element == "object" ~ "identity",
-                              str_detect(element, "modifier") ~ "modifier")) %>%
+                              stringr::str_detect(element, "modifier") ~ "modifier")) %>%
       dplyr::group_by(event_id) %>%
       dplyr::mutate(event = paste(term, collapse = " ")) %>%
               dplyr::left_join(dictionary) %>%
@@ -52,7 +52,7 @@ reshape_events_df <- function(df,
     df_long <- df %>%
                dplyr::mutate(component = dplyr::case_when(element == "behavior" ~"behavior",
                                                           element == "actor" | element == "object" ~ "identity",
-                                                          str_detect(element, "modifier") ~ "modifier"),
+                                                          stringr::str_detect(element, "modifier") ~ "modifier"),
                              event_id = get(id_column)) %>%
                dplyr::group_by(event_id) %>%
                dplyr::mutate(event = paste(term, collapse = " ")) %>%
@@ -62,6 +62,9 @@ reshape_events_df <- function(df,
                           names_to = "dimension",
                           values_to = "estimate")
   }
+
+
+  df_long <- df_long %>% filter(!is.na(term))
 
   return(df_long)
 

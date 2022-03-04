@@ -34,13 +34,13 @@ get_dictionary <- function(dict_key, g){
 #' @export
 #'
 #' @examples
-get_equation <- function(name, type, gender){
+get_equation <- function(name, type, g){
 
   eq_df <- equations_dataframe %>%
-            filter(gender == gender &
+            filter(gender == g &
                    key == name &
                    equation_type == type) %>%
-            pull(df)
+            dplyr::pull(df)
 
   eq_df <- eq_df[[1]]
 
