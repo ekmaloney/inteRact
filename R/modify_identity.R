@@ -18,9 +18,22 @@ modify_identity <- function(id_info,
   equation_info <- stringr::str_split(eq_info, "_")
 
   #get the equation you're using
-  eq <- get_equation(name = equation_info[[1]][1],
-                     g = equation_info[[1]][2],
-                     type = "traitid")
+  if(equation_info[[1]][1] == "nc1978" |
+     equation_info[[1]][1] == "us2010" |
+     equation_info[[1]][1] == "morocco2015" |
+     equation_info[[1]][1] == "germany2007" |
+     equation_info[[1]][1] == "canada20012003" |
+     equation_info[[1]][1] == "canada1985"){
+    eq <- get_equation(name = equation_info[[1]][1],
+                       g = "average",
+                       type = "traitid")
+  }else{
+    eq <- get_equation(name = equation_info[[1]][1],
+                       g = equation_info[[1]][2],
+                       type = "traitid")
+  }
+
+
 
   #select variables of interest
   selection_mat <- eq %>% dplyr::select(ME:IA)
