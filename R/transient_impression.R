@@ -57,8 +57,7 @@ if("actor_modifier" %in% df$element){
     new_id_epa <- modify_identity(id_info = new_id,
                                   eq_info = equation_info)
 
-    new_actor_info <- tibble::tibble(event_id = unique(df$event_id),
-                                     element = "object",
+    new_actor_info <- tibble::tibble(element = "object",
                                      term = paste(unique(df$term[df$element == "object_modifier"]),
                                                   unique(df$term[df$element == "object"])),
                                      component = "identity",
