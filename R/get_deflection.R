@@ -16,11 +16,6 @@
 #' reshape_new_equation function prior)
 #' @return calculated deflection for the event (single number)
 #'
-#' @importFrom dplyr mutate
-#' @importFrom dplyr rowwise
-#' @importFrom dplyr %>%
-#' @importFrom dplyr ungroup
-#' @importFrom dplyr summarise
 #'
 #' @export
 #'
@@ -29,11 +24,9 @@
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
 #' get_deflection(df = d, equation_info = "us2010_average")
 
-
-#provides deflection
 get_deflection <- function(df, equation_info) {
 
-
+        #calculate the transient impression
         t_imp <- transient_impression(df = df, equation_info = equation_info)
 
         #get element deflection by applying the transient impression function

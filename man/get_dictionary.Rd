@@ -15,11 +15,16 @@ us2010, usfullsurveyor2015, usmturk2015, usstudent2015}
 
 \item{type}{behaviors, identities, mods}
 
-\item{gender}{av, m, f}
+\item{gender}{average, male, female}
 }
 \value{
-
+the ACT dictionary from actdata
 }
 \description{
 Get Dictionary Identities
+}
+\examples{
+
+get_dictionary("morocco2015", "average")
+
 }

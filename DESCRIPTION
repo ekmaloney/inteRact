@@ -5,7 +5,7 @@ Authors@R:
     person(given = "Em",
            family = "Maloney",
            role = c("aut", "cre"),
-           email = "emily.k.maloney@duke.edu",
+           email = "em.k.maloney@duke.edu",
            comment = c(ORCID = "YOUR-ORCID-ID"))
 Description: This package allows you to run batch simulations of Affect Control Theory events by translating equations from INTERACT, the program written by David Heise, into R. 
 License: MIT + file LICENSE

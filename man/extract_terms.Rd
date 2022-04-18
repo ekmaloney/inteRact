@@ -2,12 +2,13 @@
 % Please edit documentation in R/extract_terms.R
 \name{extract_terms}
 \alias{extract_terms}
-\title{Create the I matrix from Heise (2010) that corresponds to ABO elements that are not the one being solved for in optimal functions}
+\title{Create the I matrix from Heise (2010) that corresponds to ABO
+elements that are not the one being solved for in optimal functions}
 \usage{
 extract_terms(elem, eq, t_imp)
 }
 \arguments{
-\item{elem}{string either A, B, or O}
+\item{elem}{string either actor, behavior, or object}
 
 \item{eq}{equation}
 
@@ -17,5 +18,6 @@ extract_terms(elem, eq, t_imp)
 29 x 29 matrix
 }
 \description{
-Create the I matrix from Heise (2010) that corresponds to ABO elements that are not the one being solved for in optimal functions
+Create the I matrix from Heise (2010) that corresponds to ABO
+elements that are not the one being solved for in optimal functions
 }

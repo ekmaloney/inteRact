@@ -7,28 +7,28 @@
 optimal_behavior(df, equation_info)
 }
 \arguments{
-\item{actor}{lowercase string corresponding to the actor identity}
+\item{df}{data that has been reshaped by the events_df}
 
-\item{beh}{lowercase string corresponding to the behavior term}
-
-\item{object}{lowercase string corresponding to the object identity}
-
-\item{which}{indicate whether you want the optimal behavior for "actor", "object",
-or "both"}
-
-\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
-
-\item{gender}{either average, male, or female, depending on if you are using gendered equations}
-
-\item{equation_key}{a string corresponding to the equation key from actdata}
-
-\item{eq_df}{if you select "user supplied" for equation, this parameter should
-be your equation dataframe, which (should have been reshaped by the
-reshape_new_equation function prior)}
+\item{equation_info}{is a string that corresponds to "{equationkey}_{gender}"
+from actdata}
 }
 \value{
 3 digit EPA indicating the optimal behavior
 }
 \description{
 Calculate the Optimal Behavior for the Actor following an Event
+}
+\examples{
+
+opt_behavior_example <- tibble::tibble(actor = "teenager",
+behavior = "beam_at",object = "friend")
+
+opt_behavior_df <- reshape_events_df(df = opt_behavior_example,
+df_format = "wide", dictionary_key = "indiana2003",
+dictionary_gender = "male")
+
+opt_b <- optimal_behavior(df = opt_behavior_df, equation_info = "nc1978_male")
+
+
+
 }

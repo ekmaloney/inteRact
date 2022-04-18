@@ -2,21 +2,7 @@
 #'
 #' @param df data that has been reshaped by the events_df
 #' @param equation_info is a string that corresponds to "{equationkey}_{gender}" from actdata
-
 #' @return dataframe in long format, with one row for each element-dimension of the event, columns for fundamental sentiment and transient impression.
-#'
-#' @importFrom dplyr mutate
-#' @importFrom dplyr filter
-#' @importFrom dplyr rowwise
-#' @importFrom dplyr %>%
-#' @importFrom dplyr select
-#' @importFrom dplyr arrange
-#' @importFrom dplyr case_when
-#' @importFrom tidyr pivot_longer
-#' @importFrom naniar replace_with_na_all
-#' @importFrom here here
-#' @importFrom data.table data.table
-#' @importFrom data.table melt
 #'
 #' @export
 #'
@@ -30,6 +16,7 @@
 transient_impression <- function(df,
                                  equation_info) {
 
+#first, deal with modified identities
 if("actor_modifier" %in% df$element){
 
   new_id <- df %>%
@@ -87,6 +74,7 @@ if("actor_modifier" %in% df$element){
 
           #multiply ABO elements by the equation coefficients
           post_epa <- t(eq[,2:10]) %*% abo_selected$product
+          post_epa <- tibble::tibble(post_epa = post_epa)
 
           #put before and after together
           pre_post <- cbind(df, post_epa)

@@ -17,63 +17,42 @@
 #' @export
 #'
 #' @examples
-maximally_confirm_behavior <- function(act, beh, obj,
-                                       dictionary_key,
-                                       gender,
-                                       equation_key,
-                                       eq_df = NULL){
-
-  #get dictionaries
-  d <- actdata::epa_subset(dataset = dictionary_key, gender = gender)
+maximally_confirm_behavior <- function(df, equation_info){
 
   #get equation
-  if(equation_key == "user_supplied"){
-    eq <- eq_df
-  } else {
-    eq <- get_equation(name = equation_key, type = "impressionabo", g = gender)
-  }
+  equation_info <- stringr::str_split(equation_info, "_")
+  eq <- get_equation(name = equation_info[[1]][1],
+                     g = equation_info[[1]][2],
+                     type = "impressionabo")
 
-  a <- d %>%
-    dplyr::filter(term == act & component == "identity") %>%
-    dplyr::mutate(element = "A")
-
-  o <- d %>%
-    dplyr::filter(term == obj & component == "identity") %>%
-    dplyr::mutate(element = "O")
-
-  ao_epa <- rbind(a, o) %>%
-    select(term, element, E, P, A) %>%
-    pivot_longer(cols = E:A, names_to = "dimension",
-                 values_to = "fundamental_sentiment") %>%
-    arrange(element)
-
+  #actor info
 
   i_actor <- eq %>%
-    mutate(i = case_when(A == "000" & O == "000" ~ 1,
-                         A == "100" & O == "000" ~ ao_epa$fundamental_sentiment[1],
-                         A == "010" & O == "000" ~ ao_epa$fundamental_sentiment[2],
-                         A == "001" & O == "000"~ ao_epa$fundamental_sentiment[3],
-                         A == "000" & O == "100" ~ ao_epa$fundamental_sentiment[4],
-                         A == "000" & O == "010" ~ ao_epa$fundamental_sentiment[5],
-                         A == "000" & O == "001" ~ ao_epa$fundamental_sentiment[6],
-                         A == "100" & O == "100"~ ao_epa$fundamental_sentiment[1]*ao_epa$fundamental_sentiment[4],
-                         A == "100" & O == "010" ~ ao_epa$fundamental_sentiment[1]*ao_epa$fundamental_sentiment[5],
-                         A == "100" & O == "001" ~ ao_epa$fundamental_sentiment[1]*ao_epa$fundamental_sentiment[6],
-                         A == "010" & O == "100" ~ ao_epa$fundamental_sentiment[2]*ao_epa$fundamental_sentiment[4],
-                         A == "010" & O == "010" ~ ao_epa$fundamental_sentiment[2]*ao_epa$fundamental_sentiment[5],
-                         A == "010" & O == "001" ~ ao_epa$fundamental_sentiment[2]*ao_epa$fundamental_sentiment[6],
-                         A == "001" & O == "100" ~ ao_epa$fundamental_sentiment[3]*ao_epa$fundamental_sentiment[4],
-                         A == "001" & O == "010" ~ ao_epa$fundamental_sentiment[3]*ao_epa$fundamental_sentiment[5],
-                         A == "001" & O == "001" ~ ao_epa$fundamental_sentiment[3]*ao_epa$fundamental_sentiment[6])) %>%
-    select(i)
+    dplyr::mutate(i = dplyr::case_when(A == "000" & O == "000" ~ 1,
+                         A == "100" & O == "000" ~ df$estimate[1],
+                         A == "010" & O == "000" ~ df$estimate[2],
+                         A == "001" & O == "000"~ df$estimate[3],
+                         A == "000" & O == "100" ~ df$estimate[4],
+                         A == "000" & O == "010" ~ df$estimate[5],
+                         A == "000" & O == "001" ~ df$estimate[6],
+                         A == "100" & O == "100"~ df$estimate[1]*df$estimate[4],
+                         A == "100" & O == "010" ~ df$estimate[1]*df$estimate[5],
+                         A == "100" & O == "001" ~ df$estimate[1]*df$estimate[6],
+                         A == "010" & O == "100" ~ df$estimate[2]*df$estimate[4],
+                         A == "010" & O == "010" ~ df$estimate[2]*df$estimate[5],
+                         A == "010" & O == "001" ~ df$estimate[2]*df$estimate[6],
+                         A == "001" & O == "100" ~ df$estimate[3]*df$estimate[4],
+                         A == "001" & O == "010" ~ df$estimate[3]*df$estimate[5],
+                         A == "001" & O == "001" ~ df$estimate[3]*df$estimate[6])) %>%
+    dplyr::select(i)
 
-  f_s_i <- c(ao_epa$fundamental_sentiment[1],
-             ao_epa$fundamental_sentiment[2],
-             ao_epa$fundamental_sentiment[3],
+  f_s_i <- c(df$estimate[1],
+             df$estimate[2],
+             df$estimate[3],
              1, 1, 1,
-             ao_epa$fundamental_sentiment[4],
-             ao_epa$fundamental_sentiment[5],
-             ao_epa$fundamental_sentiment[6])
+             df$estimate[4],
+             df$estimate[5],
+             df$estimate[6])
   #save as a vector
   i_actor <- c(as.vector(f_s_i), as.vector(i_actor$i))
 
@@ -82,9 +61,7 @@ maximally_confirm_behavior <- function(act, beh, obj,
   diag(mat_i_actor) <- i_actor
 
   #make a behavior selection matrix
-  b_s <- create_select_mat("behavior", gender = gender,
-                           equation_key = equation_key,
-                           eq_df)
+  b_s <- create_select_mat(term = "behavior", eq = eq)
 
   #now which terms do not have behavior in them
   i_s <- matrix(data = rep(1, length(i_actor)), nrow = length(i_actor))
@@ -93,8 +70,7 @@ maximally_confirm_behavior <- function(act, beh, obj,
   g <- as.vector(g)
 
   #h contains identity matrix + coefficients of equations
-  h <- construct_h_matrix(equation_key = equation_key,
-                          gender = gender)
+  h <- construct_h_matrix(eq=eq)
 
   #term 1 of equation
   term1 <- t(b_s) %*% mat_i_actor %*% h %*% mat_i_actor %*% b_s
@@ -108,7 +84,7 @@ maximally_confirm_behavior <- function(act, beh, obj,
   sol <- term1 %*% term2
 
   #put into nicer format
-  opt_behavior_actor <- tibble(opt_E = sol[1],
+  opt_behavior_actor <- tibble::tibble(opt_E = sol[1],
                                opt_P = sol[2],
                                opt_A = sol[3],
                                term = "actor")

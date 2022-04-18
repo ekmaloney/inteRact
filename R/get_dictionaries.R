@@ -8,12 +8,15 @@
 #'
 #' @param type behaviors, identities, mods
 #'
-#' @param gender av, m, f
+#' @param gender average, male, female
 #'
-#' @return
+#' @return the ACT dictionary from actdata
 #' @export
 #'
 #' @examples
+#'
+#' get_dictionary("morocco2015", "average")
+#'
 get_dictionary <- function(dict_key, g){
 
     d <- actdata::epa_subset(dataset = dict_key)
@@ -30,13 +33,15 @@ get_dictionary <- function(dict_key, g){
 #' @param type type of equation. options: emotionid, impressionabo, selfdir, traitid
 #' @param gender gender of equation. options: f, m, av
 #'
-#' @return
+#' @return equation dataframe
 #' @export
 #'
 #' @examples
+#'
+#' get_equation("nc1978", "impressionabo", "male")
 get_equation <- function(name, type, g){
 
-  eq_df <- equations_dataframe %>%
+  eq_df <- inteRact::equations_dataframe %>%
             filter(gender == g &
                    key == name &
                    equation_type == type) %>%

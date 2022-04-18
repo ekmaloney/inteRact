@@ -1,6 +1,6 @@
 test_that("sum of element deflection is equal to overall deflection", {
 
-  d <- tibble(actor = "brute", behavior = "work", object = "cook")
+  d <- tibble::tibble(actor = "brute", behavior = "work", object = "cook")
 
   df <- reshape_events_df(df = d,
                          df_format = "wide",
@@ -11,7 +11,7 @@ test_that("sum of element deflection is equal to overall deflection", {
 
 
     e <- element_deflection(df = df, equation_info = "nc1978_male") %>%
-         summarise(d = sum(sqd_diff))
+         dplyr::summarise(d = sum(sqd_diff))
 
-    expect_equal(d, e$d)
+    testthat::expect_equal(d, e$d)
 })

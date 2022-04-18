@@ -1,5 +1,5 @@
 
-test_that("function replicates Interact", {
+test_that("get deflection replicates Interact", {
 
   d <- tibble(actor = "brute", behavior = "work", object = "cook")
 

@@ -4,17 +4,21 @@
 \alias{characteristic_emotion}
 \title{Characteristic Emotion}
 \usage{
-characteristic_emotion(id)
+characteristic_emotion(id_info, equation_info)
 }
 \arguments{
-\item{id}{lowercase string corresponding to the identity}
+\item{id_info}{a df from reshape_events_df with EPA information of the identity}
+
+\item{equation_info}{is a string that corresponds to "{equationkey}_{gender}" from actdata}
 }
 \value{
-3 digit EPA profile of characteristic emotion for the identity
+df with a 3 digit EPA profile of characteristic emotion for the identity
 }
 \description{
 Characteristic Emotion
 }
 \examples{
-characteristic_emotion("brute")
+id <- tibble::tibble(actor = "brute")
+id_info <- reshape_events_df(id, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+characteristic_emotion(id_info, equation_info = "us2010_male")
 }

@@ -1,28 +1,25 @@
 #' Calculate the Optimal Behavior for the Actor following an Event
 #'
-#' @param actor lowercase string corresponding to the actor identity
-#' @param beh lowercase string corresponding to the behavior term
-#' @param object lowercase string corresponding to the object identity
-#' @param which indicate whether you want the optimal behavior for "actor", "object",
-#' or "both"
-#' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
-#' @param gender either average, male, or female, depending on if you are using gendered equations
-#' @param equation_key a string corresponding to the equation key from actdata
-#' @param eq_df if you select "user supplied" for equation, this parameter should
-#' be your equation dataframe, which (should have been reshaped by the
-#' reshape_new_equation function prior)
-#'
+#' @param df data that has been reshaped by the events_df
+#' @param equation_info is a string that corresponds to "{equationkey}_{gender}"
+#' from actdata
 #' @return 3 digit EPA indicating the optimal behavior
-#'
-#' @importFrom dplyr mutate
-#' @importFrom dplyr case_when
-#' @importFrom dplyr select
-#' @importFrom dplyr %>%
-#' @importFrom tibble tibble
 #'
 #' @export
 #'
 #' @examples
+#'
+#' opt_behavior_example <- tibble::tibble(actor = "teenager",
+#' behavior = "beam_at",object = "friend")
+#'
+#'opt_behavior_df <- reshape_events_df(df = opt_behavior_example,
+#'df_format = "wide", dictionary_key = "indiana2003",
+#'dictionary_gender = "male")
+#'
+#'opt_b <- optimal_behavior(df = opt_behavior_df, equation_info = "nc1978_male")
+#'
+#'
+#'
 optimal_behavior <- function(df,
                              equation_info) {
 
@@ -43,7 +40,7 @@ optimal_behavior <- function(df,
 
                 #select transient impression terms related to behavior
                 z_b <- eq %>%
-                  dplyr::mutate(z_b = case_when(B == "000" ~ 1,
+                  dplyr::mutate(z_b = dplyr::case_when(B == "000" ~ 1,
                                          B == "100" ~ element_def$trans_imp[4],
                                          B == "010" ~ element_def$trans_imp[5],
                                          B == "001" ~ element_def$trans_imp[6])) %>%
@@ -60,7 +57,7 @@ optimal_behavior <- function(df,
                 ####ACTOR
 
                 i_actor <- eq %>%
-                  dplyr::mutate(i = case_when(A == "000" & O == "000" ~ 1,
+                  dplyr::mutate(i = dplyr::case_when(A == "000" & O == "000" ~ 1,
                                                 A == "100" & O == "000" ~ element_def$trans_imp[1],
                                                 A == "010" & O == "000" ~ element_def$trans_imp[2],
                                                 A == "001" & O == "000"~ element_def$trans_imp[3],
@@ -76,7 +73,7 @@ optimal_behavior <- function(df,
                                                 A == "001" & O == "100" ~ element_def$trans_imp[3]*element_def$trans_imp[7],
                                                 A == "001" & O == "010" ~ element_def$trans_imp[3]*element_def$trans_imp[8],
                                                 A == "001" & O == "001" ~ element_def$trans_imp[3]*element_def$trans_imp[9])) %>%
-                  select(i)
+                  dplyr::select(i)
 
                 #save as a vector
                 i_actor <- c(as.vector(element_def$f_s_i), as.vector(i_actor$i))
@@ -120,7 +117,7 @@ optimal_behavior <- function(df,
                 ob_fsi <- c(element_def$f_s_i[7:9], 1, 1, 1, element_def$f_s_i[1:3])
 
                 i <- eq %>%
-                  dplyr::mutate(i = case_when(A == "000" & O == "000" ~ 1,
+                  dplyr::mutate(i = dplyr::case_when(A == "000" & O == "000" ~ 1,
                                        A == "100" & O == "000" ~ element_def$trans_imp[7],
                                        A == "010" & O == "000" ~ element_def$trans_imp[8],
                                        A == "001" & O == "000"~ element_def$trans_imp[9],

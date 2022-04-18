@@ -15,8 +15,12 @@ egypt2014, germany2007, japan1984, morocco2015, nc1978, us2010}
 \item{gender}{gender of equation. options: f, m, av}
 }
 \value{
-
+equation dataframe
 }
 \description{
 Get Equation
+}
+\examples{
+
+get_equation("nc1978", "impressionabo", "male")
 }

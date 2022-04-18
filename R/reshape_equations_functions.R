@@ -46,7 +46,7 @@ reshape_new_equation <- function(eq_df){
 
 
 reshape_emotion_equation <- function(eq) {
-  eq <- tibble(coef_name = eq$V1,
+  eq <- tibble::tibble(coef_name = eq$V1,
                postME = eq$V2,
                postMP = eq$V3,
                postMA = eq$V4)
@@ -56,12 +56,12 @@ reshape_emotion_equation <- function(eq) {
   eq_coef_info[is.na(eq_coef_info)] <- 0
 
   eq_coef_info <- eq_coef_info %>%
-                  mutate(terms_involved = ME + MP + MA + IE + IP + IA,
-                         interaction_term = if_else(terms_involved > 1, 1, 0),
-                         E_interaction = if_else(interaction_term == 1 & IE == 1, 1, 0),
-                         P_interaction = if_else(interaction_term == 1 & IP == 1, 1, 0),
-                         A_interaction = if_else(interaction_term == 1 & IA == 1, 1, 0)) %>%
-                  select(-terms_involved, interaction_term)
+    dplyr::mutate(terms_involved = ME + MP + MA + IE + IP + IA,
+                         interaction_term = dplyr::if_else(terms_involved > 1, 1, 0),
+                         E_interaction = dplyr::if_else(interaction_term == 1 & IE == 1, 1, 0),
+                         P_interaction = dplyr::if_else(interaction_term == 1 & IP == 1, 1, 0),
+                         A_interaction = dplyr::if_else(interaction_term == 1 & IA == 1, 1, 0)) %>%
+                  dplyr::select(-terms_involved, interaction_term)
 
   return(eq_coef_info)
 }

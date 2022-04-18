@@ -4,8 +4,6 @@
 #' @param equation_info is a string that corresponds to "{equationkey}_{gender}" from actdata
 #'
 #' @return dataframe with 3 columns corresponding to the EPA of optimal actor identity relabel
-#' @importFrom tibble tibble
-#' @importFrom dplyr if_else
 #' @export
 #'
 #' @examples
@@ -15,7 +13,8 @@
 reidentify_actor <- function(df, equation_info) {
 
           #calculate the transient impression of the event
-          trans_imp_df <- transient_impression(df, equation_info = equation_info)
+          trans_imp_df <- transient_impression(df,
+                                               equation_info = equation_info)
 
           #get the equation
           equation_info <- stringr::str_split(equation_info, "_")
@@ -25,7 +24,7 @@ reidentify_actor <- function(df, equation_info) {
                              type = "impressionabo")
 
 
-          #extract terms that are not A
+          #extract non-actor terms
           i_a <- extract_terms(elem = "actor",
                                eq = eq,
                                trans_imp_df)

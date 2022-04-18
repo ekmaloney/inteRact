@@ -12,6 +12,15 @@
 #' @export
 #'
 #' @examples
+#' mi <- tibble::tibble(actor_modifier = c("adventurous", "adventurous"),actor = c("man", "woman"))
+#'
+#'mi_reshaped <- reshape_events_df(df = mi, df_format = "wide",
+#'dictionary_key = "indiana2003", dictionary_gender = "male")
+#' mod_id <- mi_reshaped %>%
+#' dplyr::group_by(event_id) %>% tidyr::nest() %>%
+#' dplyr::mutate(eq_info = "nc1978_male") %>%
+#' dplyr::mutate(mod_id = purrr::map2(data, eq_info, modify_identity))
+#'
 modify_identity <- function(id_info,
                             eq_info){
 
@@ -39,7 +48,7 @@ modify_identity <- function(id_info,
   selection_mat <- eq %>% dplyr::select(ME:IA)
 
   #make sure that the modifier comes first and then identity EPA info
-  id_info <- id_info %>% arrange(component) %>% slice(4:6, 1:3)
+  id_info <- id_info %>% dplyr::arrange(component) %>% slice(4:6, 1:3)
 
   #get all of the selections
   abo_selected <- as.data.frame(t(t(selection_mat)*id_info$estimate)) %>%
@@ -50,7 +59,7 @@ modify_identity <- function(id_info,
   #final combination :)
   post_epa <- t(eq[,2:4]) %*% abo_selected$product
 
-  results <- tibble(dimension = c("E", "P", "A"),
+  results <- tibble::tibble(dimension = c("E", "P", "A"),
                     estimate = c(post_epa[1],
                                  post_epa[2],
                                  post_epa[3]))
