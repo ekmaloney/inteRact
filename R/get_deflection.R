@@ -24,10 +24,11 @@
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
 #' get_deflection(df = d, equation_info = "us2010_average")
 
-get_deflection <- function(df, equation_info) {
+get_deflection <- function(df, equation_info, eq_df = NULL) {
 
         #calculate the transient impression
-        t_imp <- transient_impression(df = df, equation_info = equation_info)
+        t_imp <- transient_impression(df = df, equation_info = equation_info,
+                                      eq_df = eq_df)
 
         #get element deflection by applying the transient impression function
         total_deflection <- t_imp %>%

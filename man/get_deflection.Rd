@@ -4,9 +4,13 @@
 \alias{get_deflection}
 \title{Compute Deflection for an Event}
 \usage{
-get_deflection(df, equation_info)
+get_deflection(df, equation_info, eq_df = NULL)
 }
 \arguments{
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
+
 \item{act}{lowercase string corresponding to the actor identity}
 
 \item{beh}{lowercase string corresponding to the behavior term}
@@ -18,10 +22,6 @@ get_deflection(df, equation_info)
 \item{gender}{either average, male, or female, depending on if you are using gendered equations}
 
 \item{equation_key}{a string corresponding to the equation key from actdata}
-
-\item{eq_df}{if you select "user supplied" for equation, this parameter should
-be your equation dataframe, which (should have been reshaped by the
-reshape_new_equation function prior)}
 }
 \value{
 calculated deflection for the event (single number)

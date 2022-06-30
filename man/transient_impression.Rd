@@ -4,7 +4,7 @@
 \alias{transient_impression}
 \title{Calculate the Transient Impression after an Event}
 \usage{
-transient_impression(df, equation_info)
+transient_impression(df, equation_info, eq_df = NULL)
 }
 \arguments{
 \item{df}{data that has been reshaped by the events_df}

@@ -14,7 +14,8 @@
 
 
 transient_impression <- function(df,
-                                 equation_info) {
+                                 equation_info,
+                                 eq_df = NULL) {
 
 #first, deal with modified identities
 if("actor_modifier" %in% df$element){
@@ -56,12 +57,17 @@ if("actor_modifier" %in% df$element){
   }
 
 
-          #get the equation
-          equation_info <- stringr::str_split(equation_info, "_")
+  if(equation_info == "user_supplied"){
+    eq <- eq_df
+  }else{
+    #get the equation
+    equation_info <- stringr::str_split(equation_info, "_")
 
-          eq <- get_equation(name = equation_info[[1]][1],
-                             g = equation_info[[1]][2],
-                             type = "impressionabo")
+    eq <- get_equation(name = equation_info[[1]][1],
+                       g = equation_info[[1]][2],
+                       type = "impressionabo")
+  }
+
 
           #construct the selection matrix
           selection_mat <- eq %>% dplyr::select(AE:OA)
