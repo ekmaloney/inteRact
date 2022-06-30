@@ -58,7 +58,7 @@ if("actor_modifier" %in% df$element){
 
 
   if(equation_info == "user_supplied"){
-    eq <- eq_df
+    eq <- eq_df[[1]]
   }else{
     #get the equation
     equation_info <- stringr::str_split(equation_info, "_")
