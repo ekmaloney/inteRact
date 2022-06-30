@@ -4,7 +4,7 @@
 \alias{get_deflection}
 \title{Compute Deflection for an Event}
 \usage{
-get_deflection(df, equation_info, eq_df = NULL)
+get_deflection(df, equation_info, eq_df = NULL, ...)
 }
 \arguments{
 \item{eq_df}{if you select "user supplied" for equation, this parameter should

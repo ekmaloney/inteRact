@@ -15,7 +15,7 @@
 
 transient_impression <- function(df,
                                  equation_info,
-                                 eq_df = NULL) {
+                                 eq_df = NULL, ...) {
 
 #first, deal with modified identities
 if("actor_modifier" %in% df$element){
