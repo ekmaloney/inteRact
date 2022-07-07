@@ -9,6 +9,10 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+You can also use inteRact to run simulations of using equations that are not in actdata. To do so, you have to first, put your equation into the format used by inteRact, and then supply the resulting equations dataframe in the inteRact function call. 
+
+Your equation should be in the V10000 format typically used in the interact.jar program. An example is shown below: 
+
 ```{r}
 #libraries needed
 library(tidyverse)
@@ -23,13 +27,15 @@ my_equation
 
 ```
 
+Then, you can run the *reshape_new_equation* function on your equation, to get it into the final format needed to run all inteRact functions. After reshaping the equation, you should have a dataframe with 22 columns. 
+
 ```{r}
 #reshape equation data to be in the form interact needed
 eq_df <- reshape_new_equation(my_equation)
 
 eq_df
 ```
-
+Next, construct your simulation events dataset. 
 ```{r}
 #get US 2015 dictionary
 us_2015 <- actdata::epa_subset(dataset = "usfullsurveyor2015")
@@ -45,6 +51,8 @@ glimpse(events)
 
 ```
 
+And enrich the events data frame with the EPA information from an ACT dictionary using the reshape_events_df. This results in a dataframe with 9 rows for each event, one for each element-dimension. 
+
 ```{r}
 #reshape with event info
 analysis_df <- reshape_events_df(events, df_format = "wide",
@@ -54,56 +62,48 @@ analysis_df <- reshape_events_df(events, df_format = "wide",
 glimpse(analysis_df)
 ```
 
+To finalize the dataframe for analysis, *nest_by* the event_id. It is important to nest_by() rather than just nesting after group_by(). Here you also put your equations dataframe in a new column as such. 
+
 ```{r}
 #nest by event
-nested_analysis <- analysis_df %>%
-                   group_by(event_id) %>%
-                   tidyr::nest() %>%
-                   mutate(df = data,
-                          eq_df = list(eq_df)) %>% 
-                   ungroup()
+nested_analysis <- analysis_df %>% ungroup() %>% 
+                   nest_by(event_id) %>% 
+                   mutate(eq_df = list(eq_df))
 
 glimpse(nested_analysis)
 
 ```
 
+Now you can run the functions on the dataframe, supplying the nested data and the equations dataframe. 
+
 ```{r}
 #get deflection
 deflection <- nested_analysis %>%
-              mutate(d = pmap_dbl(.l = .,
-                               .f = get_deflection))
+              mutate(d = get_deflection(data = data, 
+                             eq_df = eq_df))
 
 glimpse(deflection)
 ```
-
+You can also do the same with getting the entire transient impression, but you have to list() the results and then unnest() them afterwards. 
 
 ```{r}
 transimp <- nested_analysis %>%
-            mutate(ti = list(pmap_df(.l = .,
-                                 .f = transient_impression))) %>%
-            unnest(ti)
+              mutate(ti = list(transient_impression(data = data, 
+                             eq_df = eq_df)))
 
-transimp
+transimp %>% unnest(ti)
 
 ```
 
+Finally, you can also run functions together as such: 
+
 ```{r}
 multiple_functions <- nested_analysis %>%
-                      mutate(deflection = pmap(across(-event_id), 
-                             ~ {
-                            x1 <- list(...)
-                             get_deflection(data = x1$data, eq_df = x1$eq_df)
-                       }),
-                       ti = pmap(across(-event_id), 
-                             ~ {
-                            x1 <- list(...)
-                             transient_impression(data = x1$data, eq_df = x1$eq_df)
-                       }),
-                       actor_reidentified = pmap(across(-event_id), 
-                             ~ {
-                            x1 <- list(...)
-                             reidentify_actor(data = x1$data, eq_df = x1$eq_df)
-                       }))
-
+                      mutate(d = get_deflection(data = data, 
+                                        eq_df = eq_df),
+                            ti = list(transient_impression(data = data, 
+                                        eq_df = eq_df)),
+                            actor_reidentified = list(reidentify_actor(data = data, 
+                                        eq_df = eq_df)))
 ```
 
