@@ -1,0 +1,109 @@
+---
+title: "Using your own equations"
+author: "Em Maloney"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+#libraries needed
+library(tidyverse)
+library(inteRact)
+library(actdata)
+
+#read in your data file here
+#should be in the V1000 format
+my_equation <- read.table("/Users/emilymaloney/Dropbox/Grad_School/Quant_qual/inteRact/data-raw/2010_equations.txt")
+
+my_equation
+
+```
+
+```{r}
+#reshape equation data to be in the form interact needed
+eq_df <- reshape_new_equation(my_equation)
+
+eq_df
+```
+
+```{r}
+#get US 2015 dictionary
+us_2015 <- actdata::epa_subset(dataset = "usfullsurveyor2015")
+
+#make a dataframe of events
+set.seed(129)
+events <- tibble(actor = sample(us_2015$term[us_2015$component == "identity"], 50),
+                 behavior = sample(us_2015$term[us_2015$component == "behavior"], 50),
+                 object = sample(us_2015$term[us_2015$component == "identity"], 50))
+
+
+glimpse(events)
+
+```
+
+```{r}
+#reshape with event info
+analysis_df <- reshape_events_df(events, df_format = "wide",
+                                 dictionary_key = "usfullsurveyor2015",
+                                 dictionary_gender = "average")
+
+glimpse(analysis_df)
+```
+
+```{r}
+#nest by event
+nested_analysis <- analysis_df %>%
+                   group_by(event_id) %>%
+                   tidyr::nest() %>%
+                   mutate(df = data,
+                          eq_df = list(eq_df)) %>% 
+                   ungroup()
+
+glimpse(nested_analysis)
+
+```
+
+```{r}
+#get deflection
+deflection <- nested_analysis %>%
+              mutate(d = pmap_dbl(.l = .,
+                               .f = get_deflection))
+
+glimpse(deflection)
+```
+
+
+```{r}
+transimp <- nested_analysis %>%
+            mutate(ti = list(pmap_df(.l = .,
+                                 .f = transient_impression))) %>%
+            unnest(ti)
+
+transimp
+
+```
+
+```{r}
+multiple_functions <- nested_analysis %>%
+                      mutate(deflection = pmap(across(-event_id), 
+                             ~ {
+                            x1 <- list(...)
+                             get_deflection(data = x1$data, eq_df = x1$eq_df)
+                       }),
+                       ti = pmap(across(-event_id), 
+                             ~ {
+                            x1 <- list(...)
+                             transient_impression(data = x1$data, eq_df = x1$eq_df)
+                       }),
+                       actor_reidentified = pmap(across(-event_id), 
+                             ~ {
+                            x1 <- list(...)
+                             reidentify_actor(data = x1$data, eq_df = x1$eq_df)
+                       }))
+
+```
+
