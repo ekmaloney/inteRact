@@ -4,10 +4,18 @@
 \alias{get_deflection}
 \title{Compute Deflection for an Event}
 \usage{
-get_deflection(df, equation_info, eq_df = NULL, ...)
+get_deflection(
+  data,
+  equation_key = NULL,
+  equation_gender = NULL,
+  eq_df = NULL,
+  ...
+)
 }
 \arguments{
-\item{eq_df}{if you select "user supplied" for equation, this parameter should
+\item{equation_key}{a string corresponding to the equation key from actdata}
+
+\item{eq_df}{if you use your own equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)}
 
@@ -20,8 +28,6 @@ reshape_new_equation function prior)}
 \item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
 \item{gender}{either average, male, or female, depending on if you are using gendered equations}
-
-\item{equation_key}{a string corresponding to the equation key from actdata}
 }
 \value{
 calculated deflection for the event (single number)
@@ -35,5 +41,5 @@ in the US 2015 dictionary.
 \examples{
 d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-get_deflection(df = d, equation_info = "us2010_average")
+get_deflection(data = d, equation_key = "us2010", equation_gender= "average")
 }

@@ -16,22 +16,28 @@
 #'df_format = "wide", dictionary_key = "indiana2003",
 #'dictionary_gender = "male")
 #'
-#'opt_b <- optimal_behavior(df = opt_behavior_df, equation_info = "nc1978_male")
+#'opt_b <- optimal_behavior(data = opt_behavior_df, equation_key = "nc1978",
+#' equation_gender = "male")
 #'
 #'
 #'
-optimal_behavior <- function(df,
-                             equation_info) {
+optimal_behavior <- function(data,
+                             equation_key = NULL,
+                             equation_gender = NULL,
+                             eq_df = NULL,
+                             ...) {
 
           #get the equation
-          eq_info <- stringr::str_split(equation_info, "_")
-
-          eq <- get_equation(name = eq_info[[1]][1],
-                             g= eq_info[[1]][2],
+          eq <- get_equation(name = equation_key,
+                             g = equation_gender,
+                             eq_df = eq_df,
                              type = "impressionabo")
 
           #calculate the transient impression
-          element_def <- transient_impression(df, equation_info)
+          element_def <- transient_impression(data,
+                                              equation_key = equation_key,
+                                              equation_gender = equation_gender,
+                                              eq_df = eq_df)
 
               #select fundamental sentiment terms related to behavior
               element_def <- element_def %>%

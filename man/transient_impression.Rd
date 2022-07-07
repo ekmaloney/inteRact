@@ -4,10 +4,16 @@
 \alias{transient_impression}
 \title{Calculate the Transient Impression after an Event}
 \usage{
-transient_impression(df, equation_info, eq_df = NULL, ...)
+transient_impression(
+  data,
+  equation_key = NULL,
+  equation_gender = NULL,
+  eq_df = NULL,
+  ...
+)
 }
 \arguments{
-\item{df}{data that has been reshaped by the events_df}
+\item{data}{data that has been reshaped by the events_data}
 
 \item{equation_info}{is a string that corresponds to "{equationkey}_{gender}" from actdata}
 }
@@ -20,6 +26,6 @@ Calculate the Transient Impression after an Event
 \examples{
 d <- tibble::tibble(actor_modifier = "tired", actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-transient_impression(df = d, equation_info = "us2010_average")
+transient_impression(data = d, equation_key = "us2010", equation_gender = "average")
 
 }

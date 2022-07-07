@@ -12,33 +12,25 @@
 #' @export
 #'
 #' @examples
-#' mi <- tibble::tibble(actor_modifier = c("adventurous", "adventurous"),actor = c("man", "woman"))
 #'
-#'mi_reshaped <- reshape_events_df(df = mi, df_format = "wide",
-#'dictionary_key = "indiana2003", dictionary_gender = "male")
-#' mod_id <- mi_reshaped %>%
-#' dplyr::group_by(event_id) %>% tidyr::nest() %>%
-#' dplyr::mutate(eq_info = "nc1978_male") %>%
-#' dplyr::mutate(mod_id = purrr::map2(data, eq_info, modify_identity))
-#'
-modify_identity <- function(id_info,
-                            eq_info){
-
-  equation_info <- stringr::str_split(eq_info, "_")
+modify_identity <- function(data,
+                            equation_key = NULL,
+                            equation_gender = NULL,
+                            eq_df = NULL,
+                            ...){
 
   #get the equation you're using
-  if(equation_info[[1]][1] == "nc1978" |
-     equation_info[[1]][1] == "us2010" |
-     equation_info[[1]][1] == "morocco2015" |
-     equation_info[[1]][1] == "germany2007" |
-     equation_info[[1]][1] == "canada20012003" |
-     equation_info[[1]][1] == "canada1985"){
-    eq <- get_equation(name = equation_info[[1]][1],
+  if(equation_key %in% c("nc1978", "us2010",
+                         "morocco2015", "germany2007",
+                         "canada20012003", "canada1985")){
+    eq <- get_equation(name = equation_key,
                        g = "average",
+                       eq_df = eq_df,
                        type = "traitid")
   }else{
-    eq <- get_equation(name = equation_info[[1]][1],
-                       g = equation_info[[1]][2],
+    eq <- get_equation(name = equation_key,
+                       g = equation_gender,
+                       eq_df = eq_df,
                        type = "traitid")
   }
 
@@ -48,10 +40,10 @@ modify_identity <- function(id_info,
   selection_mat <- eq %>% dplyr::select(ME:IA)
 
   #make sure that the modifier comes first and then identity EPA info
-  id_info <- id_info %>% dplyr::arrange(component) %>% slice(4:6, 1:3)
+  data <- data %>% dplyr::arrange(component) %>% slice(4:6, 1:3)
 
   #get all of the selections
-  abo_selected <- as.data.frame(t(t(selection_mat)*id_info$estimate)) %>%
+  abo_selected <- as.data.frame(t(t(selection_mat)*data$estimate)) %>%
     naniar::replace_with_na_all(., condition = ~.x == 0) %>%
     dplyr::rowwise() %>%
     dplyr::mutate(product = prod(c(ME, MP, MA, IE, IP, IA), na.rm = TRUE))

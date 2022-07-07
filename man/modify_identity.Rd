@@ -4,7 +4,13 @@
 \alias{modify_identity}
 \title{Modify Identity}
 \usage{
-modify_identity(id_info, eq_info)
+modify_identity(
+  data,
+  equation_key = NULL,
+  equation_gender = NULL,
+  eq_df = NULL,
+  ...
+)
 }
 \arguments{
 \item{id_info}{a dataframe from reshape events that should be only
@@ -23,13 +29,5 @@ A function that applies the modifier equations to find the EPA location for modi
 }
 }
 \examples{
-mi <- tibble::tibble(actor_modifier = c("adventurous", "adventurous"),actor = c("man", "woman"))
-
-mi_reshaped <- reshape_events_df(df = mi, df_format = "wide",
-dictionary_key = "indiana2003", dictionary_gender = "male")
-mod_id <- mi_reshaped \%>\%
-dplyr::group_by(event_id) \%>\% tidyr::nest() \%>\%
-dplyr::mutate(eq_info = "nc1978_male") \%>\%
-dplyr::mutate(mod_id = purrr::map2(data, eq_info, modify_identity))
 
 }

@@ -4,13 +4,23 @@
 \alias{element_deflection}
 \title{Compute Element Deflection for an Event}
 \usage{
-element_deflection(df, equation_info)
+element_deflection(
+  data,
+  equation_key = NULL,
+  equation_gender = NULL,
+  eq_df = NULL,
+  ...
+)
 }
 \arguments{
-\item{df}{data that has been reshaped by the events_df}
+\item{data}{data that has been reshaped by the events_df}
 
-\item{equation_info}{is a string that corresponds to "{equationkey}_{gender}"
+\item{equation_key}{is a string that corresponds to an equation key from actdata
 from actdata}
+
+\item{equation_gender}{is a string that corresponds to the gender for the equation}
+
+\item{eq_df}{is an optional parameter if you are using your own equation dataframe}
 }
 \value{
 dataframe in long format, with one row for each element-dimension of
@@ -30,5 +40,5 @@ in the US 2015 dictionary.
 d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide",
 dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-element_deflection(df = d, equation_info = "us2010_average")
+element_deflection(data = d, equation_key = "us2010", equation_gender = "average")
 }

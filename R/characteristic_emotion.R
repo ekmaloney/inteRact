@@ -1,7 +1,8 @@
 #' Characteristic Emotion
 #'
 #' @param id_info a df from reshape_events_df with EPA information of the identity
-#' @param equation_info is a string that corresponds to "{equationkey}_{gender}" from actdata
+#' @param equation_key is a string that corresponds to equation_key from actdata
+#' @param equation_gender is a string that corresponds to what gendered data from eq
 #'
 #' @return df with a 3 digit EPA profile of characteristic emotion for the identity
 #' @export
@@ -9,15 +10,15 @@
 #' @examples
 #' id <- tibble::tibble(actor = "brute")
 #' id_info <- reshape_events_df(id, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-#' characteristic_emotion(id_info, equation_info = "us2010_male")
+#' characteristic_emotion(id_info, equation_key = "us2010", equation_gender = "male")
 characteristic_emotion <- function(id_info,
-                                   equation_info){
+                                   equation_key = NULL,
+                                   equation_gender = NULL,
+                                   eq_df = NULL, ...){
 
     #get equation information
-    equation_info <- stringr::str_split(equation_info, "_")
-
-    eq <- get_equation(name = equation_info[[1]][1],
-                       g = equation_info[[1]][2],
+    eq <- get_equation(name = equation_key,
+                       g = equation_gender,
                        type = "emotionid")
 
     #get the identity EPA scores

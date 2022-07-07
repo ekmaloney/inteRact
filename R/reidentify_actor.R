@@ -9,18 +9,23 @@
 #' @examples
 #' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-#' reidentify_actor(df = d, equation_info = "us2010_average")
-reidentify_actor <- function(df, equation_info) {
+#' reidentify_actor(data = d, equation_key = "us2010", equation_gender = "average")
+reidentify_actor <- function(data,
+                             equation_key = NULL,
+                             equation_gender = NULL,
+                             eq_df = NULL,
+                             ...) {
 
           #calculate the transient impression of the event
-          trans_imp_df <- transient_impression(df,
-                                               equation_info = equation_info)
+          trans_imp_df <- transient_impression(data = data,
+                                               equation_key = equation_key,
+                                               equation_gender = equation_gender,
+                                               eq_df = eq_df)
 
           #get the equation
-          equation_info <- stringr::str_split(equation_info, "_")
-
-          eq <- get_equation(name = equation_info[[1]][1],
-                             g = equation_info[[1]][2],
+          eq <- get_equation(name = equation_key,
+                             g = equation_gender,
+                             eq_df = eq_df,
                              type = "impressionabo")
 
 

@@ -5,11 +5,29 @@
 \alias{maximally_confirm_behavior}
 \title{maximally_confirm_behavior}
 \usage{
-maximally_confirm_behavior(df, equation_info)
+maximally_confirm_behavior(
+  data,
+  equation_key = NULL,
+  equation_gender = NULL,
+  eq_df = NULL,
+  ...
+)
 
-maximally_confirm_behavior(df, equation_info)
+maximally_confirm_behavior(
+  data,
+  equation_key = NULL,
+  equation_gender = NULL,
+  eq_df = NULL,
+  ...
+)
 }
 \arguments{
+\item{equation_key}{a string corresponding to the equation key from actdata}
+
+\item{eq_df}{if you select "user supplied" for equation, this parameter should
+be your equation dataframe, which (should have been reshaped by the
+reshape_new_equation function prior)}
+
 \item{actor}{lowercase string corresponding to the actor identity}
 
 \item{beh}{lowercase string corresponding to the behavior term}
@@ -19,12 +37,6 @@ maximally_confirm_behavior(df, equation_info)
 \item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
 \item{gender}{either average, male, or female, depending on if you are using gendered equations}
-
-\item{equation_key}{a string corresponding to the equation key from actdata}
-
-\item{eq_df}{if you select "user supplied" for equation, this parameter should
-be your equation dataframe, which (should have been reshaped by the
-reshape_new_equation function prior)}
 }
 \value{
 3 digit EPA indicating the optimal behavior
@@ -37,4 +49,9 @@ and object pairing
 
 Identify the behavior that would maximally confirm the identities of actor
 and object pairing
+}
+\examples{
+d <- tibble::tibble(actor = "ceo", object = "benefactor")
+d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+maximally_confirm_behavior(data = d, equation_key = "us2010", equation_gender = "average")
 }

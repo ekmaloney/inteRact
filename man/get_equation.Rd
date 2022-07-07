@@ -4,7 +4,7 @@
 \alias{get_equation}
 \title{Get Equation}
 \usage{
-get_equation(name, type, g)
+get_equation(name = NULL, type, g = NULL, eq_df = NULL)
 }
 \arguments{
 \item{name}{name of equation. options: canada1985, canada20012003, china2000,

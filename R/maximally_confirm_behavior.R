@@ -17,42 +17,47 @@
 #' @export
 #'
 #' @examples
-maximally_confirm_behavior <- function(df, equation_info){
+#' d <- tibble::tibble(actor = "ceo", object = "benefactor")
+#' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+#' maximally_confirm_behavior(data = d, equation_key = "us2010", equation_gender = "average")
+maximally_confirm_behavior <- function(data,
+                                       equation_key = NULL,
+                                       equation_gender = NULL,
+                                       eq_df = NULL, ...){
 
   #get equation
-  equation_info <- stringr::str_split(equation_info, "_")
-  eq <- get_equation(name = equation_info[[1]][1],
-                     g = equation_info[[1]][2],
+  eq <- get_equation(name = equation_key,
+                     g = equation_gender,
+                     eq_df = eq_df,
                      type = "impressionabo")
 
   #actor info
-
   i_actor <- eq %>%
     dplyr::mutate(i = dplyr::case_when(A == "000" & O == "000" ~ 1,
-                         A == "100" & O == "000" ~ df$estimate[1],
-                         A == "010" & O == "000" ~ df$estimate[2],
-                         A == "001" & O == "000"~ df$estimate[3],
-                         A == "000" & O == "100" ~ df$estimate[4],
-                         A == "000" & O == "010" ~ df$estimate[5],
-                         A == "000" & O == "001" ~ df$estimate[6],
-                         A == "100" & O == "100"~ df$estimate[1]*df$estimate[4],
-                         A == "100" & O == "010" ~ df$estimate[1]*df$estimate[5],
-                         A == "100" & O == "001" ~ df$estimate[1]*df$estimate[6],
-                         A == "010" & O == "100" ~ df$estimate[2]*df$estimate[4],
-                         A == "010" & O == "010" ~ df$estimate[2]*df$estimate[5],
-                         A == "010" & O == "001" ~ df$estimate[2]*df$estimate[6],
-                         A == "001" & O == "100" ~ df$estimate[3]*df$estimate[4],
-                         A == "001" & O == "010" ~ df$estimate[3]*df$estimate[5],
-                         A == "001" & O == "001" ~ df$estimate[3]*df$estimate[6])) %>%
+                         A == "100" & O == "000" ~ data$estimate[1],
+                         A == "010" & O == "000" ~ data$estimate[2],
+                         A == "001" & O == "000"~ data$estimate[3],
+                         A == "000" & O == "100" ~ data$estimate[4],
+                         A == "000" & O == "010" ~ data$estimate[5],
+                         A == "000" & O == "001" ~ data$estimate[6],
+                         A == "100" & O == "100"~ data$estimate[1]*data$estimate[4],
+                         A == "100" & O == "010" ~ data$estimate[1]*data$estimate[5],
+                         A == "100" & O == "001" ~ data$estimate[1]*data$estimate[6],
+                         A == "010" & O == "100" ~ data$estimate[2]*data$estimate[4],
+                         A == "010" & O == "010" ~ data$estimate[2]*data$estimate[5],
+                         A == "010" & O == "001" ~ data$estimate[2]*data$estimate[6],
+                         A == "001" & O == "100" ~ data$estimate[3]*data$estimate[4],
+                         A == "001" & O == "010" ~ data$estimate[3]*data$estimate[5],
+                         A == "001" & O == "001" ~ data$estimate[3]*data$estimate[6])) %>%
     dplyr::select(i)
 
-  f_s_i <- c(df$estimate[1],
-             df$estimate[2],
-             df$estimate[3],
+  f_s_i <- c(data$estimate[1],
+             data$estimate[2],
+             data$estimate[3],
              1, 1, 1,
-             df$estimate[4],
-             df$estimate[5],
-             df$estimate[6])
+             data$estimate[4],
+             data$estimate[5],
+             data$estimate[6])
   #save as a vector
   i_actor <- c(as.vector(f_s_i), as.vector(i_actor$i))
 

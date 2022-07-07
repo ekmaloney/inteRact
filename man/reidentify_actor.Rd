@@ -4,7 +4,13 @@
 \alias{reidentify_actor}
 \title{Function to Generate the Re-identification of the Actor}
 \usage{
-reidentify_actor(df, equation_info)
+reidentify_actor(
+  data,
+  equation_key = NULL,
+  equation_gender = NULL,
+  eq_df = NULL,
+  ...
+)
 }
 \arguments{
 \item{df}{data that has been reshaped by the events_df}
@@ -20,5 +26,5 @@ Function to Generate the Re-identification of the Actor
 \examples{
 d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-reidentify_actor(df = d, equation_info = "us2010_average")
+reidentify_actor(data = d, equation_key = "us2010", equation_gender = "average")
 }

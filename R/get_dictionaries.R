@@ -39,22 +39,33 @@ get_dictionary <- function(dict_key, g){
 #' @examples
 #'
 #' get_equation("nc1978", "impressionabo", "male")
-get_equation <- function(name, type, g){
+get_equation <- function(name = NULL,
+                         type,
+                         g = NULL,
+                         eq_df = NULL){
 
-  eq_df <- inteRact::equations_dataframe %>%
-            filter(gender == g &
-                   key == name &
-                   equation_type == type) %>%
-            dplyr::pull(df)
+  if(is.null(name)){
+    if(typeof(eq_df[[1]]) == "character"){
+      eq_clean <- eq_df
+    }else{
+      eq_clean <- eq_df[[1]]
+    }
+  }else{
+    eq_df <- inteRact::equations_dataframe %>%
+              dplyr::filter(gender == g &
+                       key == name &
+                       equation_type == type) %>%
+              dplyr::pull(df)
 
-  eq_df <- eq_df[[1]]
+    eq_df <- eq_df[[1]]
 
-  if(type == "impressionabo"){
-    eq_clean <- reshape_new_equation(eq_df)
-  }else if (type == "traitid" | type == "emotionid"){
-    eq_clean <- reshape_emotion_equation(eq_df)
+    if(type == "impressionabo"){
+      eq_clean <- reshape_new_equation(eq_df)
+    }else if (type == "traitid" | type == "emotionid"){
+      eq_clean <- reshape_emotion_equation(eq_df)
+    }
+
   }
-
 
   return(eq_clean)
 
