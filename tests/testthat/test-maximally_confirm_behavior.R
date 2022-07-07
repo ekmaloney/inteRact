@@ -9,15 +9,17 @@ test_that("max confirm replicates interact", {
                    dplyr::group_by(event_id, event) %>%
                    tidyr::nest() %>%
                    dplyr::ungroup() %>%
-                   dplyr::mutate(eq_info = c("nc1978_male","nc1978_male")) %>%
-                   dplyr::mutate(opt_behavior = purrr::map2(data, eq_info, maximally_confirm_behavior))
+                   dplyr::mutate(equation_key = c("nc1978","nc1978"),
+                                 equation_gender = c("male", "male")) %>%
+                   dplyr::mutate(opt_behavior = purrr::pmap_df(.l = .,
+                                                                    .f = maximally_confirm_behavior))
 
-  expect_equal(round(events_nested$opt_behavior[[1]]$opt_E, digits = 2), -0.54)
-  expect_equal(round(events_nested$opt_behavior[[1]]$opt_P, digits = 2), 0.31)
-  expect_equal(round(events_nested$opt_behavior[[1]]$opt_A, digits = 2), -0.10)
+  expect_equal(round(events_nested$opt_behavior$opt_E[1], digits = 2), -0.54)
+  expect_equal(round(events_nested$opt_behavior$opt_P[1], digits = 2), 0.31)
+  expect_equal(round(events_nested$opt_behavior$opt_A[1], digits = 2), -0.10)
 
-  expect_equal(round(events_nested$opt_behavior[[2]]$opt_E, digits = 2), 0.18)
-  expect_equal(round(events_nested$opt_behavior[[2]]$opt_P, digits = 2), -0.19)
-  expect_equal(round(events_nested$opt_behavior[[2]]$opt_A, digits = 2), 0.67)
+  expect_equal(round(events_nested$opt_behavior$opt_E[2], digits = 2), 0.18)
+  expect_equal(round(events_nested$opt_behavior$opt_P[2], digits = 2), -0.19)
+  expect_equal(round(events_nested$opt_behavior$opt_A[2], digits = 2), 0.67)
 
 })

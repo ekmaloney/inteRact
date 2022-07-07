@@ -49,17 +49,20 @@ key coming from the actdata package.
 
 ```{r}
 
-nested_analysis <- analysis_df %>% 
-                   group_by(event_id) %>% nest() %>% 
-                   mutate(equation_info = "us2010_average")
+nested_analysis <- analysis_df %>% ungroup() %>% 
+                   nest_by(event_id) %>% 
+                   mutate(equation_key = "us2010",
+                          equation_gender = "average")
 
 ```
 
 Step 4: Run some calculations
 ```{r}
 deflection <- nested_analysis %>% 
-      mutate(d = map2(data, equation_info, get_deflection))
-
+              mutate(d = get_deflection(data = data, 
+                                        equation_key = equation_key,
+                                        equation_gender = equation_gender))
+                       
 deflection %>% unnest(cols = c(data, d))
 ```
 
@@ -67,9 +70,22 @@ deflection %>% unnest(cols = c(data, d))
 
 ```{r}
 
+trans_imp <- nested_analysis %>% 
+              pmap_df(.l = .,
+                      .f = transient_impression)
+      
+start_time <- Sys.time()
 multiple_functions <- nested_analysis %>% 
-                      mutate(d = map2(data, equation_info, get_deflection),
-                             ra = map2(data, equation_info, reidentify_actor))
+                      mutate(d = get_deflection(data = data, 
+                                        equation_key = equation_key,
+                                        equation_gender = equation_gender),
+                            ti = list(transient_impression(data = data, 
+                                        equation_key = equation_key,
+                                        equation_gender = equation_gender)),
+                            actor_reidentified = list(reidentify_actor(data = data, 
+                                        equation_key = equation_key,
+                                        equation_gender = equation_gender)))
+end_time <- Sys.time()
 
 ```
 

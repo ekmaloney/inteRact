@@ -8,8 +8,9 @@ test_that("optimal behavior replicates interact", {
                                        dictionary_key = "indiana2003",
                                        dictionary_gender = "male")
 
-  opt_b <- optimal_behavior(df = opt_behavior_df,
-                            equation_info = "nc1978_male")
+  opt_b <- optimal_behavior(data = opt_behavior_df,
+                            equation_key = "nc1978",
+                            equation_gender = "male")
 
 
   expect_equal(round(opt_b$opt_E[1], digits = 2), 0.46)

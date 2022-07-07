@@ -7,10 +7,12 @@ test_that("sum of element deflection is equal to overall deflection", {
                          dictionary_key = "nc1978",
                          dictionary_gender = "male")
 
-  d <- get_deflection(df = df, equation_info = "nc1978_male")
+  d <- get_deflection(data = df, equation_key = "nc1978",
+                      equation_gender = "male")
 
 
-    e <- element_deflection(df = df, equation_info = "nc1978_male") %>%
+    e <- element_deflection(data = df, equation_key = "nc1978",
+                            equation_gender = "male") %>%
          dplyr::summarise(d = sum(sqd_diff))
 
     testthat::expect_equal(d, e$d)

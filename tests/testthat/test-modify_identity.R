@@ -8,8 +8,9 @@ test_that("modify identity replicates interact.jar", {
                                    dictionary_key = "indiana2003",
                                    dictionary_gender = "male")
 
-  mod_id <- modify_identity(id_info = mi_reshaped,
-                            eq_info = "nc1978_male")
+  mod_id <- modify_identity(data = mi_reshaped,
+                            equation_key = "nc1978",
+                            equation_gender = "male")
 
 
   expect_equal(round(mod_id$estimate[1], digits = 2), 0.9)
