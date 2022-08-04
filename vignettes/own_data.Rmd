@@ -21,9 +21,8 @@ library(actdata)
 
 #read in your data file here
 #should be in the V1000 format
-my_equation <- read.table("/Users/emilymaloney/Dropbox/Grad_School/Quant_qual/inteRact/data-raw/2010_equations.txt")
-
-my_equation
+my_equation <- read.table(here::here("data-raw/2010_equations.txt"))
+  
 
 ```
 
