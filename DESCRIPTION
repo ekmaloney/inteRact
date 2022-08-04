@@ -25,7 +25,7 @@ Imports:
     data.table,
     stringr
 Remotes:
-    ahcombs/actdata
+    actdata=github::ahcombs/actdata
 URL: https://github.com/ekmaloney/inteRact
 BugReports: https://github.com/ekmaloney/inteRact/issues
 Suggests: 
