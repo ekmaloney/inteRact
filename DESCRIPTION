@@ -14,6 +14,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.2
 Depends: 
+    actdata (>= 0.0.0.9001),
     R (>= 2.10)
 Imports: 
     dplyr,
@@ -24,8 +25,6 @@ Imports:
     magrittr,
     data.table,
     stringr
-Remotes: 
-    actdata=github::ahcombs/actdata
 URL: https://github.com/ekmaloney/inteRact
 BugReports: https://github.com/ekmaloney/inteRact/issues
 Suggests: 
@@ -34,3 +33,5 @@ Suggests:
     testthat,
     tidyverse
 VignetteBuilder: knitr
+Remotes:  
+    github::ahcombs/actdata
