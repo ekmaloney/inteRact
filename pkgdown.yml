@@ -1,7 +1,8 @@
 pandoc: 2.7.3
-pkgdown: 1.6.1
+pkgdown: 2.0.6
 pkgdown_sha: ~
 articles:
   Example_Analysis: Example_Analysis.html
-last_built: 2021-07-12T14:42Z
+  own_data: own_data.html
+last_built: 2022-08-04T14:17Z
 
