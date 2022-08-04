@@ -24,8 +24,8 @@ Imports:
     magrittr,
     data.table,
     stringr
-Remotes:
-    actdata=github::ahcombs/actdata
+Remotes: 
+  actdata=github::ahcombs/actdata
 URL: https://github.com/ekmaloney/inteRact
 BugReports: https://github.com/ekmaloney/inteRact/issues
 Suggests: 
