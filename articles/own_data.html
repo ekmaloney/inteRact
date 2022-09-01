@@ -81,7 +81,7 @@
       <h1 data-toc-skip>Using your own equations</h1>
                         <h4 data-toc-skip class="author">Em Maloney</h4>
             
-            <h4 data-toc-skip class="date">2022-08-04</h4>
+            <h4 data-toc-skip class="date">2022-09-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ekmaloney/inteRact/blob/HEAD/vignettes/own_data.Rmd" class="external-link"><code>vignettes/own_data.Rmd</code></a></small>
       <div class="hidden name"><code>own_data.Rmd</code></div>
@@ -96,10 +96,10 @@
 <code class="sourceCode R"><span><span class="co">#libraries needed</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.2 ──</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.3.6     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.4</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.8     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.0.9</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.2.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.4.0</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.2     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 0.5.1</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.3.6      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.4 </span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.8      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.0.10</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.2.0      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.4.1 </span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.2      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 0.5.2 </span></span>
 <span><span class="co">## ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">## <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
 <span><span class="co">## <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span></code></pre>
@@ -138,8 +138,7 @@
 <span><span class="co">## <span style="color: #BCBCBC;">15</span> Z001001…   0      0      0      0      0      0      0     -<span style="color: #BB0000;">0.1</span>    0    001  </span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 11 more variables: B &lt;chr&gt;, O &lt;chr&gt;, AE &lt;dbl&gt;, AP &lt;dbl&gt;, AA &lt;dbl&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   BE &lt;dbl&gt;, BP &lt;dbl&gt;, BA &lt;dbl&gt;, OE &lt;dbl&gt;, OP &lt;dbl&gt;, OA &lt;dbl&gt;, and abbreviated</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   variable name ¹​coef_name</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ Use `colnames()` to see all variable names</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;">#   variable name ¹​coef_name</span></span></span></code></pre>
 <p>Next, construct your simulation events dataset.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#get US 2015 dictionary</span></span>
@@ -228,8 +227,7 @@
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; object  mour… identi… A         -<span style="color: #BB0000;">1.65</span>  -<span style="color: #BB0000;">1.73</span> </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span>        2       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   buddy identi… E          2.66   2.29 </span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 440 more rows, and abbreviated variable names ¹​component, ²​dimension,</span></span></span>
-<span><span class="co">## <span style="color: #949494;">#   ³​estimate, ⁴​trans_imp[,1]</span></span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ Use `print(n = ...)` to see more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;">#   ³​estimate, ⁴​trans_imp[,1]</span></span></span></code></pre>
 <p>Finally, you can also run functions together as such:</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">multiple_functions</span> <span class="op">&lt;-</span> <span class="va">nested_analysis</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
