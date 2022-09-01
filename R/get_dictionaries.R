@@ -28,8 +28,7 @@ get_dictionary <- function(dict_key, g){
 
 #' Get Equation
 #'
-#' @param name name of equation. options: canada1985, canada20012003, china2000,
-#' egypt2014, germany2007, japan1984, morocco2015, nc1978, us2010
+#' @param name name of equation. options are all equation data set keys available in the actdata package (call actdata::eqn_info() for more information)
 #' @param type type of equation. options: emotionid, impressionabo, selfdir, traitid
 #' @param gender gender of equation. options: f, m, av
 #'
@@ -51,13 +50,15 @@ get_equation <- function(name = NULL,
       eq_clean <- eq_df[[1]]
     }
   }else{
-    eq_df <- inteRact::equations_dataframe %>%
-              dplyr::filter(gender == g &
-                       key == name &
-                       equation_type == type) %>%
-              dplyr::pull(df)
+    # eq_df <- inteRact::equations_dataframe %>%
+    #           dplyr::filter(gender == g &
+    #                    key == name &
+    #                    equation_type == type) %>%
+    #           dplyr::pull(df)
+    #
+    # eq_df <- eq_df[[1]]
 
-    eq_df <- eq_df[[1]]
+    eq_df <- actdata::get_eqn(key = name, equation_type = type, gender = g)
 
     if(type == "impressionabo"){
       eq_clean <- reshape_new_equation(eq_df)
