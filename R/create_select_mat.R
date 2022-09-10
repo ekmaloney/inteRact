@@ -17,7 +17,7 @@ create_select_mat <- function(term,
         diag(id_mat) <- 1
 
         #get the coefficients from the
-        coefs <- eq %>% dplyr::select(AE:OA) %>% as.matrix()
+        coefs <- eq %>% dplyr::select(.data$AE:.data$OA) %>% as.matrix()
 
         z <- rbind(id_mat, coefs)
 

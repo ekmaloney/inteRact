@@ -5,7 +5,10 @@
 \title{Characteristic Emotion}
 \usage{
 characteristic_emotion(
-  id_info,
+  id_info = NULL,
+  e = NULL,
+  p = NULL,
+  a = NULL,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -13,11 +16,21 @@ characteristic_emotion(
 )
 }
 \arguments{
-\item{id_info}{a df from reshape_events_df with EPA information of the identity}
+\item{id_info}{a df from reshape_events_df with EPA information of the identity. Must provide either this or E, P, and A values.}
+
+\item{e}{Evaluation value}
+
+\item{p}{Power value}
+
+\item{a}{Activity value}
 
 \item{equation_key}{is a string that corresponds to equation_key from actdata}
 
 \item{equation_gender}{is a string that corresponds to what gendered data from eq}
+
+\item{eq_df}{Equation data frame}
+
+\item{...}{}
 }
 \value{
 df with a 3 digit EPA profile of characteristic emotion for the identity

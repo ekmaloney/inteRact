@@ -16,6 +16,7 @@
 #' @importFrom dplyr rowwise
 #' @importFrom dplyr %>%
 #' @importFrom tidyr unnest
+#' @importFrom rlang .data
 #'
 #' @export
 
@@ -23,8 +24,8 @@
 batch_element_deflection <- function(df, equation = c("us", "user supplied"), eq_df) {
                       df_res <- df %>%
                         rowwise() %>%
-                        mutate(el_def = list(element_deflection(actor, behavior, object, equation, eq_df))) %>%
-                        unnest(el_def)
+                        mutate(el_def = list(element_deflection(.data$actor, .data$behavior, .data$object, equation, eq_df))) %>%
+                        unnest(.data$el_def)
 
                       return(df_res)
                   }

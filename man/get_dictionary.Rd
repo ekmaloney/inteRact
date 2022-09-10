@@ -24,7 +24,6 @@ the ACT dictionary from actdata
 Get Dictionary Identities
 }
 \examples{
-
 get_dictionary("morocco2015", "average")
 
 }

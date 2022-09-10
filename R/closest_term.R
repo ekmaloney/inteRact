@@ -36,22 +36,22 @@ closest_term <- function(e, p, a,
 
     terms <- d %>%
       dplyr::rowwise() %>%
-      dplyr::mutate(d_e = E - e,
-                    d_p = P - p,
-                    d_a = A - a,
-                    d_e_s = (d_e)^2,
-                    d_p_s = (d_p)^2,
-                    d_a_s = (d_a)^2,
-                    ssd = sum(d_e_s, d_p_s, d_a_s)) %>%
+      dplyr::mutate(d_e = .data$E - e,
+                    d_p = .data$P - p,
+                    d_a = .data$A - a,
+                    d_e_s = (.data$d_e)^2,
+                    d_p_s = (.data$d_p)^2,
+                    d_a_s = (.data$d_a)^2,
+                    ssd = sum(.data$d_e_s, .data$d_p_s, .data$d_a_s)) %>%
       dplyr::ungroup() %>%
-      dplyr::filter(ssd < max_dist) %>%
-      dplyr::arrange(ssd) %>%
-      dplyr::mutate(term_name = term,
-                     term_E = E,
-                     term_P = P,
-                     term_A = A) %>%
+      dplyr::filter(.data$ssd < max_dist) %>%
+      dplyr::arrange(.data$ssd) %>%
+      dplyr::mutate(term_name = .data$term,
+                     term_E = .data$E,
+                     term_P = .data$P,
+                     term_A = .data$A) %>%
       dplyr::slice(1:num_terms) %>%
-      dplyr::select(term_name, term_E, term_P, term_A, ssd)
+      dplyr::select(.data$term_name, .data$term_E, .data$term_P, .data$term_A, .data$ssd)
 
     if(nrow(terms) == 0){
       terms <- tibble::tibble(term_name = "No terms within max distance",

@@ -7,8 +7,7 @@
 get_equation(name = NULL, type, g = NULL, eq_df = NULL)
 }
 \arguments{
-\item{name}{name of equation. options: canada1985, canada20012003, china2000,
-egypt2014, germany2007, japan1984, morocco2015, nc1978, us2010}
+\item{name}{name of equation. options are all equation data set keys available in the actdata package (call actdata::eqn_info() for more information)}
 
 \item{type}{type of equation. options: emotionid, impressionabo, selfdir, traitid}
 

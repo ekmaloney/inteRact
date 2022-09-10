@@ -14,9 +14,6 @@ us 1978 equations, or "user supplied")}
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)}
 }
-\value{
-
-}
 \description{
 Construct H Matrix
 }

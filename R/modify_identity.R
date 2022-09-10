@@ -37,16 +37,16 @@ modify_identity <- function(data,
 
 
   #select variables of interest
-  selection_mat <- eq %>% dplyr::select(ME:IA)
+  selection_mat <- eq %>% dplyr::select(.data$ME:.data$IA)
 
   #make sure that the modifier comes first and then identity EPA info
-  data <- data %>% dplyr::arrange(component) %>% slice(4:6, 1:3)
+  data <- data %>% dplyr::arrange(.data$component) %>% slice(4:6, 1:3)
 
   #get all of the selections
   abo_selected <- as.data.frame(t(t(selection_mat)*data$estimate)) %>%
-    naniar::replace_with_na_all(., condition = ~.x == 0) %>%
+    naniar::replace_with_na_all(condition = ~.x == 0) %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(product = prod(c(ME, MP, MA, IE, IP, IA), na.rm = TRUE))
+    dplyr::mutate(product = prod(c(.data$ME, .data$MP, .data$MA, .data$IE, .data$IP, .data$IA), na.rm = TRUE))
 
   #final combination :)
   post_epa <- t(eq[,2:4]) %*% abo_selected$product

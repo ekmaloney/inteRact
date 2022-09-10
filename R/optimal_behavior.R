@@ -41,8 +41,8 @@ optimal_behavior <- function(data,
 
               #select fundamental sentiment terms related to behavior
               element_def <- element_def %>%
-                dplyr::mutate(f_s_b = if_else(element == "behavior",
-                                         estimate, 1))
+                dplyr::mutate(f_s_b = if_else(.data$element == "behavior",
+                                              .data$estimate, 1))
 
                 #select transient impression terms related to behavior
                 z_b <- eq %>%
@@ -57,8 +57,8 @@ optimal_behavior <- function(data,
 
                 #now get the non-behavior terms from each
                 element_def <- element_def %>%
-                  dplyr::mutate(f_s_i = if_else(element != "behavior",
-                                         estimate, 1))
+                  dplyr::mutate(f_s_i = if_else(.data$element != "behavior",
+                                                .data$estimate, 1))
 
                 ####ACTOR
 
@@ -139,7 +139,7 @@ optimal_behavior <- function(data,
                                        A == "001" & O == "100" ~ element_def$trans_imp[9]*element_def$trans_imp[1],
                                        A == "001" & O == "010" ~ element_def$trans_imp[9]*element_def$trans_imp[2],
                                        A == "001" & O == "001" ~ element_def$trans_imp[9]*element_def$trans_imp[3])) %>%
-                  dplyr::select(i)
+                  dplyr::select(.data$i)
 
                 #save as a vector
                 i <- c(as.vector(ob_fsi), as.vector(i$i))
