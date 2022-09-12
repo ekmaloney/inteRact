@@ -64,7 +64,10 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">characteristic_emotion</span><span class="op">(</span></span>
-<span>  <span class="va">id_info</span>,</span>
+<span>  id_info <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  e <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  p <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  a <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  equation_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  equation_gender <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  eq_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -75,7 +78,19 @@
     <div id="arguments">
     <h2>Arguments</h2>
     <dl><dt>id_info</dt>
-<dd><p>a df from reshape_events_df with EPA information of the identity</p></dd>
+<dd><p>a df from reshape_events_df with EPA information of the identity. Must provide either this or E, P, and A values.</p></dd>
+
+
+<dt>e</dt>
+<dd><p>Evaluation value</p></dd>
+
+
+<dt>p</dt>
+<dd><p>Power value</p></dd>
+
+
+<dt>a</dt>
+<dd><p>Activity value</p></dd>
 
 
 <dt>equation_key</dt>
@@ -84,6 +99,14 @@
 
 <dt>equation_gender</dt>
 <dd><p>is a string that corresponds to what gendered data from eq</p></dd>
+
+
+<dt>eq_df</dt>
+<dd><p>Equation data frame</p></dd>
+
+
+<dt>...</dt>
+<dd></dd>
 
 </dl></div>
     <div id="value">
