@@ -11,9 +11,6 @@ create_select_mat(term, eq)
 
 \item{equation_key}{}
 }
-\value{
-
-}
 \description{
 Convenience Function for Creating Selection Matrix Depending on the Term
 }

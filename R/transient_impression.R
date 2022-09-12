@@ -22,7 +22,7 @@ transient_impression <- function(data,
 if("actor_modifier" %in% data$element){
 
   new_id <- data %>%
-            filter(element == "actor" | element == "actor_modifier")
+            filter(.data$element == "actor" | .data$element == "actor_modifier")
 
   new_id_epa <- modify_identity(data = new_id,
                                 equation_key = equation_key,
@@ -35,7 +35,7 @@ if("actor_modifier" %in% data$element){
                                    component = "identity",
                                    event = unique(data$event)) %>% dplyr::bind_cols(new_id_epa)
 
-  data <- data %>% dplyr::filter(element != "actor" & element != "actor_modifier")
+  data <- data %>% dplyr::filter(.data$element != "actor" & .data$element != "actor_modifier")
   data <- dplyr::bind_rows(new_actor_info, data)
 
 }
@@ -43,7 +43,7 @@ if("actor_modifier" %in% data$element){
   if("object_modifier" %in% data$element){
 
     new_id <- data %>%
-              filter(element == "object" | element == "object_modifier")
+              filter(.data$element == "object" | .data$element == "object_modifier")
 
     new_id_epa <- modify_identity(id_info = new_id,
                                   equation_key = equation_key,
@@ -56,8 +56,8 @@ if("actor_modifier" %in% data$element){
                                      component = "identity",
                                      event = unique(data$event)) %>% dplyr::bind_cols(new_id_epa)
 
-    data <- data %>% filter(element != "object" & element != "object_modifier")
-    data <- bind_rows(new_actor_info, data)
+    data <- data %>% filter(.data$element != "object" & .data$element != "object_modifier")
+    data <- dplyr::bind_rows(new_actor_info, data)
 
   }
 
@@ -69,13 +69,13 @@ if("actor_modifier" %in% data$element){
 
 
           #construct the selection matrix
-          selection_mat <- eq %>% dplyr::select(AE:OA)
+          selection_mat <- eq %>% dplyr::select(.data$AE:.data$OA)
 
           #get ABO elements for coefficients
           abo_selected <- as.data.frame(t(t(selection_mat)*data$estimate)) %>%
-            naniar::replace_with_na_all(., condition = ~.x == 0) %>%
+            naniar::replace_with_na_all(condition = ~.x == 0) %>%
             dplyr::rowwise() %>%
-            dplyr::mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE))
+            dplyr::mutate(product = prod(c(.data$AE, .data$AP, .data$AA, .data$BE, .data$BP, .data$BA, .data$OE, .data$OP, .data$OA), na.rm = TRUE))
 
           #multiply ABO elements by the equation coefficients
           post_epa <- t(eq[,2:10]) %*% abo_selected$product
@@ -87,7 +87,7 @@ if("actor_modifier" %in% data$element){
           #get the pre and post event dimensions
           pre_post <- pre_post %>%
             dplyr::mutate(trans_imp = post_epa) %>%
-            dplyr::select(element, term, component, dimension, estimate, trans_imp)
+            dplyr::select(.data$element, .data$term, .data$component, .data$dimension, .data$estimate, .data$trans_imp)
 
           pre_post <- pre_post %>% ungroup()
 

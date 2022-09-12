@@ -49,7 +49,7 @@ maximally_confirm_behavior <- function(data,
                          A == "001" & O == "100" ~ data$estimate[3]*data$estimate[4],
                          A == "001" & O == "010" ~ data$estimate[3]*data$estimate[5],
                          A == "001" & O == "001" ~ data$estimate[3]*data$estimate[6])) %>%
-    dplyr::select(i)
+    dplyr::select(.data$i)
 
   f_s_i <- c(data$estimate[1],
              data$estimate[2],

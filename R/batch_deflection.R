@@ -20,8 +20,8 @@
 batch_deflection <- function(df, equation = c("us", "user supplied"), eq_df = NULL) {
   df_res <- df %>%
             rowwise() %>%
-            mutate(deflection = get_deflection(actor, behavior, object, equation, eq_df),
-                   deflection = deflection$d)
+            mutate(deflection = get_deflection(.data$actor, .data$behavior, .data$object, equation, eq_df),
+                   deflection = .data$deflection$d)
 
   return(df_res)
 }

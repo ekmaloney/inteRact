@@ -24,13 +24,13 @@ reshape_events_df <- function(df,
   #first, get the dictionary
   dictionary <- actdata::epa_subset(dataset = dictionary_key,
                            gender = dictionary_gender) %>%
-                dplyr::select(term, component, E, P, A)
+                dplyr::select(.data$term, .data$component, .data$E, .data$P, .data$A)
 
   #next, do different things if wide or short
   if(df_format == "wide"){
 
 
-    all_var_names <- variable.names(df)
+    all_var_names <- stats::variable.names(df)
 
     df_long <- df %>%
               dplyr::mutate(event_id = dplyr::row_number()) %>%
@@ -41,10 +41,10 @@ reshape_events_df <- function(df,
                               dplyr::case_when(element == "behavior" ~"behavior",
                               element == "actor" | element == "object" ~ "identity",
                               stringr::str_detect(element, "modifier") ~ "modifier")) %>%
-      dplyr::group_by(event_id) %>%
-      dplyr::mutate(event = paste(term, collapse = " ")) %>%
+      dplyr::group_by(.data$event_id) %>%
+      dplyr::mutate(event = paste(.data$term, collapse = " ")) %>%
               dplyr::left_join(dictionary) %>%
-              tidyr::pivot_longer(E:A,
+              tidyr::pivot_longer(.data$E:.data$A,
                                   names_to = "dimension",
                                   values_to = "estimate")
 
@@ -54,17 +54,17 @@ reshape_events_df <- function(df,
                                                           element == "actor" | element == "object" ~ "identity",
                                                           stringr::str_detect(element, "modifier") ~ "modifier"),
                              event_id = get(id_column)) %>%
-               dplyr::group_by(event_id) %>%
-               dplyr::mutate(event = paste(term, collapse = " ")) %>%
+               dplyr::group_by(.data$event_id) %>%
+               dplyr::mutate(event = paste(.data$term, collapse = " ")) %>%
                dplyr::left_join(dictionary) %>%
-               dplyr::select(-all_of(id_column)) %>%
-      tidyr::pivot_longer(E:A,
+               dplyr::select(-dplyr::all_of(id_column)) %>%
+      tidyr::pivot_longer(.data$E:.data$A,
                           names_to = "dimension",
                           values_to = "estimate")
   }
 
 
-  df_long <- df_long %>% filter(!is.na(term))
+  df_long <- df_long %>% filter(!is.na(.data$term))
 
   return(df_long)
 

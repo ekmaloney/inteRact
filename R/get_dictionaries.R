@@ -11,16 +11,17 @@
 #' @param gender average, male, female
 #'
 #' @return the ACT dictionary from actdata
+#'
+#' @importFrom actdata epa_subset
 #' @export
 #'
 #' @examples
-#'
 #' get_dictionary("morocco2015", "average")
 #'
 get_dictionary <- function(dict_key, g){
 
     d <- actdata::epa_subset(dataset = dict_key)
-    d <- d %>% dplyr::filter(gender == g)
+    d <- d %>% dplyr::filter(.data$gender == g)
 
   return(d)
 }

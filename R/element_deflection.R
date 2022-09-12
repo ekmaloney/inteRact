@@ -36,8 +36,8 @@ element_deflection <- function(data,
           element_deflection <- transient_impression(data = data,
                                                      equation_key = equation_key,
                                                      equation_gender = equation_gender) %>%
-            dplyr::mutate(difference = trans_imp - estimate,
-                   sqd_diff = difference^2) %>%
+            dplyr::mutate(difference = .data$trans_imp - .data$estimate,
+                   sqd_diff = .data$difference^2) %>%
             dplyr::ungroup()
 
             return(element_deflection)

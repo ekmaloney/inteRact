@@ -10,14 +10,14 @@
 #' @examples
 batch_characteristic_emotion <- function(df, var){
       d <- tibble(term = get(var, df)) %>%
-            mutate(id = row_number()) %>%
+            mutate(id = dplyr::row_number()) %>%
             rowwise() %>%
-            dplyr::mutate(char_e = list(characteristic_emotion(term))) %>%
-            unnest(col = char_e) %>%
+            dplyr::mutate(char_e = list(characteristic_emotion(.data$term))) %>%
+            unnest(cols = .data$char_e) %>%
             dplyr::ungroup() %>%
-            dplyr::mutate(dimension = rep(c("E", "P", "A"), length(unique(term)))) %>%
-            tidyr::pivot_wider(names_from = dimension, values_from = char_e) %>%
-            select(-id)
+            dplyr::mutate(dimension = rep(c("E", "P", "A"), length(unique(.data$term)))) %>%
+            tidyr::pivot_wider(names_from = .data$dimension, values_from = .data$char_e) %>%
+            dplyr::select(-.data$id)
 
       return(d)
 }

@@ -28,6 +28,3 @@ A function that applies the modifier equations to find the EPA location for modi
 \item identity
 }
 }
-\examples{
-
-}
