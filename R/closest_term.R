@@ -26,13 +26,13 @@
 
 closest_term <- function(e, p, a,
                          dictionary_key,
-                         gender,
+                         dictionary_gender,
                          term_typ = c("identity", "behavior", "modifier"),
                          max_dist = 1,
                          num_terms = 10) {
 
       #get dictionaries
-      d <- actdata::epa_subset(dataset = dictionary_key, gender = gender, component = term_typ)
+      d <- actdata::epa_subset(dataset = dictionary_key, gender = dictionary_gender, component = term_typ)
 
     terms <- d %>%
       dplyr::rowwise() %>%

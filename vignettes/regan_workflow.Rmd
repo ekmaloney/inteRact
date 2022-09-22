@@ -1,0 +1,65 @@
+---
+title: "regan_workflow"
+author: "Em Maloney"
+date: "`r Sys.Date()`"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(tidyverse)
+library(inteRact)
+library(actdata)
+
+
+example_events <- tibble(actor = c("man", "husband"),
+                         behavior = c("ignore", "criticize"),
+                         object = c("daughter", "wife"))
+
+
+example_reshaped <- reshape_events_df(example_events, 
+                                      df_format = "wide",
+                                      dictionary_key = "usfullsurveyor2015",
+                                      dictionary_gender = "average")
+
+
+example_nested <- example_reshaped %>% 
+                  ungroup() %>% 
+                   dplyr::nest_by(event_id) %>% 
+                   mutate(equation_key = "us2010",
+                          equation_gender = "average") %>% 
+                   mutate(d = get_deflection(data = data, 
+                                             equation_key = equation_key,
+                                             equation_gender = equation_gender),
+                          ra = reidentify_actor(data = data,
+                                                equation_key = equation_key,
+                                             equation_gender = equation_gender),
+                          ro = reidentify_object(data = data,
+                                                equation_key = equation_key,
+                                             equation_gender = equation_gender)) %>% 
+                    mutate(actor_closes = list(closest_term(e = ra$E,
+                                                          p = ra$P,
+                                                          a = ra$A,
+                                                          term_typ = "identity",
+                                                          dictionary_key = "usfullsurveyor2015",
+                                                          dictionary_gender = "average")),
+                           object_closest = list(closest_term(e = ro$E,
+                                                          p = ro$P,
+                                                          a = ro$A,
+                                                          term_typ = "identity",
+                                                          dictionary_key = "usfullsurveyor2015",
+                                                          dictionary_gender = "average"))) %>% 
+                  ungroup() %>% 
+                  pivot_longer(actor_closes:object_closest,
+                               names_to = "position",
+                               values_to = "value") %>% 
+                  unnest_longer(value)
+
+
+example_nested
+
+```
+

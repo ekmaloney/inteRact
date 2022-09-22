@@ -46,7 +46,7 @@ events <- tibble(actor = sample(us_2015$term[us_2015$component == "identity"], 5
                  object = sample(us_2015$term[us_2015$component == "identity"], 50))
 
 
-glimpse(events)
+dplyr::glimpse(events)
 
 ```
 
@@ -66,11 +66,8 @@ To finalize the dataframe for analysis, *nest_by* the event_id. It is important 
 ```{r}
 #nest by event
 nested_analysis <- analysis_df %>% ungroup() %>% 
-                   nest_by(event_id) %>% 
+                   dplyr::nest_by(event_id) %>% 
                    mutate(eq_df = list(eq_df))
-
-glimpse(nested_analysis)
-
 ```
 
 Now you can run the functions on the dataframe, supplying the nested data and the equations dataframe. 
