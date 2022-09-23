@@ -22,7 +22,7 @@
 #' @export
 #'
 #' @examples
-#' closest_term(1, 2.5, 3, dictionary_key = "usfullsurveyor2015", gender = "average", term_typ = "identity")
+#' closest_term(1, 2.5, 3, dictionary_key = "usfullsurveyor2015", dictionary_gender = "average", term_typ = "identity")
 
 closest_term <- function(e, p, a,
                          dictionary_key,

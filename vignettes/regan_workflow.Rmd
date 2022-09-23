@@ -10,56 +10,80 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 ```{r}
+#libraries necessary for analysis
 library(tidyverse)
 library(inteRact)
 library(actdata)
 
-
+#here you would construct your 'seed' list of ABO events from the AITA narratives
+#could add an id variable linking the event to a specific narrative if you want
+#I've just done two example events here, but theoretically, this could be as long
+#as you need it to be 
+#although I might advise chunking it a little, so if there are any issues with an 
+#event, it is easier to locate
 example_events <- tibble(actor = c("man", "husband"),
                          behavior = c("ignore", "criticize"),
                          object = c("daughter", "wife"))
 
 
+#first step is to reshape the events with the EPA information 
 example_reshaped <- reshape_events_df(example_events, 
                                       df_format = "wide",
                                       dictionary_key = "usfullsurveyor2015",
                                       dictionary_gender = "average")
 
+glimpse(example_reshaped)
+```
 
+```{r}
+#next, you can do the analysis on your df! 
 example_nested <- example_reshaped %>% 
                   ungroup() %>% 
-                   dplyr::nest_by(event_id) %>% 
-                   mutate(equation_key = "us2010",
+                  #key step: nest the data by the event_id 
+                  dplyr::nest_by(event_id) %>% 
+                  #add variables indicating the ACT equation and gender you want 
+                  #to use 
+                  mutate(equation_key = "us2010",
                           equation_gender = "average") %>% 
-                   mutate(d = get_deflection(data = data, 
+                  #now, run the ACT functions 
+                  #getting the deflection and then reidentify actor & object
+                  mutate(d = get_deflection(data = data, 
                                              equation_key = equation_key,
                                              equation_gender = equation_gender),
-                          ra = reidentify_actor(data = data,
+                        ra = reidentify_actor(data = data,
                                                 equation_key = equation_key,
                                              equation_gender = equation_gender),
-                          ro = reidentify_object(data = data,
+                        ro = reidentify_object(data = data,
                                                 equation_key = equation_key,
                                              equation_gender = equation_gender)) %>% 
-                    mutate(actor_closes = list(closest_term(e = ra$E,
-                                                          p = ra$P,
-                                                          a = ra$A,
+                      unnest_wider(ra:ro, names_sep = "_")
+
+
+DT::datatable(example_nested)
+
+```
+
+```{r}
+example_terms <-  example_nested %>% group_by(event_id) %>% 
+                    mutate(actor_closest = list(closest_term(e = ra_E,
+                                                          p = ra_P,
+                                                          a = ra_A,
                                                           term_typ = "identity",
                                                           dictionary_key = "usfullsurveyor2015",
                                                           dictionary_gender = "average")),
-                           object_closest = list(closest_term(e = ro$E,
-                                                          p = ro$P,
-                                                          a = ro$A,
+                           object_closest = list(closest_term(e = ro_E,
+                                                          p = ro_P,
+                                                          a = ro_A,
                                                           term_typ = "identity",
                                                           dictionary_key = "usfullsurveyor2015",
                                                           dictionary_gender = "average"))) %>% 
                   ungroup() %>% 
-                  pivot_longer(actor_closes:object_closest,
+                  pivot_longer(actor_closest:object_closest,
                                names_to = "position",
-                               values_to = "value") %>% 
-                  unnest_longer(value)
+                               values_to = "value") %>% unnest_longer(value)
 
-
-example_nested
+example_terms$value %>% bind_cols(example_terms %>% select(event_id, position)) %>% 
+  DT::datatable()
 
 ```
 
