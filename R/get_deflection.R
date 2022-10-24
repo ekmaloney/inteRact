@@ -31,18 +31,18 @@ get_deflection <- function(data,
                            ...) {
 
         #calculate the transient impression
-        t_imp <- transient_impression(data = data,
+        t_imp <- transient_impression(d = data,
                                       equation_key = equation_key,
                                       equation_gender = equation_gender,
                                       eq_df = eq_df)
 
         #get element deflection by applying the transient impression function
         total_deflection <- t_imp %>%
-                      dplyr::mutate(difference = .data$estimate - .data$trans_imp,
-                                    sqd_diff = .data$difference^2) %>%
-                      dplyr::summarise(deflection = sum(.data$sqd_diff))
+                      dplyr::mutate(difference = estimate - trans_imp,
+                                    sqd_diff = difference^2) %>%
+                      dplyr::summarise(deflection = sum(sqd_diff))
 
 
-        return(total_deflection %>% dplyr::pull(.data$deflection))
+        return(total_deflection %>% dplyr::pull(deflection))
 
 }

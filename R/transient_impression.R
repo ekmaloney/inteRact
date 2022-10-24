@@ -13,51 +13,51 @@
 #'
 
 
-transient_impression <- function(data,
+transient_impression <- function(d,
                                  equation_key = NULL,
                                  equation_gender = NULL,
                                  eq_df = NULL, ...) {
 
 #first, deal with modified identities
-if("actor_modifier" %in% data$element){
+if("actor_modifier" %in% d$element){
 
-  new_id <- data %>%
-            filter(.data$element == "actor" | .data$element == "actor_modifier")
+  new_id <- d %>%
+            filter(element == "actor" | element == "actor_modifier")
 
-  new_id_epa <- modify_identity(data = new_id,
+  new_id_epa <- modify_identity(d = new_id,
                                 equation_key = equation_key,
                                 equation_gender = equation_gender,
                                 eq_df = eq_df)
 
   new_actor_info <- tibble::tibble(element = "actor",
-                                   term = paste(unique(data$term[data$element == "actor_modifier"]),
-                                                unique(data$term[data$element == "actor"])),
+                                   term = paste(unique(d$term[d$element == "actor_modifier"]),
+                                                unique(d$term[d$element == "actor"])),
                                    component = "identity",
-                                   event = unique(data$event)) %>% dplyr::bind_cols(new_id_epa)
+                                   event = unique(d$event)) %>% dplyr::bind_cols(new_id_epa)
 
-  data <- data %>% dplyr::filter(.data$element != "actor" & .data$element != "actor_modifier")
-  data <- dplyr::bind_rows(new_actor_info, data)
+  d <- d %>% dplyr::filter(element != "actor" & element != "actor_modifier")
+  d <- dplyr::bind_rows(new_actor_info, d)
 
 }
 
-  if("object_modifier" %in% data$element){
+  if("object_modifier" %in% d$element){
 
-    new_id <- data %>%
-              filter(.data$element == "object" | .data$element == "object_modifier")
+    new_id <- d %>%
+      filter(element == "object" | element == "object_modifier")
 
-    new_id_epa <- modify_identity(id_info = new_id,
+    new_id_epa <- modify_identity(d = new_id,
                                   equation_key = equation_key,
                                   equation_gender = equation_gender,
                                   eq_df = eq_df)
 
-    new_actor_info <- tibble::tibble(element = "object",
-                                     term = paste(unique(data$term[data$element == "object_modifier"]),
-                                                  unique(data$term[data$element == "object"])),
+    new_object_info <- tibble::tibble(element = "object",
+                                     term = paste(unique(d$term[d$element == "object_modifier"]),
+                                                  unique(d$term[d$element == "object"])),
                                      component = "identity",
-                                     event = unique(data$event)) %>% dplyr::bind_cols(new_id_epa)
+                                     event = unique(d$event)) %>% dplyr::bind_cols(new_id_epa)
 
-    data <- data %>% filter(.data$element != "object" & .data$element != "object_modifier")
-    data <- dplyr::bind_rows(new_actor_info, data)
+    d <- d %>% dplyr::filter(element != "object" & element != "object_modifier")
+    d <- dplyr::bind_rows(new_object_info, d)
 
   }
 
@@ -69,25 +69,25 @@ if("actor_modifier" %in% data$element){
 
 
           #construct the selection matrix
-          selection_mat <- eq %>% dplyr::select(.data$AE:.data$OA)
+          selection_mat <- eq %>% dplyr::select(AE:OA)
 
           #get ABO elements for coefficients
-          abo_selected <- as.data.frame(t(t(selection_mat)*data$estimate)) %>%
+          abo_selected <- as.data.frame(t(t(selection_mat)*d$estimate)) %>%
             naniar::replace_with_na_all(condition = ~.x == 0) %>%
             dplyr::rowwise() %>%
-            dplyr::mutate(product = prod(c(.data$AE, .data$AP, .data$AA, .data$BE, .data$BP, .data$BA, .data$OE, .data$OP, .data$OA), na.rm = TRUE))
+            dplyr::mutate(product = prod(c(AE, AP, AA, BE, BP, BA, OE, OP, OA), na.rm = TRUE))
 
           #multiply ABO elements by the equation coefficients
           post_epa <- t(eq[,2:10]) %*% abo_selected$product
           post_epa <- tibble::tibble(post_epa = post_epa)
 
           #put before and after together
-          pre_post <- cbind(data, post_epa)
+          pre_post <- cbind(d, post_epa)
 
           #get the pre and post event dimensions
           pre_post <- pre_post %>%
             dplyr::mutate(trans_imp = post_epa) %>%
-            dplyr::select(.data$element, .data$term, .data$component, .data$dimension, .data$estimate, .data$trans_imp)
+            dplyr::select(element, term, component, dimension, estimate, trans_imp)
 
           pre_post <- pre_post %>% ungroup()
 

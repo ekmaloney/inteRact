@@ -21,26 +21,69 @@ library(actdata)
 #as you need it to be 
 #although I might advise chunking it a little, so if there are any issues with an 
 #event, it is easier to locate
-example_events <- tibble(actor = c("man", "husband"),
-                         behavior = c("ignore", "criticize"),
-                         object = c("daughter", "wife"))
+# example_events <- tibble(actor = c("man", "husband"),
+#                          behavior = c("ignore", "criticize"),
+#                          object = c("daughter", "wife"))
+
+###NEW CODE FOR EPA ONLY EXAMPLE
+#let's say you have data that is read in like this: 
+coded_events <- tibble(actor_modifier_E = 1,
+                       actor_modifier_P = 1,
+                       actor_modifier_A = 1,
+                       actor_E = 1, 
+                       actor_P = 1,
+                       actor_A = 1,
+                       behavior_E = 1,
+                       behavior_P = 1,
+                       behavior_A = 1,
+                       object_modifier_E = 1,
+                       object_modifier_P = 1,
+                       object_modifier_A = 1,
+                       object_E = 1,
+                       object_P = 1,
+                       object_A = 1,
+                       event_id = 1,
+                       term = NA)
+
+#function to get last characters
+last_2_characters <- function(x){
+  
+  total_n <- nchar(x)
+  first <- substr(x, start = 1, stop = total_n - 2)
+  last <- substr(x, start = total_n - 1, stop = total_n)
+  last <- str_remove_all(last, "_")
+  
+  return(last)
+}
+
+
+first_characters <- function(x){
+  total_n <- nchar(x)
+  first <- substr(x, start = 1, stop = total_n - 2)
+  
+  return(first)
+}
 
 
 #first step is to reshape the events with the EPA information 
-example_reshaped <- reshape_events_df(example_events, 
-                                      df_format = "wide",
-                                      dictionary_key = "usfullsurveyor2015",
-                                      dictionary_gender = "average")
+coded_events_long <- coded_events %>% 
+                     pivot_longer(actor_modifier_E:object_A,
+                                  names_to = "element",
+                                  values_to = "estimate") %>% 
+                     mutate(dimension = map_chr(element, last_2_characters),
+                            element = map_chr(element, first_characters)) %>% 
+                     mutate(component = case_when(str_detect(element, "modifier") ~ "modifier",
+                                                  element == "behavior" ~ "behavior",
+                                                  TRUE ~ "identity")) %>% 
+                     ungroup() %>% nest_by(event_id)
 
-glimpse(example_reshaped)
+#most important thing: you need all of these variables in your df
+glimpse(coded_events_long)
 ```
 
 ```{r}
 #next, you can do the analysis on your df! 
-example_nested <- example_reshaped %>% 
-                  ungroup() %>% 
-                  #key step: nest the data by the event_id 
-                  dplyr::nest_by(event_id) %>% 
+example_nested <- coded_events_long %>% 
                   #add variables indicating the ACT equation and gender you want 
                   #to use 
                   mutate(equation_key = "us2010",
@@ -57,7 +100,6 @@ example_nested <- example_reshaped %>%
                                                 equation_key = equation_key,
                                              equation_gender = equation_gender)) %>% 
                       unnest_wider(ra:ro, names_sep = "_")
-
 
 DT::datatable(example_nested)
 

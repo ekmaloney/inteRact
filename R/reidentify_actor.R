@@ -17,7 +17,7 @@ reidentify_actor <- function(data,
                              ...) {
 
           #calculate the transient impression of the event
-          trans_imp_df <- transient_impression(data = data,
+          trans_imp_df <- transient_impression(d = data,
                                                equation_key = equation_key,
                                                equation_gender = equation_gender,
                                                eq_df = eq_df)

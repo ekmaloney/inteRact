@@ -34,7 +34,7 @@ optimal_behavior <- function(data,
                              type = "impressionabo")
 
           #calculate the transient impression
-          element_def <- transient_impression(data,
+          element_def <- transient_impression(d = data,
                                               equation_key = equation_key,
                                               equation_gender = equation_gender,
                                               eq_df = eq_df)

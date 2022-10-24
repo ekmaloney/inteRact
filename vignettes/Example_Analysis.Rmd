@@ -30,7 +30,8 @@ us_2015 <- epa_subset(dataset = "usfullsurveyor2015")
 
 #make a dataframe of events 
 set.seed(129)
-events <- tibble(actor = sample(us_2015$term[us_2015$component == "identity"], 50),
+events <- tibble(actor_modifier = sample(us_2015$term[us_2015$component == "modifier"], 50),
+                 actor = sample(us_2015$term[us_2015$component == "identity"], 50),
                  behavior = sample(us_2015$term[us_2015$component == "behavior"], 50),
                  object = sample(us_2015$term[us_2015$component == "identity"], 50))
 
@@ -62,8 +63,6 @@ deflection <- nested_analysis %>%
               mutate(d = get_deflection(data = data, 
                                         equation_key = equation_key,
                                         equation_gender = equation_gender))
-                       
-deflection %>% unnest(cols = c(data, d))
 ```
 
 
