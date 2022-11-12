@@ -61,6 +61,8 @@ if("actor_modifier" %in% d$element){
 
   }
 
+  d <- d %>% arrange(match(element, c("actor", "behavior", "object")))
+
           #get the equation
           eq <- get_equation(name = equation_key,
                      g = equation_gender,
