@@ -9,7 +9,7 @@ closest_term(
   p,
   a,
   dictionary_key,
-  gender,
+  dictionary_gender,
   term_typ = c("identity", "behavior", "modifier"),
   max_dist = 1,
   num_terms = 10
@@ -24,11 +24,11 @@ closest_term(
 
 \item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
-\item{gender}{either average, male, or female, depending on if you are using gendered equations}
-
 \item{term_typ}{a string indicating whether you are looking for an identity, behavior, or modifier}
 
 \item{max_dist}{a numeric variable equaling the maximum distance a term can be away from your EPA location}
+
+\item{gender}{either average, male, or female, depending on if you are using gendered equations}
 }
 \value{
 a dataframe listing terms matching your search. Includes variables indicating element-wise distance and sum of squared differences.
@@ -37,5 +37,5 @@ a dataframe listing terms matching your search. Includes variables indicating el
 A function to find the closest measured identity, behavior, or modifier to a specified E, P, A location.
 }
 \examples{
-closest_term(1, 2.5, 3, dictionary_key = "usfullsurveyor2015", gender = "average", term_typ = "identity")
+closest_term(1, 2.5, 3, dictionary_key = "usfullsurveyor2015", dictionary_gender = "average", term_typ = "identity")
 }

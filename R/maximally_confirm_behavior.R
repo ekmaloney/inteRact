@@ -3,11 +3,9 @@
 #' Identify the behavior that would maximally confirm the identities of actor
 #' and object pairing
 #'
-#' @param actor lowercase string corresponding to the actor identity
-#' @param beh lowercase string corresponding to the behavior term
-#' @param object lowercase string corresponding to the object identity
+#' @param d events dataframe reshaped by reshape_events_dataframe function with an actor and object pairing
 #' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
-#' @param gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_gender either average, male, or female, depending on if you are using gendered equations
 #' @param equation_key a string corresponding to the equation key from actdata
 #' @param eq_df if you select "user supplied" for equation, this parameter should
 #' be your equation dataframe, which (should have been reshaped by the
@@ -19,8 +17,8 @@
 #' @examples
 #' d <- tibble::tibble(actor = "ceo", object = "benefactor")
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-#' maximally_confirm_behavior(data = d, equation_key = "us2010", equation_gender = "average")
-maximally_confirm_behavior <- function(data,
+#' maximally_confirm_behavior(d = d, equation_key = "us2010", equation_gender = "average")
+maximally_confirm_behavior <- function(d,
                                        equation_key = NULL,
                                        equation_gender = NULL,
                                        eq_df = NULL, ...){
@@ -34,30 +32,30 @@ maximally_confirm_behavior <- function(data,
   #actor info
   i_actor <- eq %>%
     dplyr::mutate(i = dplyr::case_when(A == "000" & O == "000" ~ 1,
-                         A == "100" & O == "000" ~ data$estimate[1],
-                         A == "010" & O == "000" ~ data$estimate[2],
-                         A == "001" & O == "000"~ data$estimate[3],
-                         A == "000" & O == "100" ~ data$estimate[4],
-                         A == "000" & O == "010" ~ data$estimate[5],
-                         A == "000" & O == "001" ~ data$estimate[6],
-                         A == "100" & O == "100"~ data$estimate[1]*data$estimate[4],
-                         A == "100" & O == "010" ~ data$estimate[1]*data$estimate[5],
-                         A == "100" & O == "001" ~ data$estimate[1]*data$estimate[6],
-                         A == "010" & O == "100" ~ data$estimate[2]*data$estimate[4],
-                         A == "010" & O == "010" ~ data$estimate[2]*data$estimate[5],
-                         A == "010" & O == "001" ~ data$estimate[2]*data$estimate[6],
-                         A == "001" & O == "100" ~ data$estimate[3]*data$estimate[4],
-                         A == "001" & O == "010" ~ data$estimate[3]*data$estimate[5],
-                         A == "001" & O == "001" ~ data$estimate[3]*data$estimate[6])) %>%
-    dplyr::select(.data$i)
+                         A == "100" & O == "000" ~ d$estimate[1],
+                         A == "010" & O == "000" ~ d$estimate[2],
+                         A == "001" & O == "000"~ d$estimate[3],
+                         A == "000" & O == "100" ~ d$estimate[4],
+                         A == "000" & O == "010" ~ d$estimate[5],
+                         A == "000" & O == "001" ~ d$estimate[6],
+                         A == "100" & O == "100"~ d$estimate[1]*d$estimate[4],
+                         A == "100" & O == "010" ~ d$estimate[1]*d$estimate[5],
+                         A == "100" & O == "001" ~ d$estimate[1]*d$estimate[6],
+                         A == "010" & O == "100" ~ d$estimate[2]*d$estimate[4],
+                         A == "010" & O == "010" ~ d$estimate[2]*d$estimate[5],
+                         A == "010" & O == "001" ~ d$estimate[2]*d$estimate[6],
+                         A == "001" & O == "100" ~ d$estimate[3]*d$estimate[4],
+                         A == "001" & O == "010" ~ d$estimate[3]*d$estimate[5],
+                         A == "001" & O == "001" ~ d$estimate[3]*d$estimate[6])) %>%
+    dplyr::select(i)
 
-  f_s_i <- c(data$estimate[1],
-             data$estimate[2],
-             data$estimate[3],
+  f_s_i <- c(d$estimate[1],
+             d$estimate[2],
+             d$estimate[3],
              1, 1, 1,
-             data$estimate[4],
-             data$estimate[5],
-             data$estimate[6])
+             d$estimate[4],
+             d$estimate[5],
+             d$estimate[6])
   #save as a vector
   i_actor <- c(as.vector(f_s_i), as.vector(i_actor$i))
 

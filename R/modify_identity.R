@@ -3,17 +3,19 @@
 #' A function that applies the modifier equations to find the EPA location for modifier
 #' + identity
 #'
-#' @param id_info a dataframe from reshape events that should be only
+#' @param d a dataframe from reshape events that should be only
 #' actor_modifier and actor elements or object_modifier and object elements
-#' @param eq_info the equation information you are using, should be in the
-#' form {name}_{gender}
+#' @param equation_gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_key a string corresponding to the equation key from actdata
 #'
 #' @return three digit EPA profile of the modified identity
 #' @export
 #'
 #' @examples
-#'
-modify_identity <- function(data,
+#' d <- tibble::tibble(actor_modifier = "tired", actor = "ceo")
+#' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+#' tired_ceo <- modify_identity(d = d, equation_key = "us2010", equation_gender = "average")
+modify_identity <- function(d,
                             equation_key = NULL,
                             equation_gender = NULL,
                             eq_df = NULL,
@@ -40,7 +42,7 @@ modify_identity <- function(data,
   selection_mat <- eq %>% dplyr::select(ME:IA)
 
   #make sure that the modifier comes first and then identity EPA info
-  data <- data %>% dplyr::arrange(component) %>% slice(4:6, 1:3)
+  data <- d %>% dplyr::arrange(component) %>% slice(4:6, 1:3)
 
   #get all of the selections
   abo_selected <- as.data.frame(t(t(selection_mat)*data$estimate)) %>%

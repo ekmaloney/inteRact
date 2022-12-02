@@ -5,7 +5,7 @@
 \title{Calculate the Transient Impression after an Event}
 \usage{
 transient_impression(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -13,12 +13,21 @@ transient_impression(
 )
 }
 \arguments{
-\item{data}{data that has been reshaped by the events_data}
+\item{d}{data that has been reshaped to be in long format, with columns:
+element, term, component, event, event_id, dimension, and estimate}
 
-\item{equation_info}{is a string that corresponds to "{equationkey}_{gender}" from actdata}
+\item{equation_key}{the actdata equation key for the equation to use to get
+the transient impression}
+
+\item{equation_gender}{male, female, or average, corresponding to the gender
+of equation to use when calculating the transient impression}
+
+\item{eq_df}{use this only if you have used your \emph{own} equation and not one in
+actdata}
 }
 \value{
-dataframe in long format, with one row for each element-dimension of the event, columns for fundamental sentiment and transient impression.
+dataframe in long format, with one row for each element-dimension of
+the event, columns for fundamental sentiment and transient impression.
 }
 \description{
 Calculate the Transient Impression after an Event
@@ -26,6 +35,6 @@ Calculate the Transient Impression after an Event
 \examples{
 d <- tibble::tibble(actor_modifier = "tired", actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-transient_impression(data = d, equation_key = "us2010", equation_gender = "average")
+transient_impression(d = d, equation_key = "us2010", equation_gender = "average")
 
 }

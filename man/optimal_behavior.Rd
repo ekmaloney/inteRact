@@ -5,7 +5,7 @@
 \title{Calculate the Optimal Behavior for the Actor following an Event}
 \usage{
 optimal_behavior(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -13,10 +13,11 @@ optimal_behavior(
 )
 }
 \arguments{
-\item{df}{data that has been reshaped by the events_df}
+\item{d}{data that has been reshaped by the reshape_events_df function}
 
-\item{equation_info}{is a string that corresponds to "{equationkey}_{gender}"
-from actdata}
+\item{equation_key}{a string corresponding to the equation key from actdata}
+
+\item{equation_gender}{either average, male, or female, depending on if you are using gendered equations}
 }
 \value{
 3 digit EPA indicating the optimal behavior
@@ -26,15 +27,9 @@ Calculate the Optimal Behavior for the Actor following an Event
 }
 \examples{
 
-opt_behavior_example <- tibble::tibble(actor = "teenager",
-behavior = "beam_at",object = "friend")
-
-opt_behavior_df <- reshape_events_df(df = opt_behavior_example,
-df_format = "wide", dictionary_key = "indiana2003",
-dictionary_gender = "male")
-
-opt_b <- optimal_behavior(data = opt_behavior_df, equation_key = "nc1978",
-equation_gender = "male")
+opt_behavior_example <- tibble::tibble(actor = "teenager", behavior = "beam_at",object = "friend")
+opt_behavior_df <- reshape_events_df(df = opt_behavior_example, df_format = "wide", dictionary_key = "indiana2003", dictionary_gender = "male")
+opt_b <- optimal_behavior(d = opt_behavior_df, equation_key = "nc1978", equation_gender = "male")
 
 
 

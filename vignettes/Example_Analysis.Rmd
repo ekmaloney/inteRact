@@ -60,7 +60,7 @@ nested_analysis <- analysis_df %>% ungroup() %>%
 Step 4: Run some calculations
 ```{r}
 deflection <- nested_analysis %>% 
-              mutate(d = get_deflection(data = data, 
+              mutate(d = get_deflection(d = data, 
                                         equation_key = equation_key,
                                         equation_gender = equation_gender))
 ```
@@ -68,24 +68,18 @@ deflection <- nested_analysis %>%
 
 
 ```{r}
-
-trans_imp <- nested_analysis %>% 
-              pmap_df(.l = .,
-                      .f = transient_impression)
-      
 start_time <- Sys.time()
 multiple_functions <- nested_analysis %>% 
-                      mutate(d = get_deflection(data = data, 
+                      mutate(d = get_deflection(d = data, 
                                         equation_key = equation_key,
                                         equation_gender = equation_gender),
-                            ti = list(transient_impression(data = data, 
+                            ti = list(transient_impression(d = data, 
                                         equation_key = equation_key,
                                         equation_gender = equation_gender)),
-                            actor_reidentified = list(reidentify_actor(data = data, 
+                            actor_reidentified = list(reidentify_actor(d = data, 
                                         equation_key = equation_key,
                                         equation_gender = equation_gender)))
 end_time <- Sys.time()
-
 ```
 
 

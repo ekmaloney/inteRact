@@ -5,7 +5,7 @@
 \title{Function to Generate the Re-identification of the Actor}
 \usage{
 reidentify_actor(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -13,9 +13,12 @@ reidentify_actor(
 )
 }
 \arguments{
-\item{df}{data that has been reshaped by the events_df}
+\item{d}{a dataframe from reshape events that should be only
+actor_modifier and actor elements or object_modifier and object elements}
 
-\item{equation_info}{is a string that corresponds to "{equationkey}_{gender}" from actdata}
+\item{equation_key}{a string corresponding to the equation key from actdata}
+
+\item{equation_gender}{either average, male, or female, depending on if you are using gendered equations}
 }
 \value{
 dataframe with 3 columns corresponding to the EPA of optimal actor identity relabel
@@ -26,5 +29,5 @@ Function to Generate the Re-identification of the Actor
 \examples{
 d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-reidentify_actor(data = d, equation_key = "us2010", equation_gender = "average")
+reidentify_actor(d = d, equation_key = "us2010", equation_gender = "average")
 }

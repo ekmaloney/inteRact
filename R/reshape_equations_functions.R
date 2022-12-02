@@ -11,22 +11,21 @@
 #' @examples
 reshape_new_equation <- function(eq_df){
 
-  # data("all_combinations", envir=environment())
   all_combos <- unique(c(inteRact::all_combinations$combos, eq_df$V1))
 
   decoding_coefficients <- tibble(coef_name = all_combos) %>%
-                          dplyr::mutate(combos = stringr::str_remove(.data$coef_name, "Z")) %>%
-    tidyr::separate(.data$combos, sep = c(3, 6), into = c("A", "B", "O")) %>%
+                          dplyr::mutate(combos = stringr::str_remove(coef_name, "Z")) %>%
+    tidyr::separate(combos, sep = c(3, 6), into = c("A", "B", "O")) %>%
     dplyr::rowwise() %>%
-    dplyr::mutate(AE = if_else(.data$A == "100", 1, 0),
-                                 AP = if_else(.data$A == "010", 1, 0),
-                                 AA = if_else(.data$A == "001", 1, 0),
-                                 BE = if_else(.data$B == "100", 1, 0),
-                                 BP = if_else(.data$B == "010", 1, 0),
-                                 BA = if_else(.data$B == "001", 1, 0),
-                                 OE = if_else(.data$O == "100", 1, 0),
-                                 OP = if_else(.data$O == "010", 1, 0),
-                                 OA = if_else(.data$O == "001", 1, 0))
+    dplyr::mutate(AE = if_else(A == "100", 1, 0),
+                                 AP = if_else(A == "010", 1, 0),
+                                 AA = if_else(A == "001", 1, 0),
+                                 BE = if_else(B == "100", 1, 0),
+                                 BP = if_else(B == "010", 1, 0),
+                                 BA = if_else(B == "001", 1, 0),
+                                 OE = if_else(O == "100", 1, 0),
+                                 OP = if_else(O == "010", 1, 0),
+                                 OA = if_else(O == "001", 1, 0))
 
   eq_df <- tibble::tibble(coef_name = eq_df$V1,
                  postAE = eq_df$V2,
@@ -56,12 +55,12 @@ reshape_emotion_equation <- function(eq) {
   eq_coef_info[is.na(eq_coef_info)] <- 0
 
   eq_coef_info <- eq_coef_info %>%
-    dplyr::mutate(terms_involved = .data$ME + .data$MP + .data$MA + .data$IE + .data$IP + .data$IA,
-                         interaction_term = dplyr::if_else(.data$terms_involved > 1, 1, 0),
-                         E_interaction = dplyr::if_else(.data$interaction_term == 1 & .data$IE == 1, 1, 0),
-                         P_interaction = dplyr::if_else(.data$interaction_term == 1 & .data$IP == 1, 1, 0),
-                         A_interaction = dplyr::if_else(.data$interaction_term == 1 & .data$IA == 1, 1, 0)) %>%
-                  dplyr::select(-.data$terms_involved, .data$interaction_term)
+    dplyr::mutate(terms_involved = ME + MP + MA + IE + IP + IA,
+                         interaction_term = dplyr::if_else(terms_involved > 1, 1, 0),
+                         E_interaction = dplyr::if_else(interaction_term == 1 & IE == 1, 1, 0),
+                         P_interaction = dplyr::if_else(interaction_term == 1 & IP == 1, 1, 0),
+                         A_interaction = dplyr::if_else(interaction_term == 1 & IA == 1, 1, 0)) %>%
+                  dplyr::select(-terms_involved, interaction_term)
 
   return(eq_coef_info)
 }

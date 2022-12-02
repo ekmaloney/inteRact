@@ -1,13 +1,15 @@
 #' Convenience Function for Creating Selection Matrix Depending on the Term
 #'
 #' @param term, string indicating whether you are selection for actor, behavior, or object
-#' @param gender
-#' @param equation_key
+#' @param eq the equation dataframe being used for analysis
 #'
-#' @return
+#' @return selection matrix to easily grab desired estimates from entire event ABO-EPA matrix
+#' see Heise, Expressive Order p. 86
 #' @export
 #'
 #' @examples
+#' eq <- get_equation(name = "us2010", type = "impressionabo", g = "average")
+#' select_mat_a <- create_select_mat(term = "actor", eq = eq)
 
 create_select_mat <- function(term,
                               eq) {

@@ -5,7 +5,7 @@
 \title{Modify Identity}
 \usage{
 modify_identity(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -13,11 +13,12 @@ modify_identity(
 )
 }
 \arguments{
-\item{id_info}{a dataframe from reshape events that should be only
+\item{d}{a dataframe from reshape events that should be only
 actor_modifier and actor elements or object_modifier and object elements}
 
-\item{eq_info}{the equation information you are using, should be in the
-form {name}_{gender}}
+\item{equation_key}{a string corresponding to the equation key from actdata}
+
+\item{equation_gender}{either average, male, or female, depending on if you are using gendered equations}
 }
 \value{
 three digit EPA profile of the modified identity
@@ -27,4 +28,9 @@ A function that applies the modifier equations to find the EPA location for modi
 \itemize{
 \item identity
 }
+}
+\examples{
+d <- tibble::tibble(actor_modifier = "tired", actor = "ceo")
+d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+tired_ceo <- modify_identity(d = d, equation_key = "us2010", equation_gender = "average")
 }

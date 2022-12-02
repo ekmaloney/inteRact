@@ -15,9 +15,17 @@ extract_terms(elem, eq, t_imp)
 \item{t_imp}{the dataframe containing the result of the transient impression from the event}
 }
 \value{
-29 x 29 matrix
+29 x 29 matrix with desired terms extracted
 }
 \description{
-Create the I matrix from Heise (2010) that corresponds to ABO
-elements that are not the one being solved for in optimal functions
+Convenience internal function
+}
+\examples{
+eq <- get_equation(name = "us2010", type = "impressionabo", g = "average")
+d <- tibble::tibble(actor_modifier = "tired", actor = "ceo", behavior = "advise", object = "benefactor")
+d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+ti <- transient_impression(d = d, equation_key = "us2010", equation_gender = "average")
+
+terms_matrix <- extract_terms(elem = "actor", eq = eq, t_imp = ti)
+
 }

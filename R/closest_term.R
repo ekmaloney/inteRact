@@ -31,35 +31,41 @@ closest_term <- function(e, p, a,
                          max_dist = 1,
                          num_terms = 10) {
 
-      #get dictionaries
-      d <- actdata::epa_subset(dataset = dictionary_key, gender = dictionary_gender, component = term_typ)
+  if(is.null(e) | is.null(p) | is.null(a)){
+    stop("Must provide either an id_info dataframe from reshape_events_df or E, P, and A values")
+  }else if(!is.numeric(e) | !is.numeric(p) | !is.numeric(a)){
+    stop("E, P, and A must be numeric")
+  }else{
+    #get dictionaries
+    d <- actdata::epa_subset(dataset = dictionary_key, gender = dictionary_gender, component = term_typ)
 
     terms <- d %>%
       dplyr::rowwise() %>%
-      dplyr::mutate(d_e = .data$E - e,
-                    d_p = .data$P - p,
-                    d_a = .data$A - a,
-                    d_e_s = (.data$d_e)^2,
-                    d_p_s = (.data$d_p)^2,
-                    d_a_s = (.data$d_a)^2,
-                    ssd = sum(.data$d_e_s, .data$d_p_s, .data$d_a_s)) %>%
+      dplyr::mutate(d_e = E - e,
+                    d_p = P - p,
+                    d_a = A - a,
+                    d_e_s = (d_e)^2,
+                    d_p_s = (d_p)^2,
+                    d_a_s = (d_a)^2,
+                    ssd = sum(d_e_s, d_p_s, d_a_s)) %>%
       dplyr::ungroup() %>%
-      dplyr::filter(.data$ssd < max_dist) %>%
-      dplyr::arrange(.data$ssd) %>%
-      dplyr::mutate(term_name = .data$term,
-                     term_E = .data$E,
-                     term_P = .data$P,
-                     term_A = .data$A) %>%
+      dplyr::filter(ssd < max_dist) %>%
+      dplyr::arrange(ssd) %>%
+      dplyr::mutate(term_name = term,
+                    term_E = E,
+                    term_P = P,
+                    term_A = A) %>%
       dplyr::slice(1:num_terms) %>%
-      dplyr::select(.data$term_name, .data$term_E, .data$term_P, .data$term_A, .data$ssd)
+      dplyr::select(term_name, term_E, term_P, term_A, ssd)
 
     if(nrow(terms) == 0){
       terms <- tibble::tibble(term_name = "No terms within max distance",
-                      term_E = NA,
-                      term_P = NA,
-                      term_A = NA,
-                      ssd = NA)
+                              term_E = NA,
+                              term_P = NA,
+                              term_A = NA,
+                              ssd = NA)
     }
+  }
 
     return(terms)
 }

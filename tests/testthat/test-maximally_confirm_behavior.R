@@ -11,7 +11,10 @@ test_that("max confirm replicates interact", {
                    dplyr::ungroup() %>%
                    dplyr::mutate(equation_key = c("nc1978","nc1978"),
                                  equation_gender = c("male", "male")) %>%
-                   dplyr::mutate(opt_behavior = purrr::pmap_df(.l = .,
+                   dplyr::group_by(event_id, event) %>%
+                   dplyr::mutate(opt_behavior = purrr::pmap_df(.l = list(d = data,
+                                                                         equation_gender = equation_gender,
+                                                                         equation_key = equation_key),
                                                                     .f = maximally_confirm_behavior))
 
   expect_equal(round(events_nested$opt_behavior$opt_E[1], digits = 2), -0.54)

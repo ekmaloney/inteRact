@@ -75,7 +75,7 @@ Now you can run the functions on the dataframe, supplying the nested data and th
 ```{r}
 #get deflection
 deflection <- nested_analysis %>%
-              mutate(d = get_deflection(data = data, 
+              mutate(d = get_deflection(d = data, 
                              eq_df = eq_df))
 
 glimpse(deflection)
@@ -84,7 +84,7 @@ You can also do the same with getting the entire transient impression, but you h
 
 ```{r}
 transimp <- nested_analysis %>%
-              mutate(ti = list(transient_impression(data = data, 
+              mutate(ti = list(transient_impression(d = data, 
                              eq_df = eq_df)))
 
 transimp %>% unnest(ti)
@@ -95,11 +95,11 @@ Finally, you can also run functions together as such:
 
 ```{r}
 multiple_functions <- nested_analysis %>%
-                      mutate(d = get_deflection(data = data, 
+                      mutate(d = get_deflection(d = data, 
                                         eq_df = eq_df),
-                            ti = list(transient_impression(data = data, 
+                            ti = list(transient_impression(d = data, 
                                         eq_df = eq_df)),
-                            actor_reidentified = list(reidentify_actor(data = data, 
+                            actor_reidentified = list(reidentify_actor(d = data, 
                                         eq_df = eq_df)))
 ```
 

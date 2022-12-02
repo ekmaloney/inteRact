@@ -8,7 +8,7 @@ test_that("optimal behavior replicates interact", {
                                        dictionary_key = "indiana2003",
                                        dictionary_gender = "male")
 
-  opt_b <- optimal_behavior(data = opt_behavior_df,
+  opt_b <- optimal_behavior(d = opt_behavior_df,
                             equation_key = "nc1978",
                             equation_gender = "male")
 

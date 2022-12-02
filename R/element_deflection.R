@@ -1,11 +1,9 @@
 #' Compute Element Deflection for an Event
 #'
-#' This function calculates the deflection for an Actor, Behavior, Object event.
-#' It assumes that the first input is an identity corresponding to the actor,
-#' the second, the behavior, and last, the object. Each of these terms must be
-#' in the US 2015 dictionary.
+#' This function calculates the element-wise/decomposed deflection for an Actor,
+#' Behavior, Object event.
 #'
-#' @param data data that has been reshaped by the events_df
+#' @param d data that has been reshaped by the events_df
 #' @param equation_key is a string that corresponds to an equation key from actdata
 #' from actdata
 #' @param equation_gender is a string that corresponds to the gender for the equation
@@ -23,22 +21,22 @@
 #' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 #' d <- reshape_events_df(df = d, df_format = "wide",
 #' dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-#' element_deflection(data = d, equation_key = "us2010", equation_gender = "average")
+#' element_deflection(d = d, equation_key = "us2010", equation_gender = "average")
 
 
 #provides deflection
-element_deflection <- function(data,
+element_deflection <- function(d,
                                equation_key= NULL,
                                equation_gender= NULL,
                                eq_df = NULL, ...) {
 
           #get element deflection by applying the transient impression function
-          element_deflection <- transient_impression(data = data,
+          element_deflection <- transient_impression(d = d,
                                                      equation_key = equation_key,
                                                      equation_gender = equation_gender) %>%
-            dplyr::mutate(difference = .data$trans_imp - .data$estimate,
-                   sqd_diff = .data$difference^2) %>%
-            dplyr::ungroup()
+                                dplyr::mutate(difference = trans_imp - estimate,
+                                       sqd_diff = difference^2) %>%
+                                dplyr::ungroup()
 
             return(element_deflection)
 }

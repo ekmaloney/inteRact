@@ -5,7 +5,7 @@
 \title{Compute Element Deflection for an Event}
 \usage{
 element_deflection(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -13,7 +13,7 @@ element_deflection(
 )
 }
 \arguments{
-\item{data}{data that has been reshaped by the events_df}
+\item{d}{data that has been reshaped by the events_df}
 
 \item{equation_key}{is a string that corresponds to an equation key from actdata
 from actdata}
@@ -30,15 +30,13 @@ difference between the fundamental sentiment and the transient impression
 deflection.
 }
 \description{
-This function calculates the deflection for an Actor, Behavior, Object event.
-It assumes that the first input is an identity corresponding to the actor,
-the second, the behavior, and last, the object. Each of these terms must be
-in the US 2015 dictionary.
+This function calculates the element-wise/decomposed deflection for an Actor,
+Behavior, Object event.
 }
 \examples{
 
 d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide",
 dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-element_deflection(data = d, equation_key = "us2010", equation_gender = "average")
+element_deflection(d = d, equation_key = "us2010", equation_gender = "average")
 }

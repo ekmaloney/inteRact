@@ -1,7 +1,9 @@
 #' Function to Generate the Re-identification of the Object
 #'
-#' @param df data that has been reshaped by the events_df
-#' @param equation_info is a string that corresponds to "{equationkey}_{gender}" from actdata
+#' @param d a dataframe from reshape events that should be only
+#' actor_modifier and actor elements or object_modifier and object elements
+#' @param equation_gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_key a string corresponding to the equation key from actdata
 #'
 #' @return dataframe with 3 columns corresponding to the EPA of optimal object identity relabel
 #' @importFrom tibble tibble
@@ -11,15 +13,15 @@
 #' @examples
 #' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-#' reidentify_object(data = d, equation_key= "us2010", equation_gender = "average")
-reidentify_object <- function(data,
+#' reidentify_object(d = d, equation_key= "us2010", equation_gender = "average")
+reidentify_object <- function(d,
                               equation_key = NULL,
                               equation_gender = NULL,
                               eq_df = NULL,
                               ...) {
 
             #calculate the transient impression of the event
-            trans_imp_df <- transient_impression(d = data,
+            trans_imp_df <- transient_impression(d = d,
                                                  equation_key = equation_key,
                                                  equation_gender = equation_gender,
                                                  eq_df = eq_df)

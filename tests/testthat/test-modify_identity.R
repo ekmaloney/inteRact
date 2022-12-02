@@ -8,7 +8,7 @@ test_that("modify identity replicates interact.jar", {
                                    dictionary_key = "indiana2003",
                                    dictionary_gender = "male")
 
-  mod_id <- modify_identity(data = mi_reshaped,
+  mod_id <- modify_identity(d = mi_reshaped,
                             equation_key = "nc1978",
                             equation_gender = "male")
 

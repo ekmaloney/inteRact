@@ -7,7 +7,7 @@ test_that("reidentify object replicates interact.jar", {
                           dictionary_key = "indiana2003",
                           dictionary_gender = "male")
 
-  object_id <- reidentify_object(data = df,
+  object_id <- reidentify_object(d = df,
                                  equation_key = "nc1978",
                                  equation_gender = "male")
 

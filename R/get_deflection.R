@@ -1,13 +1,9 @@
 #' Compute Deflection for an Event
 #'
-#' This function calculates the deflection for an Actor, Behavior, Object event.
-#' It assumes that the first input is an identity corresponding to the actor,
-#' the second, the behavior, and last, the object. Each of these terms must be
-#' in the US 2015 dictionary.
+#' This function calculates the deflection for ABO events contained in a dataframe
+#' corresponding to the inteRact event data structure.
 #'
-#' @param act lowercase string corresponding to the actor identity
-#' @param beh lowercase string corresponding to the behavior term
-#' @param obj lowercase string corresponding to the object identity
+#' @param d inteRact-style events dataframe
 #' @param dictionary_key a string corresponding to the dictionary from actdata you are using for cultural EPA measurements
 #' @param gender either average, male, or female, depending on if you are using gendered equations
 #' @param equation_key a string corresponding to the equation key from actdata
@@ -22,16 +18,16 @@
 #' @examples
 #' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-#' get_deflection(data = d, equation_key = "us2010", equation_gender= "average")
+#' get_deflection(d = d, equation_key = "us2010", equation_gender= "average")
 
-get_deflection <- function(data,
+get_deflection <- function(d,
                            equation_key = NULL,
                            equation_gender = NULL,
                            eq_df = NULL,
                            ...) {
 
         #calculate the transient impression
-        t_imp <- transient_impression(d = data,
+        t_imp <- transient_impression(d = d,
                                       equation_key = equation_key,
                                       equation_gender = equation_gender,
                                       eq_df = eq_df)
@@ -43,6 +39,6 @@ get_deflection <- function(data,
                       dplyr::summarise(deflection = sum(sqd_diff))
 
 
-        return(total_deflection %>% dplyr::pull(deflection))
+        return(total_deflection %>% ungroup() %>% dplyr::pull(deflection))
 
 }

@@ -1,15 +1,22 @@
 #' Calculate the Transient Impression after an Event
 #'
-#' @param data data that has been reshaped by the events_data
-#' @param equation_info is a string that corresponds to "{equationkey}_{gender}" from actdata
-#' @return dataframe in long format, with one row for each element-dimension of the event, columns for fundamental sentiment and transient impression.
+#' @param d data that has been reshaped to be in long format, with columns:
+#' element, term, component, event, event_id, dimension, and estimate
+#' @param equation_key the actdata equation key for the equation to use to get
+#' the transient impression
+#' @param equation_gender male, female, or average, corresponding to the gender
+#' of equation to use when calculating the transient impression
+#' @param eq_df use this only if you have used your *own* equation and not one in
+#' actdata
+#' @return dataframe in long format, with one row for each element-dimension of
+#' the event, columns for fundamental sentiment and transient impression.
 #'
 #' @export
 #'
 #' @examples
 #' d <- tibble::tibble(actor_modifier = "tired", actor = "ceo", behavior = "advise", object = "benefactor")
 #' d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-#' transient_impression(data = d, equation_key = "us2010", equation_gender = "average")
+#' transient_impression(d = d, equation_key = "us2010", equation_gender = "average")
 #'
 
 
@@ -21,8 +28,8 @@ transient_impression <- function(d,
 #first, deal with modified identities
 if("actor_modifier" %in% d$element){
 
-  new_id <- d %>%
-            filter(element == "actor" | element == "actor_modifier")
+  new_id <- d[which(d$element == "actor" | d$element == "actor_modifier"),
+              , drop = FALSE]
 
   new_id_epa <- modify_identity(d = new_id,
                                 equation_key = equation_key,
@@ -33,17 +40,24 @@ if("actor_modifier" %in% d$element){
                                    term = paste(unique(d$term[d$element == "actor_modifier"]),
                                                 unique(d$term[d$element == "actor"])),
                                    component = "identity",
-                                   event = unique(d$event)) %>% dplyr::bind_cols(new_id_epa)
+                                   event = unique(d$event))
 
-  d <- d %>% dplyr::filter(element != "actor" & element != "actor_modifier")
-  d <- dplyr::bind_rows(new_actor_info, d)
+  new_actor_info <- cbind(new_actor_info, new_id_epa)
 
+  d <- d[which(d$element != "actor" & d$element != "actor_modifier"),
+         , drop = FALSE]
+
+  if("event_id" %in% names(d)){
+    new_actor_info$event_id <- unique(d$event_id)
+  }
+
+  d <- rbind(new_actor_info, d)
 }
 
   if("object_modifier" %in% d$element){
 
-    new_id <- d %>%
-      filter(element == "object" | element == "object_modifier")
+    new_id <- d[which(d$element == "object" | d$element == "object_modifier"),
+                , drop = FALSE]
 
     new_id_epa <- modify_identity(d = new_id,
                                   equation_key = equation_key,
@@ -54,14 +68,23 @@ if("actor_modifier" %in% d$element){
                                      term = paste(unique(d$term[d$element == "object_modifier"]),
                                                   unique(d$term[d$element == "object"])),
                                      component = "identity",
-                                     event = unique(d$event)) %>% dplyr::bind_cols(new_id_epa)
+                                     event = unique(d$event))
 
-    d <- d %>% dplyr::filter(element != "object" & element != "object_modifier")
-    d <- dplyr::bind_rows(new_object_info, d)
+    new_object_info <- cbind(new_object_info, new_id_epa)
+
+    d <- d[which(d$element == "object" | d$element == "object_modifier"),
+           , drop = FALSE]
+
+    if("event_id" %in% names(d)){
+      new_object_info$event_id <- unique(d$event_id)
+    }
+
+    d <- rbind(new_object_info, d)
 
   }
 
-  d <- d %>% arrange(match(element, c("actor", "behavior", "object")))
+  #d <- d %>% dplyr::arrange(match(element, c("actor", "behavior", "object")))
+  d <- d[order(d$element), , drop = FALSE]
 
           #get the equation
           eq <- get_equation(name = equation_key,
@@ -88,7 +111,7 @@ if("actor_modifier" %in% d$element){
 
           #get the pre and post event dimensions
           pre_post <- pre_post %>%
-            dplyr::mutate(trans_imp = post_epa) %>%
+            dplyr::mutate(trans_imp = post_epa[,1]) %>%
             dplyr::select(element, term, component, dimension, estimate, trans_imp)
 
           pre_post <- pre_post %>% ungroup()

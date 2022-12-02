@@ -1,27 +1,22 @@
 #' Calculate the Optimal Behavior for the Actor following an Event
 #'
-#' @param df data that has been reshaped by the events_df
-#' @param equation_info is a string that corresponds to "{equationkey}_{gender}"
-#' from actdata
+#' @param d data that has been reshaped by the reshape_events_df function
+#' @param equation_gender either average, male, or female, depending on if you are using gendered equations
+#' @param equation_key a string corresponding to the equation key from actdata
+#'
 #' @return 3 digit EPA indicating the optimal behavior
 #'
 #' @export
 #'
 #' @examples
 #'
-#' opt_behavior_example <- tibble::tibble(actor = "teenager",
-#' behavior = "beam_at",object = "friend")
-#'
-#'opt_behavior_df <- reshape_events_df(df = opt_behavior_example,
-#'df_format = "wide", dictionary_key = "indiana2003",
-#'dictionary_gender = "male")
-#'
-#'opt_b <- optimal_behavior(data = opt_behavior_df, equation_key = "nc1978",
-#' equation_gender = "male")
+#' opt_behavior_example <- tibble::tibble(actor = "teenager", behavior = "beam_at",object = "friend")
+#' opt_behavior_df <- reshape_events_df(df = opt_behavior_example, df_format = "wide", dictionary_key = "indiana2003", dictionary_gender = "male")
+#' opt_b <- optimal_behavior(d = opt_behavior_df, equation_key = "nc1978", equation_gender = "male")
 #'
 #'
 #'
-optimal_behavior <- function(data,
+optimal_behavior <- function(d,
                              equation_key = NULL,
                              equation_gender = NULL,
                              eq_df = NULL,
@@ -34,15 +29,15 @@ optimal_behavior <- function(data,
                              type = "impressionabo")
 
           #calculate the transient impression
-          element_def <- transient_impression(d = data,
+          element_def <- transient_impression(d = d,
                                               equation_key = equation_key,
                                               equation_gender = equation_gender,
                                               eq_df = eq_df)
 
               #select fundamental sentiment terms related to behavior
               element_def <- element_def %>%
-                dplyr::mutate(f_s_b = if_else(.data$element == "behavior",
-                                              .data$estimate, 1))
+                dplyr::mutate(f_s_b = if_else(element == "behavior",
+                                              estimate, 1))
 
                 #select transient impression terms related to behavior
                 z_b <- eq %>%
@@ -57,8 +52,8 @@ optimal_behavior <- function(data,
 
                 #now get the non-behavior terms from each
                 element_def <- element_def %>%
-                  dplyr::mutate(f_s_i = if_else(.data$element != "behavior",
-                                                .data$estimate, 1))
+                  dplyr::mutate(f_s_i = if_else(element != "behavior",
+                                                estimate, 1))
 
                 ####ACTOR
 
@@ -139,7 +134,7 @@ optimal_behavior <- function(data,
                                        A == "001" & O == "100" ~ element_def$trans_imp[9]*element_def$trans_imp[1],
                                        A == "001" & O == "010" ~ element_def$trans_imp[9]*element_def$trans_imp[2],
                                        A == "001" & O == "001" ~ element_def$trans_imp[9]*element_def$trans_imp[3])) %>%
-                  dplyr::select(.data$i)
+                  dplyr::select(i)
 
                 #save as a vector
                 i <- c(as.vector(ob_fsi), as.vector(i$i))

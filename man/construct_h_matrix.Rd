@@ -7,13 +7,17 @@
 construct_h_matrix(eq)
 }
 \arguments{
-\item{equation}{which equation to use - you can either set it to "us" for the
-us 1978 equations, or "user supplied")}
-
-\item{eq_df}{if you select "user supplied" for equation, this parameter should
-be your equation dataframe, which (should have been reshaped by the
-reshape_new_equation function prior)}
+\item{eq}{the equation dataframe being used in the analysis}
+}
+\value{
+the h matrix, which "symbolize the matrices of constant parameters"
+(see Heise, Expressive Order, p. 87)
 }
 \description{
-Construct H Matrix
+This function is for internal use within other functions. A helper function to
+make the H matrix needed in ACT calculations
+}
+\examples{
+eq <- get_equation(name = "us2010", type = "impressionabo", g = "average")
+h_mat <- construct_h_matrix(eq = eq)
 }

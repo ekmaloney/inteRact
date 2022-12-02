@@ -6,7 +6,7 @@
 \title{maximally_confirm_behavior}
 \usage{
 maximally_confirm_behavior(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -14,7 +14,7 @@ maximally_confirm_behavior(
 )
 
 maximally_confirm_behavior(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -22,7 +22,11 @@ maximally_confirm_behavior(
 )
 }
 \arguments{
+\item{d}{events dataframe reshaped by reshape_events_dataframe function with an actor and object pairing}
+
 \item{equation_key}{a string corresponding to the equation key from actdata}
+
+\item{equation_gender}{either average, male, or female, depending on if you are using gendered equations}
 
 \item{eq_df}{if you select "user supplied" for equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the
@@ -34,9 +38,9 @@ reshape_new_equation function prior)}
 
 \item{object}{lowercase string corresponding to the object identity}
 
-\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
-
 \item{gender}{either average, male, or female, depending on if you are using gendered equations}
+
+\item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 }
 \value{
 3 digit EPA indicating the optimal behavior
@@ -53,5 +57,5 @@ and object pairing
 \examples{
 d <- tibble::tibble(actor = "ceo", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-maximally_confirm_behavior(data = d, equation_key = "us2010", equation_gender = "average")
+maximally_confirm_behavior(d = d, equation_key = "us2010", equation_gender = "average")
 }

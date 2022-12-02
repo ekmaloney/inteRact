@@ -21,7 +21,7 @@
 get_dictionary <- function(dict_key, g){
 
     d <- actdata::epa_subset(dataset = dict_key)
-    d <- d %>% dplyr::filter(.data$gender == g)
+    d <- d %>% dplyr::filter(gender == g)
 
   return(d)
 }

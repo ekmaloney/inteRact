@@ -9,8 +9,16 @@ create_select_mat(term, eq)
 \arguments{
 \item{term, }{string indicating whether you are selection for actor, behavior, or object}
 
-\item{equation_key}{}
+\item{eq}{the equation dataframe being used for analysis}
+}
+\value{
+selection matrix to easily grab desired estimates from entire event ABO-EPA matrix
+see Heise, Expressive Order p. 86
 }
 \description{
 Convenience Function for Creating Selection Matrix Depending on the Term
+}
+\examples{
+eq <- get_equation(name = "us2010", type = "impressionabo", g = "average")
+select_mat_a <- create_select_mat(term = "actor", eq = eq)
 }

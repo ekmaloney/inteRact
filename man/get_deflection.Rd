@@ -5,7 +5,7 @@
 \title{Compute Deflection for an Event}
 \usage{
 get_deflection(
-  data,
+  d,
   equation_key = NULL,
   equation_gender = NULL,
   eq_df = NULL,
@@ -13,17 +13,13 @@ get_deflection(
 )
 }
 \arguments{
+\item{d}{inteRact-style events dataframe}
+
 \item{equation_key}{a string corresponding to the equation key from actdata}
 
 \item{eq_df}{if you use your own equation, this parameter should
 be your equation dataframe, which (should have been reshaped by the
 reshape_new_equation function prior)}
-
-\item{act}{lowercase string corresponding to the actor identity}
-
-\item{beh}{lowercase string corresponding to the behavior term}
-
-\item{obj}{lowercase string corresponding to the object identity}
 
 \item{dictionary_key}{a string corresponding to the dictionary from actdata you are using for cultural EPA measurements}
 
@@ -33,13 +29,11 @@ reshape_new_equation function prior)}
 calculated deflection for the event (single number)
 }
 \description{
-This function calculates the deflection for an Actor, Behavior, Object event.
-It assumes that the first input is an identity corresponding to the actor,
-the second, the behavior, and last, the object. Each of these terms must be
-in the US 2015 dictionary.
+This function calculates the deflection for ABO events contained in a dataframe
+corresponding to the inteRact event data structure.
 }
 \examples{
 d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-get_deflection(data = d, equation_key = "us2010", equation_gender= "average")
+get_deflection(d = d, equation_key = "us2010", equation_gender= "average")
 }
