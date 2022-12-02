@@ -64,7 +64,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">transient_impression</span><span class="op">(</span></span>
-<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">d</span>,</span>
 <span>  equation_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  equation_gender <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  eq_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -74,19 +74,32 @@
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>data</dt>
-<dd><p>data that has been reshaped by the events_data</p></dd>
+    <dl><dt>d</dt>
+<dd><p>data that has been reshaped to be in long format, with columns:
+element, term, component, event, event_id, dimension, and estimate</p></dd>
 
 
-<dt>equation_info</dt>
-<dd><p>is a string that corresponds to "equationkey_gender" from actdata</p></dd>
+<dt>equation_key</dt>
+<dd><p>the actdata equation key for the equation to use to get
+the transient impression</p></dd>
+
+
+<dt>equation_gender</dt>
+<dd><p>male, female, or average, corresponding to the gender
+of equation to use when calculating the transient impression</p></dd>
+
+
+<dt>eq_df</dt>
+<dd><p>use this only if you have used your <em>own</em> equation and not one in
+actdata</p></dd>
 
 </dl></div>
     <div id="value">
     <h2>Value</h2>
     
 
-<p>dataframe in long format, with one row for each element-dimension of the event, columns for fundamental sentiment and transient impression.</p>
+<p>dataframe in long format, with one row for each element-dimension of
+the event, columns for fundamental sentiment and transient impression.</p>
     </div>
 
     <div id="ref-examples">
@@ -94,7 +107,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>actor_modifier <span class="op">=</span> <span class="st">"tired"</span>, actor <span class="op">=</span> <span class="st">"ceo"</span>, behavior <span class="op">=</span> <span class="st">"advise"</span>, object <span class="op">=</span> <span class="st">"benefactor"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reshape_events_df.html">reshape_events_df</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">d</span>, df_format <span class="op">=</span> <span class="st">"wide"</span>, dictionary_key <span class="op">=</span> <span class="st">"usfullsurveyor2015"</span>, dictionary_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("term", "component")</span>
-<span class="r-in"><span><span class="fu">transient_impression</span><span class="op">(</span>data <span class="op">=</span> <span class="va">d</span>, equation_key <span class="op">=</span> <span class="st">"us2010"</span>, equation_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">transient_impression</span><span class="op">(</span>d <span class="op">=</span> <span class="va">d</span>, equation_key <span class="op">=</span> <span class="st">"us2010"</span>, equation_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    element       term component dimension estimate  trans_imp</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1    actor  tired ceo  identity         E -0.79846  0.9841138</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2    actor  tired ceo  identity         P  1.21070  0.9023990</span>

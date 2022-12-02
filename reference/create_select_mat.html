@@ -72,11 +72,24 @@
 <dd><p>string indicating whether you are selection for actor, behavior, or object</p></dd>
 
 
-<dt>equation_key</dt>
-<dd></dd>
+<dt>eq</dt>
+<dd><p>the equation dataframe being used for analysis</p></dd>
 
 </dl></div>
+    <div id="value">
+    <h2>Value</h2>
+    
 
+<p>selection matrix to easily grab desired estimates from entire event ABO-EPA matrix
+see Heise, Expressive Order p. 86</p>
+    </div>
+
+    <div id="ref-examples">
+    <h2>Examples</h2>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">eq</span> <span class="op">&lt;-</span> <span class="fu"><a href="get_equation.html">get_equation</a></span><span class="op">(</span>name <span class="op">=</span> <span class="st">"us2010"</span>, type <span class="op">=</span> <span class="st">"impressionabo"</span>, g <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">select_mat_a</span> <span class="op">&lt;-</span> <span class="fu">create_select_mat</span><span class="op">(</span>term <span class="op">=</span> <span class="st">"actor"</span>, eq <span class="op">=</span> <span class="va">eq</span><span class="op">)</span></span></span>
+</code></pre></div>
+    </div>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top"><h2 data-toc-skip>Contents</h2>

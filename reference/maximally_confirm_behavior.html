@@ -70,7 +70,7 @@ and object pairing</p>
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">maximally_confirm_behavior</span><span class="op">(</span></span>
-<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">d</span>,</span>
 <span>  equation_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  equation_gender <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  eq_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -78,7 +78,7 @@ and object pairing</p>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu">maximally_confirm_behavior</span><span class="op">(</span></span>
-<span>  <span class="va">data</span>,</span>
+<span>  <span class="va">d</span>,</span>
 <span>  equation_key <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  equation_gender <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  eq_df <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -88,8 +88,16 @@ and object pairing</p>
 
     <div id="arguments">
     <h2>Arguments</h2>
-    <dl><dt>equation_key</dt>
+    <dl><dt>d</dt>
+<dd><p>events dataframe reshaped by reshape_events_dataframe function with an actor and object pairing</p></dd>
+
+
+<dt>equation_key</dt>
 <dd><p>a string corresponding to the equation key from actdata</p></dd>
+
+
+<dt>equation_gender</dt>
+<dd><p>either average, male, or female, depending on if you are using gendered equations</p></dd>
 
 
 <dt>eq_df</dt>
@@ -110,12 +118,12 @@ reshape_new_equation function prior)</p></dd>
 <dd><p>lowercase string corresponding to the object identity</p></dd>
 
 
-<dt>dictionary_key</dt>
-<dd><p>a string corresponding to the dictionary from actdata you are using for cultural EPA measurements</p></dd>
-
-
 <dt>gender</dt>
 <dd><p>either average, male, or female, depending on if you are using gendered equations</p></dd>
+
+
+<dt>dictionary_key</dt>
+<dd><p>a string corresponding to the dictionary from actdata you are using for cultural EPA measurements</p></dd>
 
 </dl></div>
     <div id="value">
@@ -133,7 +141,7 @@ reshape_new_equation function prior)</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>actor <span class="op">=</span> <span class="st">"ceo"</span>, object <span class="op">=</span> <span class="st">"benefactor"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reshape_events_df.html">reshape_events_df</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">d</span>, df_format <span class="op">=</span> <span class="st">"wide"</span>, dictionary_key <span class="op">=</span> <span class="st">"usfullsurveyor2015"</span>, dictionary_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("term", "component")</span>
-<span class="r-in"><span><span class="fu">maximally_confirm_behavior</span><span class="op">(</span>data <span class="op">=</span> <span class="va">d</span>, equation_key <span class="op">=</span> <span class="st">"us2010"</span>, equation_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">maximally_confirm_behavior</span><span class="op">(</span>d <span class="op">=</span> <span class="va">d</span>, equation_key <span class="op">=</span> <span class="st">"us2010"</span>, equation_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   opt_E opt_P opt_A term </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span></span>
