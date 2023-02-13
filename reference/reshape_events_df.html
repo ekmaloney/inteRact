@@ -68,7 +68,7 @@
 <span>  df_format <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wide"</span>, <span class="st">"long"</span><span class="op">)</span>,</span>
 <span>  id_column <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">dictionary_key</span>,</span>
-<span>  dictionary_gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"average"</span><span class="op">)</span></span>
+<span>  dictionary_gender <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"male"</span>, <span class="st">"female"</span>, <span class="st">"all"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -106,8 +106,8 @@ or long (multiple rows for each event)</p></dd>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>actor <span class="op">=</span> <span class="st">"ceo"</span>, behavior <span class="op">=</span> <span class="st">"advise"</span>, object <span class="op">=</span> <span class="st">"benefactor"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="fu">reshape_events_df</span><span class="op">(</span>df <span class="op">=</span> <span class="va">d</span>, df_format <span class="op">=</span> <span class="st">"wide"</span>, dictionary_key <span class="op">=</span> <span class="st">"usfullsurveyor2015"</span>, dictionary_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("term", "component")</span>
+<span class="r-in"><span><span class="fu">reshape_events_df</span><span class="op">(</span>df <span class="op">=</span> <span class="va">d</span>, df_format <span class="op">=</span> <span class="st">"wide"</span>, dictionary_key <span class="op">=</span> <span class="st">"usfullsurveyor2015"</span>, dictionary_gender <span class="op">=</span> <span class="st">"all"</span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(term, component)`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 9 × 7</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># Groups:   event_id [1]</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   event_id element  term       component event                 dimension estim…¹</span>
@@ -136,7 +136,7 @@ or long (multiple rows for each event)</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

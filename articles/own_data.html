@@ -81,7 +81,7 @@
       <h1 data-toc-skip>Using your own equations</h1>
                         <h4 data-toc-skip class="author">Em Maloney</h4>
             
-            <h4 data-toc-skip class="date">2022-12-03</h4>
+            <h4 data-toc-skip class="date">2023-02-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/ekmaloney/inteRact/blob/HEAD/vignettes/own_data.Rmd" class="external-link"><code>vignettes/own_data.Rmd</code></a></small>
       <div class="hidden name"><code>own_data.Rmd</code></div>
@@ -96,10 +96,10 @@
 <code class="sourceCode R"><span><span class="co">#libraries needed</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://tidyverse.tidyverse.org" class="external-link">tidyverse</a></span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## ── <span style="font-weight: bold;">Attaching packages</span> ─────────────────────────────────────── tidyverse 1.3.2 ──</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.4.0      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 0.3.5 </span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.8      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.0.10</span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.2.1      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.5.0 </span></span>
-<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.3      <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 0.5.2 </span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">ggplot2</span> 3.4.1     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">purrr  </span> 1.0.1</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tibble </span> 3.1.8     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">dplyr  </span> 1.1.0</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">tidyr  </span> 1.3.0     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">stringr</span> 1.5.0</span></span>
+<span><span class="co">## <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">readr  </span> 2.1.4     <span style="color: #00BB00;">✔</span> <span style="color: #0000BB;">forcats</span> 1.0.0</span></span>
 <span><span class="co">## ── <span style="font-weight: bold;">Conflicts</span> ────────────────────────────────────────── tidyverse_conflicts() ──</span></span>
 <span><span class="co">## <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">filter()</span> masks <span style="color: #0000BB;">stats</span>::filter()</span></span>
 <span><span class="co">## <span style="color: #BB0000;">✖</span> <span style="color: #0000BB;">dplyr</span>::<span style="color: #00BB00;">lag()</span>    masks <span style="color: #0000BB;">stats</span>::lag()</span></span></code></pre>
@@ -163,7 +163,7 @@
 <span><span class="va">analysis_df</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/reshape_events_df.html">reshape_events_df</a></span><span class="op">(</span><span class="va">events</span>, df_format <span class="op">=</span> <span class="st">"wide"</span>,</span>
 <span>                                 dictionary_key <span class="op">=</span> <span class="st">"usfullsurveyor2015"</span>,</span>
 <span>                                 dictionary_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## Joining, by = c("term", "component")</span></span></code></pre>
+<pre><code><span><span class="co">## Joining with `by = join_by(term, component)`</span></span></code></pre>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">analysis_df</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Rows: 450</span></span>
@@ -175,7 +175,7 @@
 <span><span class="co">## $ component <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "identity", "identity", "identity", "behavior", "behavior", …</span></span>
 <span><span class="co">## $ event     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "grandmother bewilder mourner", "grandmother bewilder mourne…</span></span>
 <span><span class="co">## $ dimension <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "E", "P", "A", "E", "P", "A", "E", "P", "A", "E", "P", "A", …</span></span>
-<span><span class="co">## $ estimate  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2.76, 0.89, -1.03, -0.34, 0.68, 0.65, -0.15, -1.60, -1.65, 2…</span></span></code></pre>
+<span><span class="co">## $ estimate  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …</span></span></code></pre>
 <p>To finalize the dataframe for analysis, <em>nest_by</em> the event_id. It is important to nest_by() rather than just nesting after group_by(). Here you also put your equations dataframe in a new column as such.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">#nest by event</span></span>
@@ -196,28 +196,28 @@
 <span><span class="co">## $ event_id <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18…</span></span>
 <span><span class="co">## $ data     <span style="color: #949494; font-style: italic;">&lt;list&lt;tibble[,6]&gt;&gt;</span> [&lt;tbl_df[9 x 6]&gt;], [&lt;tbl_df[9 x 6]&gt;], [&lt;tbl_df[9…</span></span>
 <span><span class="co">## $ eq_df    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> [&lt;tbl_df[15 x 22]&gt;], [&lt;tbl_df[15 x 22]&gt;], [&lt;tbl_df[15 x 22]&gt;…</span></span>
-<span><span class="co">## $ d        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 6.380303, 10.675613, 27.817563, 21.797024, 35.270588, 7.66000…</span></span></code></pre>
+<span><span class="co">## $ d        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span></code></pre>
 <p>You can also do the same with getting the entire transient impression, but you have to list() the results and then unnest() them afterwards.</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">transimp</span> <span class="op">&lt;-</span> <span class="va">nested_analysis</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span></span>
 <span>              <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>ti <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="../reference/transient_impression.html">transient_impression</a></span><span class="op">(</span>d <span class="op">=</span> <span class="va">data</span>, </span>
 <span>                             eq_df <span class="op">=</span> <span class="va">eq_df</span><span class="op">)</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">transimp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/nest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">ti</span><span class="op">)</span></span></code></pre></div>
+<span><span class="va">transimp</span> <span class="op"><a href="../reference/pipe.html">%&gt;%</a></span> <span class="fu"><a href="https://tidyr.tidyverse.org/reference/unnest.html" class="external-link">unnest</a></span><span class="op">(</span><span class="va">ti</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 450 × 9</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># Groups:   event_id [50]</span></span></span>
 <span><span class="co">##    event_id          data eq_df    element term  compo…¹ dimen…² estim…³ trans…⁴</span></span>
 <span><span class="co">##       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&lt;tibble&gt;</span> <span style="color: #949494; font-style: italic;">&lt;list&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   gran… identi… E          2.76   1.38 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   gran… identi… P          0.89   1.29 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   gran… identi… A         -<span style="color: #BB0000;">1.03</span>   0.384</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; behavi… bewi… behavi… E         -<span style="color: #BB0000;">0.34</span>   1.05 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; behavi… bewi… behavi… P          0.68   1.07 </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; behavi… bewi… behavi… A          0.65   0.539</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; object  mour… identi… E         -<span style="color: #BB0000;">0.15</span>  -<span style="color: #BB0000;">0.534</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; object  mour… identi… P         -<span style="color: #BB0000;">1.6</span>   -<span style="color: #BB0000;">1.32</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; object  mour… identi… A         -<span style="color: #BB0000;">1.65</span>  -<span style="color: #BB0000;">1.73</span> </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span>        2       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   buddy identi… E          2.66   2.29 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   gran… identi… E            <span style="color: #BB0000;">NA</span>    0.9 </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   gran… identi… P            <span style="color: #BB0000;">NA</span>    0.64</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   gran… identi… A            <span style="color: #BB0000;">NA</span>    1.01</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; behavi… bewi… behavi… E            <span style="color: #BB0000;">NA</span>    0.81</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; behavi… bewi… behavi… P            <span style="color: #BB0000;">NA</span>    1.05</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; behavi… bewi… behavi… A            <span style="color: #BB0000;">NA</span>    1.24</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; object  mour… identi… E            <span style="color: #BB0000;">NA</span>    1.11</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; object  mour… identi… P            <span style="color: #BB0000;">NA</span>    0.31</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span>        1       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; object  mour… identi… A            <span style="color: #BB0000;">NA</span>    1.17</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span>        2       <span style="color: #949494;">[9 × 6]</span> &lt;tibble&gt; actor   buddy identi… E            <span style="color: #BB0000;">NA</span>    0.9 </span></span>
 <span><span class="co">## <span style="color: #949494;"># … with 440 more rows, and abbreviated variable names ¹​component, ²​dimension,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   ³​estimate, ⁴​trans_imp</span></span></span></code></pre>
 <p>Finally, you can also run functions together as such:</p>
@@ -246,7 +246,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>

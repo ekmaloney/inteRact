@@ -106,18 +106,18 @@ the event, columns for fundamental sentiment and transient impression.</p>
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>actor_modifier <span class="op">=</span> <span class="st">"tired"</span>, actor <span class="op">=</span> <span class="st">"ceo"</span>, behavior <span class="op">=</span> <span class="st">"advise"</span>, object <span class="op">=</span> <span class="st">"benefactor"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reshape_events_df.html">reshape_events_df</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">d</span>, df_format <span class="op">=</span> <span class="st">"wide"</span>, dictionary_key <span class="op">=</span> <span class="st">"usfullsurveyor2015"</span>, dictionary_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("term", "component")</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(term, component)`</span>
 <span class="r-in"><span><span class="fu">transient_impression</span><span class="op">(</span>d <span class="op">=</span> <span class="va">d</span>, equation_key <span class="op">=</span> <span class="st">"us2010"</span>, equation_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    element       term component dimension estimate  trans_imp</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1    actor  tired ceo  identity         E -0.79846  0.9841138</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2    actor  tired ceo  identity         P  1.21070  0.9023990</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3    actor  tired ceo  identity         A -0.48800 -0.1250800</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 behavior     advise  behavior         E  2.57000  1.0171968</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 behavior     advise  behavior         P  2.28000  1.6511710</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 6 behavior     advise  behavior         A  0.28000  0.0922000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 7   object benefactor  identity         E  1.97000  1.8357522</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 8   object benefactor  identity         P  1.98000  0.9686181</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 9   object benefactor  identity         A  0.10000 -1.1940028</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    element       term component dimension estimate trans_imp</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1    actor  tired ceo  identity         E     0.54    0.6148</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2    actor  tired ceo  identity         P     0.93    0.6001</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3    actor  tired ceo  identity         A     1.05    1.0230</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4 behavior     advise  behavior         E       NA    0.5708</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 5 behavior     advise  behavior         P       NA    1.0129</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 6 behavior     advise  behavior         A       NA    1.2475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 7   object benefactor  identity         E       NA    1.0364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 8   object benefactor  identity         P       NA    0.3050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 9   object benefactor  identity         A       NA    0.9216</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
@@ -133,7 +133,7 @@ the event, columns for fundamental sentiment and transient impression.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>

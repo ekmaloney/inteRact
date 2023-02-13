@@ -98,13 +98,13 @@ actor_modifier and actor elements or object_modifier and object elements</p></dd
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu">tibble</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span>actor <span class="op">=</span> <span class="st">"ceo"</span>, behavior <span class="op">=</span> <span class="st">"advise"</span>, object <span class="op">=</span> <span class="st">"benefactor"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">d</span> <span class="op">&lt;-</span> <span class="fu"><a href="reshape_events_df.html">reshape_events_df</a></span><span class="op">(</span>df <span class="op">=</span> <span class="va">d</span>, df_format <span class="op">=</span> <span class="st">"wide"</span>, dictionary_key <span class="op">=</span> <span class="st">"usfullsurveyor2015"</span>, dictionary_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining, by = c("term", "component")</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Joining with `by = join_by(term, component)`</span>
 <span class="r-in"><span><span class="fu">reidentify_actor</span><span class="op">(</span>d <span class="op">=</span> <span class="va">d</span>, equation_key <span class="op">=</span> <span class="st">"us2010"</span>, equation_gender <span class="op">=</span> <span class="st">"average"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Adding missing grouping variables: `event_id`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 3</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       E     P       A</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> 0.531  1.64 -<span style="color: #BB0000;">0.067</span><span style="color: #BB0000; text-decoration: underline;">7</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       E     P     A</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span></span>
 </code></pre></div>
     </div>
   </div>
@@ -119,7 +119,7 @@ actor_modifier and actor elements or object_modifier and object elements</p></dd
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer></div>
