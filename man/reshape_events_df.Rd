@@ -9,7 +9,7 @@ reshape_events_df(
   df_format = c("wide", "long"),
   id_column = NULL,
   dictionary_key,
-  dictionary_gender = c("male", "female", "average")
+  dictionary_gender = c("male", "female", "all")
 )
 }
 \arguments{
@@ -33,5 +33,5 @@ Reshape Events DF
 \examples{
 
 d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
-reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "all")
 }

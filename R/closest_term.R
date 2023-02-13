@@ -37,7 +37,7 @@ closest_term <- function(e, p, a,
     stop("E, P, and A must be numeric")
   }else{
     #get dictionaries
-    d <- actdata::epa_subset(dataset = dictionary_key, gender = dictionary_gender, component = term_typ)
+    d <- actdata::epa_subset(dataset = dictionary_key, group = dictionary_gender, component = term_typ)
 
     terms <- d %>%
       dplyr::rowwise() %>%

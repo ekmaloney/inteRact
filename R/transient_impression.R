@@ -28,8 +28,7 @@ transient_impression <- function(d,
 #first, deal with modified identities
 if("actor_modifier" %in% d$element){
 
-  new_id <- d[which(d$element == "actor" | d$element == "actor_modifier"),
-              , drop = FALSE]
+  new_id <- d %>% dplyr::filter(element == "actor" | element == "actor_modifier")
 
   new_id_epa <- modify_identity(d = new_id,
                                 equation_key = equation_key,
@@ -44,8 +43,7 @@ if("actor_modifier" %in% d$element){
 
   new_actor_info <- cbind(new_actor_info, new_id_epa)
 
-  d <- d[which(d$element != "actor" & d$element != "actor_modifier"),
-         , drop = FALSE]
+  d <- d %>% dplyr::filter(!(element == "actor" | element == "actor_modifier"))
 
   if("event_id" %in% names(d)){
     new_actor_info$event_id <- unique(d$event_id)
@@ -56,8 +54,7 @@ if("actor_modifier" %in% d$element){
 
   if("object_modifier" %in% d$element){
 
-    new_id <- d[which(d$element == "object" | d$element == "object_modifier"),
-                , drop = FALSE]
+    new_id <- d %>% dplyr::filter(element == "object" | element == "object_modifier")
 
     new_id_epa <- modify_identity(d = new_id,
                                   equation_key = equation_key,
@@ -72,8 +69,7 @@ if("actor_modifier" %in% d$element){
 
     new_object_info <- cbind(new_object_info, new_id_epa)
 
-    d <- d[which(d$element == "object" | d$element == "object_modifier"),
-           , drop = FALSE]
+    d <- d %>% dplyr::filter(!(element == "object" | element == "object_modifier"))
 
     if("event_id" %in% names(d)){
       new_object_info$event_id <- unique(d$event_id)

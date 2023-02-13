@@ -21,7 +21,7 @@
 get_dictionary <- function(dict_key, g){
 
     d <- actdata::epa_subset(dataset = dict_key)
-    d <- d %>% dplyr::filter(gender == g)
+    d <- d %>% dplyr::filter(group == g)
 
   return(d)
 }
@@ -59,7 +59,7 @@ get_equation <- function(name = NULL,
     #
     # eq_df <- eq_df[[1]]
 
-    eq_df <- actdata::get_eqn(key = name, equation_type = type, gender = g)
+    eq_df <- actdata::get_eqn(key = name, equation_type = type, group = g)
 
     if(type == "impressionabo"){
       eq_clean <- reshape_new_equation(eq_df)

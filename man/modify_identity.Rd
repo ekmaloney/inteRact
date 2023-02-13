@@ -32,5 +32,5 @@ A function that applies the modifier equations to find the EPA location for modi
 \examples{
 d <- tibble::tibble(actor_modifier = "tired", actor = "ceo")
 d <- reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
-tired_ceo <- modify_identity(d = d, equation_key = "us2010", equation_gender = "average")
+tired_ceo <- modify_identity(d = d, equation_key = "us2010", equation_gender = "all")
 }

@@ -13,18 +13,25 @@
 #' @examples
 #'
 #' d <- tibble::tibble(actor = "ceo", behavior = "advise", object = "benefactor")
-#' reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "average")
+#' reshape_events_df(df = d, df_format = "wide", dictionary_key = "usfullsurveyor2015", dictionary_gender = "all")
 reshape_events_df <- function(df,
                               df_format = c("wide", "long"),
                               id_column = NULL,
                               dictionary_key,
-                              dictionary_gender = c("male", "female", "average")){
+                              dictionary_gender = c("male", "female", "all")){
 
 
   #first, get the dictionary
-  dictionary <- actdata::epa_subset(dataset = dictionary_key,
-                           gender = dictionary_gender) %>%
-                dplyr::select(term, component, E, P, A)
+  dictionary <- actdata::epa_subset(dataset = dictionary_key)
+  if("group" %in% names(dictionary)){
+    dictionary <- dictionary %>%
+                  dplyr::filter(group == dictionary_gender) %>%
+                  dplyr::select(term, component, E, P, A)
+  }else{
+    dictionary <- dictionary %>%
+                  dplyr::select(term, component, E, P, A)
+      }
+
 
   #next, do different things if wide or short
   if(df_format == "wide"){
